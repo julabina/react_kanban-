@@ -89,5 +89,21 @@ html, body {
   height: 70px;
   border-bottom: 2px solid #8f8f8f73;
 }
+.home__modalNewBoard {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: #000000b6;
+}
+.home__modalNewBoard__modal {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #ffffff;
+  padding: 15px;
+}
 
 /*# sourceMappingURL=style.css.map */

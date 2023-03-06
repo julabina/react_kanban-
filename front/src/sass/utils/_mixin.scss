@@ -1,0 +1,14 @@
+@mixin modal {
+    position: fixed;
+    top: 0;left: 0;
+    bottom: 0;right: 0;
+    background: map-get($map: $colors, $key: modal-black);
+    &__modal {
+        position: absolute;
+        top: 42%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: map-get($map: $colors, $key: light-white); 
+        padding: 15px;  
+    }
+}

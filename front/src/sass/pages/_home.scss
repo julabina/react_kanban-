@@ -30,4 +30,7 @@
             border-bottom: 2px solid map-get($map: $colors, $key: light-separator);
         }
     }
+    &__modalNewBoard {
+        @include modal;
+    }
 }

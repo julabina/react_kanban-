@@ -39,7 +39,13 @@ const Log = () => {
         }
     },[]);
 
-    const verifyLog = (e: React.FormEvent<HTMLFormElement>) => {
+    /**
+     * validate login field before login
+     * 
+     * @param e 
+     * @returns 
+     */
+    const validateLog = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (logErrorCont) {    
@@ -69,7 +75,13 @@ const Log = () => {
         tryToLog();
     };
 
-    const verifySign = (e: React.FormEvent<HTMLFormElement>) => {
+    /**
+     * validate sigin field before sign in
+     * 
+     * @param e 
+     * @returns 
+     */
+    const validateSign = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
           
         if (signErrorCont) {    
@@ -109,7 +121,13 @@ const Log = () => {
         tryToSign();
     };
 
-    const logControl = (action: string, value: string) => {
+    /**
+     * control login field
+     * 
+     * @param action 
+     * @param value 
+     */
+    const ctrlLog = (action: string, value: string) => {
         if (action === 'mail') {
             const newObj: LogInput = {
                 ...logInput,
@@ -125,7 +143,13 @@ const Log = () => {
         }
     };
     
-    const signControl = (action: string, value: string) => {
+    /**
+     * control sign in field
+     * 
+     * @param action
+     * @param value 
+     */
+    const ctrlSign = (action: string, value: string) => {
         if (action === 'mail') {
             const newObj: SignInput = {
                 ...signInput,
@@ -159,7 +183,10 @@ const Log = () => {
         }
     };
 
-    const tryToSign = () => {       
+    /**
+     * create user on database
+     */
+    const tryToSign = () => {     
         fetch(process.env.REACT_APP_API_URL + '/api/user/create', {
             headers: {
                 'Accept': 'application/json',
@@ -182,8 +209,13 @@ const Log = () => {
             })
     };
 
+    /**
+     * check in database for user, and if ok log it
+     * 
+     * @param mail 
+     * @param password 
+     */
     const tryToLog = (mail?: string, password?: string) => {
-
         if (mail === undefined || password === undefined) {
             mail = logInput.mail;
             password = logInput.password;
@@ -219,6 +251,9 @@ const Log = () => {
             })   
     };
 
+    /**
+     * disconnect an user
+     */
     const disconnect = () => {       
         if (localStorage.getItem('react_kanban_token') !== null) {
             localStorage.removeItem('react_kanban_token');
@@ -236,49 +271,52 @@ const Log = () => {
             </main>
         : 
             <main className='log'>
+                {/* section login start */}
                 <section className='log__login'>
                     <h2>Se connecter</h2>
                     <div className="log__login__errorCont"></div>
-                    <form className='log__login__form' onSubmit={verifyLog}>
+                    <form className='log__login__form' onSubmit={validateLog}>
                         <div className="log__login__form__inputCont">
                             <label htmlFor="logEmail">Email</label>
-                            <input onInput={(e) => logControl('mail', (e.target as HTMLInputElement).value)} value={logInput.mail} type="email" id="logEmail" placeholder='user@gmail.com' />
+                            <input onInput={(e) => ctrlLog('mail', (e.target as HTMLInputElement).value)} value={logInput.mail} type="email" id="logEmail" placeholder='user@gmail.com' />
                         </div>
                         <div className="log__login__form__inputCont">
                             <label htmlFor="logPassword">Mot de passe</label>
-                            <input onInput={(e) => logControl('password', (e.target as HTMLInputElement).value)} value={logInput.password} type="password" id="logPassword" />
+                            <input onInput={(e) => ctrlLog('password', (e.target as HTMLInputElement).value)} value={logInput.password} type="password" id="logPassword" />
                         </div>
                         <div className="log__login__form__btnCont">
                             <input type="submit" value="Connexion" />
                         </div>
                     </form>
                 </section>
+                {/* section login ended */}
+                {/* section signin start */}
                 <section className='log__signin'>
                     <h2>S'inscrire</h2>
                     <div className="log__signin__errorCont"></div>
-                    <form className='log__signin__form' onSubmit={verifySign}>
+                    <form className='log__signin__form' onSubmit={validateSign}>
                         <div className="log__signin__form__cont"> 
                             <div className="log__signin__form__cont__inputCont">
                                 <label htmlFor="signEmail">Email</label>
-                                <input onInput={(e) => signControl('mail', (e.target as HTMLInputElement).value)} value={signInput.mail} type="email" id="signEmail" placeholder='user@gmail.com' />
+                                <input onInput={(e) => ctrlSign('mail', (e.target as HTMLInputElement).value)} value={signInput.mail} type="email" id="signEmail" placeholder='user@gmail.com' />
                             </div>
                             <div className="log__signin__form__cont__inputCont">
                                 <label htmlFor="signConfirmEmail">Confirmer email</label>
-                                <input onInput={(e) => signControl('confirmMail', (e.target as HTMLInputElement).value)} value={signInput.confirmMail} type="email" id="signConfirmEmail" placeholder='user@gmail.com' />
+                                <input onInput={(e) => ctrlSign('confirmMail', (e.target as HTMLInputElement).value)} value={signInput.confirmMail} type="email" id="signConfirmEmail" placeholder='user@gmail.com' />
                             </div>
                         </div>
                         <div className="log__signin__form__cont"> 
                             <div className="log__signin__form__cont__inputCont">
                                 <label htmlFor="signPassword">Mot de passe</label>
-                                <input onInput={(e) => signControl('password', (e.target as HTMLInputElement).value)} value={signInput.password} type="password" id="signPassword" />
+                                <input onInput={(e) => ctrlSign('password', (e.target as HTMLInputElement).value)} value={signInput.password} type="password" id="signPassword" />
                             </div>
                             <div className="log__signin__form__cont__inputCont">
                                 <label htmlFor="signConfirm">Confirmer le mot de passe</label>
-                                <input onInput={(e) => signControl('confirmPassword', (e.target as HTMLInputElement).value)} value={signInput.confirmPassword} type="password" id="signConfirm" />
+                                <input onInput={(e) => ctrlSign('confirmPassword', (e.target as HTMLInputElement).value)} value={signInput.confirmPassword} type="password" id="signConfirm" />
                             </div>
                         </div>
                         <div className="log__signin__form__checkboxCont">
-                            <input onInput={(e) => signControl('aggree', '')} value={signInput.aggree.toString()} type="checkbox" id="signCheck" />
+                            <input onInput={(e) => ctrlSign('aggree', '')} value={signInput.aggree.toString()} type="checkbox" id="signCheck" />
                             <label htmlFor="signCheck">J'accepte les CGU.</label>
                         </div>
                         <div className="log__signin__form__btnCont">
@@ -286,6 +324,7 @@ const Log = () => {
                         </div>
                     </form>
                 </section>
+                {/* section signin ended */}
             </main>
         }
         </>

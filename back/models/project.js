@@ -22,8 +22,16 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             validate: {
                 notEmpty: { msg: "Le titre ne doit pas être vide." },
-                len: { args: [2, 100], msg: "Le titre doit etre compris entre 2 et 25 caractères." },
-                is: {args: /^[\wé èà\-]*$/i, msg: "le titre ne doit contenir que des lettres et des chiffres"}
+                len: { args: [2, 100], msg: "Le titre doit etre compris entre 2 et 100 caractères." },
+                is: {args: /^[\wé èà\-\']*$/i, msg: "le titre ne doit contenir que des lettres et des chiffres"}
+            }
+        },
+        description: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                len: { args: [0, 100], msg: "La description doit comprendre maximum 100 caractères." },
+                is: {args: /^[\wé èà\-\']*$/i, msg: "la description ne doit contenir que des lettres et des chiffres"}
             }
         }
     },{

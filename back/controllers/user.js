@@ -13,7 +13,6 @@ const { ValidationError, UniqueConstraintError } = require('sequelize');
  * @returns 
  */
 exports.create = (req, res, next) => {
-
     if (req.body.mail === undefined || req.body.password === undefined) {
 
         const message = "Toutes les informations n'ont pas été envoyées.";
@@ -21,7 +20,7 @@ exports.create = (req, res, next) => {
 
     } else if (req.body.password !== "" && req.body.password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/)) {
 
-        User.findOne({where: {email: req.body.mail}})
+        User.findOne({ where: { email: req.body.mail }})
             .then(u => {
                 if (u !== null) {
                     const message = "Un compte est déjà lié à cet email.";
@@ -44,10 +43,10 @@ exports.create = (req, res, next) => {
                             })
                             .catch(error => {
                                 if (error instanceof ValidationError) {
-                                    return res.status(400).json({message: error.message, data: error}); 
+                                    return res.status(400).json({ message: error.message, data: error }); 
                                 }
                                 if (error instanceof UniqueConstraintError) {
-                                    return res.status(400).json({message: error.message, data: error});
+                                    return res.status(400).json({ message: error.message, data: error });
                                 }
                                 res.status(500).json({ message: "Une erreur est survenue lors de la création de l'utilisateur.", error });
                             });
@@ -55,10 +54,10 @@ exports.create = (req, res, next) => {
                         })
                         .catch(error => {
                             if (error instanceof ValidationError) {
-                                return res.status(400).json({message: error.message, data: error}); 
+                                return res.status(400).json({ message: error.message, data: error }); 
                             }
                             if (error instanceof UniqueConstraintError) {
-                                return res.status(400).json({message: error.message, data: error});
+                                return res.status(400).json({ message: error.message, data: error });
                             }
                             res.status(500).json({ message: "Une erreur est survenue lors de la création de l'utilisateur.", error });
                         });
@@ -69,7 +68,6 @@ exports.create = (req, res, next) => {
         const message = "Les informations sont incorrectes ou incomplètes.";
         res.status(401).json({ message });
     }
-
 };
 
 /**
@@ -80,7 +78,6 @@ exports.create = (req, res, next) => {
  * @param {*} next 
  */
 exports.login = (req, res, next) => {
-
     if (req.body.mail === undefined || req.body.password === undefined) {
         const message = "Toutes les informations n'ont pas été envoyées.";
         return res.status(400).json({ message });
@@ -120,5 +117,4 @@ exports.login = (req, res, next) => {
         const message = 'Les informations sont incorrectes ou incomplètes.';
         res.status(400).json({ message });
     }
-    
 };
