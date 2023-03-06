@@ -20,21 +20,21 @@ const Log = () => {
     const [isLogged, setIsLogged] = useState<boolean>(false);
 
     useEffect(() => {
-        if (localStorage.getItem('react_project_manager_token') !== null) {
-            let getToken = localStorage.getItem('react_project_manager_token') || "";
+        if (localStorage.getItem('react_kanban_token') !== null) {
+            let getToken = localStorage.getItem('react_kanban_token') || "";
             let token: StoredToken = JSON.parse(getToken);
             if (token !== null) {
                 let decodedToken: DecodedToken = decodeToken(token.version) || {userId: "",token: {version: "", content: ""}};
                 let isTokenExpired = isExpired(token.version);
                 if (decodedToken.userId !== token.content || isTokenExpired === true) {
                     // DISCONNECT
-                    localStorage.removeItem('react_project_manager_token');
+                    localStorage.removeItem('react_kanban_token');
                     return navigate('/connexion', { replace: true });
                 };
                 setIsLogged(true);
             } else {
                 // DISCONNECT
-                localStorage.removeItem('react_project_manager_token');
+                localStorage.removeItem('react_kanban_token');
             };
         }
     },[]);
@@ -160,7 +160,7 @@ const Log = () => {
     };
 
     const tryToSign = () => {       
-        fetch(process.env.REACT_APP_API_URL + '/api/users/sign', {
+        fetch(process.env.REACT_APP_API_URL + '/api/user/create', {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -189,7 +189,7 @@ const Log = () => {
             password = logInput.password;
         }
 
-        fetch(process.env.REACT_APP_API_URL + '/api/users/log', {
+        fetch(process.env.REACT_APP_API_URL + '/api/user/login', {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -199,17 +199,15 @@ const Log = () => {
         })
             .then(res => {
                 if (res.status === 200) {
-                    
                     res.json()
                         .then(data => {
                             let newObj = {
                                 version: data.token,
                                 content: data.userId
                             };
-                            localStorage.setItem('react_project_manager_token', JSON.stringify(newObj)); 
+                            localStorage.setItem('react_kanban_token', JSON.stringify(newObj)); 
                             navigate('/', { replace: true });
                         })
-                    
                 } else {
                     res.json()
                         .then(data => {
@@ -222,8 +220,8 @@ const Log = () => {
     };
 
     const disconnect = () => {       
-        if (localStorage.getItem('react_project_manager_token') !== null) {
-            localStorage.removeItem('react_project_manager_token');
+        if (localStorage.getItem('react_kanban_token') !== null) {
+            localStorage.removeItem('react_kanban_token');
             setIsLogged(false);
         }
     };
@@ -281,7 +279,7 @@ const Log = () => {
                         </div>
                         <div className="log__signin__form__checkboxCont">
                             <input onInput={(e) => signControl('aggree', '')} value={signInput.aggree.toString()} type="checkbox" id="signCheck" />
-                            <label htmlFor="signCheck">Je blablabla</label>
+                            <label htmlFor="signCheck">J'accepte les CGU.</label>
                         </div>
                         <div className="log__signin__form__btnCont">
                             <input type="submit" value="Inscription" />
