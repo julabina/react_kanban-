@@ -106,7 +106,8 @@ exports.login = (req, res, next) => {
                                 {userId: user.id},
                                 '' + process.env.REACT_APP_JWT_PRIVATE_KEY + '',
                                 { expiresIn: '24h' }
-                            )
+                            ),
+                            dark: user.darkOption
                         })
                     })
                     .catch(error => res.status(500).json({ message: error }));
@@ -117,4 +118,39 @@ exports.login = (req, res, next) => {
         const message = 'Les informations sont incorrectes ou incomplètes.';
         res.status(400).json({ message });
     }
+};
+
+exports.toggleDarkmod = (req, res, next) => {
+    console.log(typeof req.body.userId);
+    if (req.body.userId === undefined || req.body.dark === undefined) {
+        const message = "Toutes les informations n'ont pas été envoyées.";
+        return res.status(401).json({ message });
+    } else {
+        User.findOne({ where : { id: req.body.userId} })
+            .then(user => {
+                if (user === null) {
+                    const message ="Aucun utilisateur trouvé.";
+                    return res.status(404).json({ message });
+                }
+
+                user.darkOption = req.body.dark;
+
+                user.save()
+                    .then(() => {
+                        const message = "Option bien modifiée.";
+                        res.status(201).json({ message });
+                    })
+                    .catch(error => {
+                        if (error instanceof ValidationError) {
+                            return res.status(401).json({ message: error.message, data: error }); 
+                        }
+                        if (error instanceof UniqueConstraintError) {
+                            return res.status(401).json({ message: error.message, data: error });
+                        }
+                        res.status(500).json({ message: "Une erreur est survenue lors de la création de l'utilisateur.", error });
+                    });
+            })
+            .catch(error => res.status(500).json({ message: error }));
+    }
+
 };

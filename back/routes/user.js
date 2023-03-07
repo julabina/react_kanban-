@@ -6,5 +6,6 @@ const auth = require('../middleware/auth');
 
 router.post('/create', userController.create);
 router.post('/login', userController.login);
+router.put('/toggleDarkmod', auth, userController.toggleDarkmod);
 
 module.exports = router;

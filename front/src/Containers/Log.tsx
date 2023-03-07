@@ -233,9 +233,12 @@ const Log = () => {
                 if (res.status === 200) {
                     res.json()
                         .then(data => {
+                            console.log(data);
+                            
                             let newObj = {
                                 version: data.token,
-                                content: data.userId
+                                content: data.userId,
+                                dark: data.dark
                             };
                             localStorage.setItem('react_kanban_token', JSON.stringify(newObj)); 
                             navigate('/', { replace: true });

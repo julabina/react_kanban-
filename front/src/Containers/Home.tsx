@@ -19,6 +19,7 @@ const Home = () => {
     const [boards, setBoards] = useState<Board[]>([]);
     const [allBoards, setAllBoards] = useState<Board[]>([]);
     const [activProject, setActivProject] = useState<Board>({id: "", title: "", updatedAt: 0});
+    const [darkMod, setDarkMod] = useState<boolean>(false);
 
     const newBoardErrorCont = document.querySelector('.home__modalNewBoard__modal__errorCont');
 
@@ -26,7 +27,13 @@ const Home = () => {
 
         if (localStorage.getItem('react_kanban_token') !== null) {
             let getToken = localStorage.getItem('react_kanban_token') || "";
-            let token: StoredToken = JSON.parse(getToken);
+
+            const tokenObj: StoredToken = {
+                version: JSON.parse(getToken).version,
+                content: JSON.parse(getToken).content
+            }
+            
+            let token: StoredToken = tokenObj;
             if (token !== null) {
                 let decodedToken: DecodedToken = decodeToken(token.version) || {userId: "",token: {version: "", content: ""}};
                 let isTokenExpired = isExpired(token.version);
@@ -39,6 +46,7 @@ const Home = () => {
                 const user: DecodedToken = {userId: decodedToken.userId, token};
               
                 setActualUser(user);
+                setDarkMod(JSON.parse(getToken).dark)
                 getAllProjects(user.userId, user.token.version);
                 
             } else {
@@ -217,6 +225,30 @@ const Home = () => {
         }
     };
 
+    const changeDarkMod = () => {
+        fetch(process.env.REACT_APP_API_URL + '/api/user/toggleDarkmod',{
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + actualUser.token.version,
+            },
+            method: "PUT",
+            body: JSON.stringify({ dark: !darkMod, userId: actualUser.userId })
+        })
+            .then(res => {
+                if (res.status === 201) {
+                    setDarkMod(!darkMod);
+                    let newObj = {
+                        version: actualUser.token,
+                        content: actualUser.userId,
+                        dark: !darkMod
+                    };
+                    localStorage.setItem('react_kanban_token', JSON.stringify(newObj)); 
+                }
+            })
+        
+    };
+
     return (
         <>
         <main className='home'>
@@ -236,7 +268,7 @@ const Home = () => {
                                 {
                                     boards.map(el => {
                                         return (
-                                            <div key={el.id} onClick={() => changeProject(el.id)} className="home__side__top__boards__container__board">
+                                            <div key={el.id} onClick={() => changeProject(el.id)} className={activProject.id === el.id ? "home__side__top__boards__container__board home__side__top__boards__container__board--activ" : "home__side__top__boards__container__board"}>
                                                 <p>{el.title}</p>
                                             </div>
                                         )
@@ -254,9 +286,10 @@ const Home = () => {
                     </div>
                 </div>
                 <div className="home__side__bot">
-                    <div className="home__side__bot__darkModOption">
-
-                    </div>
+                    <label className="home__side__bot__darkModOption">
+                        <input onChange={changeDarkMod} checked={darkMod && true} type="checkbox" />
+                        <span className="home__side__bot__darkModOption__slider home__side__bot__darkModOption__round"></span>
+                    </label>
                     <div className="home__side__bot__hideSide">
                         <p>Cacher onglet</p>
                     </div>
