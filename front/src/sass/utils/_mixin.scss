@@ -18,15 +18,15 @@
             font-weight: 700;
             height: 22px;width: 22px;
             background: inherit;
-            border: 2px solid map-get($map: $colors, $key: gray-dark);
+            border: 2px solid map-get($map: $colors, $key: blue-dark);
             border-radius: 50%;
-            color: map-get($map: $colors, $key:gray-dark );    
+            color: map-get($map: $colors, $key:blue-dark );    
             cursor: pointer;  
             transition: all 120ms ease-in-out;
             &:hover {
                 transition: all 120ms ease-in-out;
-                border-color: darken($color: map-get($map: $colors, $key: gray-dark), $amount: 20);
-                color: darken($color: map-get($map: $colors, $key: gray-dark), $amount: 20);
+                border-color: darken($color: map-get($map: $colors, $key: blue-dark), $amount: 20);
+                color: darken($color: map-get($map: $colors, $key: blue-dark), $amount: 20);
             }      
         }
         &__errorCont {

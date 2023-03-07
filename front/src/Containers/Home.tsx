@@ -369,7 +369,7 @@ const Home = () => {
                         </>
                     }
                 </div>
-                <div className="home__right__main">
+                <div className={darkMod ? "home__right__main home__right__main--dark" : "home__right__main home__right__main--light"}>
                     
                 </div>
             </section>

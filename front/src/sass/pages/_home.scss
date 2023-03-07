@@ -226,10 +226,13 @@
                     }
                 }
             }
+            transition: all 120ms ease-in-out;
             &--dark {
+                transition: all 120ms ease-in-out;
                 background: map-get($map: $colors, $key:primary-dark );
             }
             &--light {
+                transition: all 120ms ease-in-out;
                 background: map-get($map: $colors, $key:light-white ); 
             }
         }
@@ -237,7 +240,15 @@
             box-sizing: border-box;
             min-height: 100vh;
             padding-top: 100px;
-            background: map-get($map: $colors, $key:secondary-light );
+            transition: all 120ms ease-in-out;
+            &--dark {
+                transition: all 120ms ease-in-out;
+                background: map-get($map: $colors, $key:secondary-dark );
+            }
+            &--light {
+                transition: all 120ms ease-in-out;
+                background: map-get($map: $colors, $key:secondary-light );
+            }
         }
     }
     &__modalNewBoard {

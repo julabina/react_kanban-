@@ -291,6 +291,7 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   height: 100px;
   padding: 0 25px;
   border-bottom: 1px solid #8f8f8f73;
+  transition: all 120ms ease-in-out;
 }
 .home__right__header__title {
   font-size: 1.7em;
@@ -335,15 +336,25 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   color: #768197;
 }
 .home__right__header--dark {
+  transition: all 120ms ease-in-out;
   background: #2C2C37;
 }
 .home__right__header--light {
+  transition: all 120ms ease-in-out;
   background: #ffffff;
 }
 .home__right__main {
   box-sizing: border-box;
   min-height: 100vh;
   padding-top: 100px;
+  transition: all 120ms ease-in-out;
+}
+.home__right__main--dark {
+  transition: all 120ms ease-in-out;
+  background: #21222D;
+}
+.home__right__main--light {
+  transition: all 120ms ease-in-out;
   background: #F3F6FE;
 }
 .home__modalNewBoard {
@@ -371,16 +382,16 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   height: 22px;
   width: 22px;
   background: inherit;
-  border: 2px solid #939CAD;
+  border: 2px solid #635EC6;
   border-radius: 50%;
-  color: #939CAD;
+  color: #635EC6;
   cursor: pointer;
   transition: all 120ms ease-in-out;
 }
 .home__modalNewBoard__modal__closeBtn:hover {
   transition: all 120ms ease-in-out;
-  border-color: #5e687c;
-  color: #5e687c;
+  border-color: #36328c;
+  color: #36328c;
 }
 .home__modalNewBoard__modal__errorCont {
   font-size: 0.8em;
