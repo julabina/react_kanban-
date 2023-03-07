@@ -74,11 +74,11 @@ html, body {
   justify-content: space-between;
   height: 100vh;
   width: 320px;
-  border-right: 2px solid #8f8f8f73;
+  border-right: 1px solid #8f8f8f73;
   transition: all 120ms ease-in-out;
 }
 .home__side__top__titleCont {
-  margin: 25px 0 50px 25px;
+  margin: 33px 0 50px 25px;
   display: flex;
 }
 .home__side__top__titleCont img {
@@ -281,14 +281,69 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   width: 100%;
 }
 .home__right__header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 321px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 10vh;
-  border-bottom: 2px solid #8f8f8f73;
+  height: 100px;
+  padding: 0 25px;
+  border-bottom: 1px solid #8f8f8f73;
+}
+.home__right__header__title {
+  font-size: 1.7em;
+  font-weight: 500;
+}
+.home__right__header__title--dark {
+  color: #ffffff;
+}
+.home__right__header__title--light {
+  color: #0f0f0f;
+}
+.home__right__header__right {
+  display: flex;
+  align-items: center;
+}
+.home__right__header__right__newBtn {
+  height: 47px;
+  background: #635EC6;
+  border: none;
+  border-radius: 47px;
+  padding: 0 30px;
+  font-size: 1.05em;
+  font-weight: 500;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 150ms ease-in-out;
+}
+.home__right__header__right__newBtn:hover {
+  transition: all 150ms ease-in-out;
+  background: #453fb2;
+}
+.home__right__header__right__menuBtn {
+  font-size: 1.4em;
+  color: #939CAD;
+  margin-left: 25px;
+  cursor: pointer;
+  transition: all 150ms ease-in-out;
+  width: 15px;
+}
+.home__right__header__right__menuBtn:hover {
+  transition: all 150ms ease-in-out;
+  color: #768197;
+}
+.home__right__header--dark {
+  background: #2C2C37;
+}
+.home__right__header--light {
+  background: #ffffff;
 }
 .home__right__main {
-  min-height: 90vh;
+  box-sizing: border-box;
+  min-height: 100vh;
+  padding-top: 100px;
   background: #F3F6FE;
 }
 .home__modalNewBoard {

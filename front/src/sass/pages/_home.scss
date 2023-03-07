@@ -8,10 +8,10 @@
         justify-content: space-between;
         height: 100vh;
         width: 320px;
-        border-right: 2px solid map-get($map: $colors, $key: light-separator );
+        border-right: 1px solid map-get($map: $colors, $key: light-separator );
         &__top {
             &__titleCont {
-                margin: 25px 0 50px 25px;
+                margin: 33px 0 50px 25px;
                 display: flex;
                 img {
                     height: 25px;
@@ -174,14 +174,69 @@
         margin-left: 320px;
         width: 100%;
         &__header {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 321px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            height: 10vh;
-            border-bottom: 2px solid map-get($map: $colors, $key: light-separator);
+            height: 100px;
+            padding: 0 25px;
+            border-bottom: 1px solid map-get($map: $colors, $key: light-separator);
+            &__title {
+                font-size: 1.7em;
+                font-weight: 500;
+                &--dark {
+                    color: map-get($map: $colors, $key:light-white );
+                }
+                &--light {
+                    color: map-get($map: $colors, $key:light-black );
+                }
+            }
+            &__right {
+                display: flex;
+                align-items: center;
+                &__newBtn {
+                    height: 47px;
+                    background: map-get($map: $colors, $key: blue-dark);
+                    border: none;
+                    border-radius: 47px;
+                    padding: 0 30px;
+                    font-size: 1.05em;
+                    font-weight: 500;
+                    color: map-get($map: $colors, $key:light-white );
+                    cursor: pointer;
+                    transition: all 150ms ease-in-out;
+                    &:hover {
+                        transition: all 150ms ease-in-out;
+                        background: darken($color: map-get($map: $colors, $key: blue-dark), $amount: 10);
+                    }
+                }
+                &__menuBtn {
+                    font-size: 1.4em;
+                    color: map-get($map: $colors, $key:gray-dark );
+                    margin-left: 25px;
+                    cursor: pointer;
+                    transition: all 150ms ease-in-out;
+                    width: 15px;
+                    &:hover {
+                        transition: all 150ms ease-in-out;
+                        color: darken($color: map-get($map: $colors, $key: gray-dark), $amount: 10);
+                    }
+                }
+            }
+            &--dark {
+                background: map-get($map: $colors, $key:primary-dark );
+            }
+            &--light {
+                background: map-get($map: $colors, $key:light-white ); 
+            }
         }
         &__main {
-            min-height: 90vh;
+            box-sizing: border-box;
+            min-height: 100vh;
+            padding-top: 100px;
             background: map-get($map: $colors, $key:secondary-light );
         }
     }

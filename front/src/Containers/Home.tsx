@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { decodeToken, isExpired } from 'react-jwt';
 import { faRectangleList, faSun } from '@fortawesome/free-regular-svg-icons';
-import { faCloudMoon, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { faCloudMoon, faEyeSlash, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import appLogo from '../assets/logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -117,7 +117,7 @@ const Home = () => {
         if (toggleNewBoardModal) {
             setNewBoardInput({ title: "", description: "" });
         }
-        
+
         setToggleNewBoardModal(!toggleNewBoardModal);
         
     };
@@ -356,14 +356,14 @@ const Home = () => {
             </section>
             {/* side bar ended */}
             <section className="home__right">
-                <div className="home__right__header">
+                <div className={darkMod ? "home__right__header home__right__header--dark" : "home__right__header home__right__header--light"}>
                     {
                         activProject.id !== "" &&
                         <>
-                        <h2>{ activProject.title }</h2>
+                        <h2 className={darkMod ? "home__right__header__title home__right__header__title--dark" : "home__right__header__title home__right__header__title--light"}>{ activProject.title }</h2>
                         <div className='home__right__header__right'>
                             <input className='home__right__header__right__newBtn' type="button" value="Ajouter une tache" />
-                            <input className='home__right__header__right__menuBtn' type="button" value="..." />
+                            <FontAwesomeIcon icon={faEllipsisVertical} className="home__right__header__right__menuBtn" />
                             <div className="home__right__header__right__menu"></div>
                         </div>
                         </>
