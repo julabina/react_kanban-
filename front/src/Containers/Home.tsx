@@ -23,8 +23,7 @@ const Home = () => {
     const [allBoards, setAllBoards] = useState<Board[]>([]);
     const [activProject, setActivProject] = useState<Board>({id: "", title: "", updatedAt: 0});
     const [darkMod, setDarkMod] = useState<boolean>(false);
-
-    const newBoardErrorCont = document.querySelector('.home__modalNewBoard__modal__errorCont');
+    const [displayAllBoard, setDisplayAllBoard] = useState<boolean>(false);
 
     useEffect(() => {
         console.log("1");
@@ -115,13 +114,20 @@ const Home = () => {
      * toggle modal for create new board
      */
     const toggleModalNewBoard = () => {
+        if (toggleNewBoardModal) {
+            setNewBoardInput({ title: "", description: "" });
+        }
+        
         setToggleNewBoardModal(!toggleNewBoardModal);
+        
     };
 
     /**
      * create new board on database
      */
     const tryToCreateNewBoard = () => {
+        const newBoardErrorCont = document.querySelector('.home__modalNewBoard__modal__errorCont');
+
         fetch(process.env.REACT_APP_API_URL + '/api/project/create', {
             headers: {
                 'Accept': 'application/json',
@@ -186,7 +192,8 @@ const Home = () => {
     const validateNewBoard = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        console.log('test');            
+        const newBoardErrorCont = document.querySelector('.home__modalNewBoard__modal__errorCont');
+
         if (newBoardErrorCont) {    
             let errors: string = "";
             newBoardErrorCont.innerHTML = "";
@@ -237,7 +244,10 @@ const Home = () => {
         }
     };
 
-    const changeDarkMod = () => {
+    /**
+     * toggle dark mod and light mod
+     */
+    const toggleDarkMod = () => {
         fetch(process.env.REACT_APP_API_URL + '/api/user/toggleDarkmod',{
             headers: {
                 'Accept': 'application/json',
@@ -264,6 +274,28 @@ const Home = () => {
         
     };
 
+    /**
+     * toggle display all boards
+     */
+    const toggleAllBoards = () => {
+        if (allBoards.length > 4) {
+            let arr: Board[] = [];
+                
+            if (displayAllBoard) {
+                const newArr = allBoards;
+                
+                newArr.sort((a, b) => b.updatedAt - a.updatedAt);
+                
+                arr = newArr.slice(0, 4);
+            } else {
+                arr = allBoards;
+            }
+            
+            setBoards(arr);
+            setDisplayAllBoard(!displayAllBoard);
+        }
+    };
+
     return (
         <>
         <main className='home'>
@@ -275,8 +307,13 @@ const Home = () => {
                         <h1 className={darkMod ? "home__side__top__titleCont--dark" : ""}>react kanban</h1>
                     </div>
                     <div className="home__side__top__boards">
-                        <p className='home__side__top__boards__count'>Tous les tableau ({ allBoards.length })</p>
-                        <div className="home__side__top__boards__container">
+                        {
+                            displayAllBoard ?
+                            <p onClick={toggleAllBoards} className='home__side__top__boards__count'>Reduire les tableaux</p>
+                            :
+                            <p onClick={toggleAllBoards} className='home__side__top__boards__count'>Tous les tableaux ({ allBoards.length })</p>
+                        }
+                        <div className={displayAllBoard ? "home__side__top__boards__container home__side__top__boards__container--displayAll" : "home__side__top__boards__container"}>
                             {
                                 boards.length > 0 ?
                                 <>
@@ -292,7 +329,7 @@ const Home = () => {
                                 }
                                 </>
                                 :
-                                <h2>Aucun tableau</h2>
+                                <h2 className='home__side__top__boards__container__nothing'>Aucun tableau</h2>
                             }
                         </div>
                         <div onClick={toggleModalNewBoard
@@ -306,7 +343,7 @@ const Home = () => {
                     <div className={darkMod ? "home__side__bot__cont home__side__bot__cont--dark" : "home__side__bot__cont home__side__bot__cont--light"}>
                     <FontAwesomeIcon icon={faSun} className="home__side__bot__cont__img" />
                         <label className="home__side__bot__cont__darkModOption">
-                            <input onChange={changeDarkMod} checked={darkMod && true} type="checkbox" />
+                            <input onChange={toggleDarkMod} checked={darkMod && true} type="checkbox" />
                             <span className="home__side__bot__cont__darkModOption__slider"></span>
                         </label>
                     <FontAwesomeIcon icon={faCloudMoon} className="home__side__bot__cont__img" />
@@ -341,18 +378,18 @@ const Home = () => {
         {
             toggleNewBoardModal &&
             <div className="home__modalNewBoard">
-                <div className="home__modalNewBoard__modal">
-                    <input onClick={toggleModalNewBoard} type="button" value="X" />
+                <div className={darkMod ? "home__modalNewBoard__modal home__modalNewBoard__modal--dark" : "home__modalNewBoard__modal home__modalNewBoard__modal--light"}>
+                    <input className='home__modalNewBoard__modal__closeBtn' onClick={toggleModalNewBoard} type="button" value="X" />
                     <h2>Ajouter un tableau</h2>
                     <div className='home__modalNewBoard__modal__errorCont'></div>
                     <form className='home__modalNewBoard__modal__form' onSubmit={validateNewBoard}>
                         <div className="home__modalNewBoard__modal__form__inputCont">
                             <label htmlFor="newBoardTitle">Titre *</label>
-                            <input onInput={(e) => ctrlNewBoardInput("title", (e.target as HTMLInputElement).value)} value={newBoardInput.title} type="text" id="newBoardTitle" />
+                            <input onInput={(e) => ctrlNewBoardInput("title", (e.target as HTMLInputElement).value)} value={newBoardInput.title} type="text" id="newBoardTitle" placeholder='e.g. Créer un potager' />
                         </div>
                         <div className="home__modalNewBoard__modal__form__inputCont">
                             <label htmlFor="newBoardDescription">Description</label>
-                            <input onInput={(e) => ctrlNewBoardInput("description", (e.target as HTMLInputElement).value)} value={newBoardInput.description} type="text" id="newBoardDescription" />
+                            <textarea onInput={(e) => ctrlNewBoardInput("description", (e.target as HTMLInputElement).value)} value={newBoardInput.description} id="newBoardDescription" placeholder='e.g. Un potager complet avec tomates, courgettes et aubergines.'/>
                         </div>
                         <input className='home__modalNewBoard__modal__form__submitBtn' type="submit" value="Créer tableau" />
                     </form>

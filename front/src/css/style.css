@@ -107,6 +107,7 @@ html, body {
   color: #5e687c;
 }
 .home__side__top__boards__container {
+  height: auto;
   margin-top: 20px;
 }
 .home__side__top__boards__container__board {
@@ -141,6 +142,14 @@ html, body {
 .home__side__top__boards__container__board--activ:hover {
   transition: all 120ms ease-in-out;
   color: #cccccc;
+}
+.home__side__top__boards__container__nothing {
+  text-align: center;
+  margin: 40px 0;
+}
+.home__side__top__boards__container--displayAll {
+  overflow: scroll;
+  max-height: 400px;
 }
 .home__side__top__boards__addBtnCont {
   cursor: pointer;
@@ -295,8 +304,98 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   top: 42%;
   left: 50%;
   transform: translate(-50%, -50%);
+  padding: 40px 30px;
+  border-radius: 6px;
+}
+.home__modalNewBoard__modal__closeBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  text-align: center;
+  font-weight: 700;
+  height: 22px;
+  width: 22px;
+  background: inherit;
+  border: 2px solid #939CAD;
+  border-radius: 50%;
+  color: #939CAD;
+  cursor: pointer;
+  transition: all 120ms ease-in-out;
+}
+.home__modalNewBoard__modal__closeBtn:hover {
+  transition: all 120ms ease-in-out;
+  border-color: #5e687c;
+  color: #5e687c;
+}
+.home__modalNewBoard__modal__errorCont {
+  font-size: 0.8em;
+  height: 13px;
+  margin-top: 13px;
+  color: #c41b1b;
+}
+.home__modalNewBoard__modal h2 {
+  font-size: 1.3em;
+  font-weight: 600;
+}
+.home__modalNewBoard__modal__form__inputCont {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+}
+.home__modalNewBoard__modal__form__inputCont label {
+  font-size: 0.85em;
+  margin-bottom: 9px;
+}
+.home__modalNewBoard__modal__form__inputCont input {
+  height: 30px;
+  background: inherit;
+  border: 1px solid #939cad70;
+  border-radius: 6px;
+  padding: 0 15px;
+  color: #ffffff;
+  width: 380px;
+}
+.home__modalNewBoard__modal__form__inputCont input::placeholder {
+  color: #939cad70;
+}
+.home__modalNewBoard__modal__form__inputCont textarea {
+  height: 80px;
+  background: inherit;
+  border: 1px solid #939cad70;
+  border-radius: 6px;
+  padding: 0 15px;
+  color: #ffffff;
+  width: 380px;
+}
+.home__modalNewBoard__modal__form__inputCont textarea::placeholder {
+  color: #939cad70;
+}
+.home__modalNewBoard__modal__form__inputCont:first-child {
+  margin-top: 8px;
+}
+.home__modalNewBoard__modal__form__submitBtn {
+  background: #635EC6;
+  border: none;
+  font-weight: 500;
+  color: #ffffff;
+  height: 42px;
+  width: 100%;
+  border-radius: 42px;
+  margin-top: 30px;
+  cursor: pointer;
+  transition: all 150ms ease-in-out;
+}
+.home__modalNewBoard__modal__form__submitBtn:hover {
+  transition: all 150ms ease-in-out;
+  background: #453fb2;
+}
+.home__modalNewBoard__modal--dark {
+  background: #2C2C37;
+  color: #ffffff;
+}
+.home__modalNewBoard__modal--light {
   background: #ffffff;
-  padding: 15px;
+  color: light-black;
 }
 
 /*# sourceMappingURL=style.css.map */

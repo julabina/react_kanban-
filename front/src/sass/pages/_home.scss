@@ -39,6 +39,7 @@
                     }
                 }
                 &__container {
+                    height: auto;
                     margin-top: 20px;
                     &__board {
                         @include projectCard;
@@ -51,6 +52,14 @@
                                 color: darken($color: map-get($colors, light-white), $amount: 20);
                             }
                         }
+                    }
+                    &__nothing {
+                        text-align: center;
+                        margin: 40px 0;
+                    }
+                    &--displayAll {
+                        overflow: scroll;
+                        max-height: 400px;
                     }
                 }
                 &__addBtnCont {

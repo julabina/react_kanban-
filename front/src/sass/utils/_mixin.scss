@@ -8,8 +8,95 @@
         top: 42%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background: map-get($map: $colors, $key: light-white); 
-        padding: 15px;  
+        padding: 40px 30px; 
+        border-radius: 6px; 
+        &__closeBtn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            text-align: center;
+            font-weight: 700;
+            height: 22px;width: 22px;
+            background: inherit;
+            border: 2px solid map-get($map: $colors, $key: gray-dark);
+            border-radius: 50%;
+            color: map-get($map: $colors, $key:gray-dark );    
+            cursor: pointer;  
+            transition: all 120ms ease-in-out;
+            &:hover {
+                transition: all 120ms ease-in-out;
+                border-color: darken($color: map-get($map: $colors, $key: gray-dark), $amount: 20);
+                color: darken($color: map-get($map: $colors, $key: gray-dark), $amount: 20);
+            }      
+        }
+        &__errorCont {
+            font-size: 0.8em;
+            height: 13px;
+            margin-top: 13px;
+            color: map-get($map: $colors, $key: error);
+        }
+        h2{
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        &__form {
+            &__inputCont {
+                display: flex;
+                flex-direction: column;
+                margin-top: 30px;
+                label {
+                    font-size: 0.85em;
+                    margin-bottom: 9px;
+                }
+                input {
+                    height: 30px;
+                    @include inputCont;
+                }
+                textarea {
+                    height: 80px;
+                    @include inputCont;
+                }
+                &:first-child {
+                    margin-top: 8px;
+                }
+            }
+            &__submitBtn {
+                background: map-get($map: $colors, $key:blue-dark );
+                border: none;
+                font-weight: 500;
+                color: map-get($map: $colors, $key: light-white);
+                height: 42px;
+                width: 100%;
+                border-radius: 42px;
+                margin-top: 30px;
+                cursor: pointer;
+                transition: all 150ms ease-in-out;
+                &:hover {
+                    transition: all 150ms ease-in-out;
+                    background: darken($color: map-get($colors, blue-dark), $amount: 10);
+                }
+            }
+        }
+        &--dark {
+            background: map-get($map: $colors, $key: primary-dark); 
+            color: map-get($map: $colors, $key: light-white); 
+        }
+        &--light {
+            background: map-get($map: $colors, $key: light-white); 
+            color: light-black;
+        }
+    }
+}
+
+@mixin inputCont {
+    background: inherit;
+    border: 1px solid map-get($map: $colors, $key: gray-light);
+    border-radius: 6px;
+    padding: 0 15px;
+    color: map-get($map: $colors, $key:light-white );
+    width: 380px;
+    &::placeholder {
+        color: map-get($map: $colors, $key: gray-light);
     }
 }
 
