@@ -11,10 +11,13 @@ const Home = () => {
     type Token = {version: string, content: string};
     type DecodedToken = {userId: string, token: Token};
     type NewBoardInput = {title: string, description: string};
+    type Board = {id: string, title: string, updatedAt: number}
 
     const [actualUser, setActualUser] = useState<DecodedToken>({ userId: "", token: {version: "", content: ""} });
     const [toggleNewBoardModal, setToggleNewBoardModal] = useState<boolean>(false);
     const [newBoardInput, setNewBoardInput] = useState<NewBoardInput>({ title: "", description: "" });
+    const [boards, setBoards] = useState<Board[]>([]);
+    const [allBoards, setAllBoards] = useState<Board[]>([]);
 
     const newBoardErrorCont = document.querySelector('.home__modalNewBoard__modal__errorCont');
 
@@ -35,6 +38,7 @@ const Home = () => {
                 const user: DecodedToken = {userId: decodedToken.userId, token};
               
                 setActualUser(user);
+                getAllProjects(user.userId, user.token.version);
                 
             } else {
                 // DISCONNECT
@@ -45,11 +49,44 @@ const Home = () => {
             // DISCONNECT
             navigate('/connexion', { replace: true });
         };   
-
     },[]);
 
-    const getAllProjects = () => {
+    /**
+     * get all board from one user
+     * 
+     * @param id 
+     * @param token 
+     */
+    const getAllProjects = (id: string, token: string) => {
+        fetch(process.env.REACT_APP_API_URL + "/api/project/getAll/" + id, {
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+            method: "GET"
+        })
+            .then(res => res.json())
+            .then(data => {
+                let newArr: Board[] = [];
+                
+                if (data.data && data.data.length !== 0) {
+                    for (let i = 0; i < data.data.length; i++) {
+                        const newObj: Board = {
+                            id: data.data[i].id,
+                            title: data.data[i].title,
+                            updatedAt: Math.floor((new Date(data.data[i].updatedAt)).getTime() / 1000)
+                        };
 
+                        newArr.push(newObj);
+                    }
+                    
+                    newArr.sort((a, b) => b.updatedAt - a.updatedAt);
+                
+                    const firstBoard = newArr.slice(0, 4);
+
+                    setBoards(firstBoard);                    
+                    setAllBoards(newArr);
+                }
+            })
     };
 
     /**
@@ -80,7 +117,7 @@ const Home = () => {
                         description: "" 
                     };
                     setNewBoardInput(newObj);
-                    getAllProjects();
+                    getAllProjects(actualUser.userId, actualUser.token.version);
                 } else {
                     res.json()
                         .then(data => {
@@ -172,8 +209,25 @@ const Home = () => {
                         <h1>React Kanban</h1>
                     </div>
                     <div className="home__side__top__boards">
-                        <p className='home__side__top__boards__count'></p>
-                        <div className="home__side__top__boards__container"></div>
+                        <p className='home__side__top__boards__count'>Tous les tableau ({ allBoards.length })</p>
+                        <div className="home__side__top__boards__container">
+                            {
+                                boards.length > 0 ?
+                                <>
+                                {
+                                    boards.map(el => {
+                                        return (
+                                            <div key={el.id} className="home__side__top__boards__container__board">
+                                                <p>{el.title}</p>
+                                            </div>
+                                        )
+                                        })
+                                }
+                                </>
+                                :
+                                <h2>Aucun tableau</h2>
+                            }
+                        </div>
                         <div onClick={toggleModalNewBoard
                         } className="home__side__top__boards__addBtnCont">
                             <p>Créer un nouveau tableau</p>

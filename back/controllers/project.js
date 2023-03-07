@@ -2,6 +2,14 @@ const { v4 } = require('uuid');
 const { Project, User } = require('../db/sequelize');
 const { ValidationError, UniqueConstraintError } = require('sequelize');
 
+/**
+ * create a new project
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ * @returns 
+ */
 exports.create = (req, res, next) => {
     if (req.body.title === undefined || req.body.description === undefined || req.body.userId === undefined) {
         const message = "Toutes les informations n'ont pas été envoyées.";
@@ -44,4 +52,39 @@ exports.create = (req, res, next) => {
             })
             .catch(error => res.status(500).json({ message: error }));
     }
+};
+
+/**
+ * get all project from one user
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+exports.getAll = (req, res, next) => {
+    User.findOne({ where: { id: req.params.id } })
+        .then(user => {
+            if (user === null) {
+                const message = "Aucun utilisateur trouvé.";
+                return res.status(404).json({ message });
+            }
+            console.log("1");
+
+            Project.findAll({ where : { userId: req.params.id } })
+                .then(projects => {
+                    if (projects === null) {
+                        const message = "Aucun projets trouvés.";
+                        return res.status(404).json({ message });
+                    }
+
+                    let message = "Des projets ont bien été trouvés.";
+                    if (projects.length === 1) {
+                        message = "Un projet a bien été trouvé.";
+                    }
+
+                    res.status(200).json({ message, data: projects });
+                })
+                .catch(error => res.status(500).json({ message: error }));
+        })
+        .catch(error => res.status(500).json({ message: error }));
 };
