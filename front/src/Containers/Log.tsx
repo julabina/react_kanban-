@@ -233,7 +233,6 @@ const Log = () => {
                 if (res.status === 200) {
                     res.json()
                         .then(data => {
-                            console.log(data);
                             
                             let newObj = {
                                 version: data.token,

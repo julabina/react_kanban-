@@ -12,3 +12,28 @@
         padding: 15px;  
     }
 }
+
+@mixin projectCard {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    height: 45px;
+    border-radius: 0 45px 45px 0;
+    padding-left: 25px;
+    margin-right: 25px;
+    transition: all 120ms ease-in-out;
+    &__img {
+        margin: 1px 15px 0 0;
+        height: 16px;
+    }
+    p {
+        font-size: 1.1em;
+        &::first-letter {
+            text-transform: uppercase;
+        }
+    }
+    &:hover {
+        transition: all 120ms ease-in-out;
+        color: darken($color: map-get($colors, gray-dark), $amount: 20);
+    }
+}

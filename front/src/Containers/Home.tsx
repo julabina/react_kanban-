@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { decodeToken, isExpired } from 'react-jwt';
+import { faRectangleList, faSun } from '@fortawesome/free-regular-svg-icons';
+import { faCloudMoon, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import appLogo from '../assets/logo.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Home = () => {
 
@@ -24,37 +27,46 @@ const Home = () => {
     const newBoardErrorCont = document.querySelector('.home__modalNewBoard__modal__errorCont');
 
     useEffect(() => {
-
+        console.log("1");
+        
         if (localStorage.getItem('react_kanban_token') !== null) {
             let getToken = localStorage.getItem('react_kanban_token') || "";
-
+            
             const tokenObj: StoredToken = {
                 version: JSON.parse(getToken).version,
                 content: JSON.parse(getToken).content
             }
             
+            console.log("2", getToken);
             let token: StoredToken = tokenObj;
             if (token !== null) {
+                console.log("3");
                 let decodedToken: DecodedToken = decodeToken(token.version) || {userId: "",token: {version: "", content: ""}};
                 let isTokenExpired = isExpired(token.version);
+                console.log("decodedToken", decodedToken);
+                console.log("dec", decodedToken.userId);
+                console.log("tok", token.content );
                 if (decodedToken.userId !== token.content || isTokenExpired === true) {
+                    console.log("4");
                     // DISCONNECT
                     localStorage.removeItem('react_kanban_token');
                     return navigate('/connexion', { replace: true });
                 };
-             
+                
                 const user: DecodedToken = {userId: decodedToken.userId, token};
-              
+                
                 setActualUser(user);
                 setDarkMod(JSON.parse(getToken).dark)
                 getAllProjects(user.userId, user.token.version);
                 
             } else {
+                console.log("5");
                 // DISCONNECT
                 localStorage.removeItem('react_kanban_token');
                 navigate('/connexion', { replace: true });
             };
         } else {
+            console.log("6");
             // DISCONNECT
             navigate('/connexion', { replace: true });
         };   
@@ -238,12 +250,15 @@ const Home = () => {
             .then(res => {
                 if (res.status === 201) {
                     setDarkMod(!darkMod);
-                    let newObj = {
-                        version: actualUser.token,
-                        content: actualUser.userId,
-                        dark: !darkMod
-                    };
-                    localStorage.setItem('react_kanban_token', JSON.stringify(newObj)); 
+                    if (localStorage.getItem('react_kanban_token') !== null) {
+                        let getToken = localStorage.getItem('react_kanban_token') || "";
+                        let newObj = {
+                            version: JSON.parse(getToken).version,
+                            content: JSON.parse(getToken).content,
+                            dark: !darkMod
+                        };
+                        localStorage.setItem('react_kanban_token', JSON.stringify(newObj)); 
+                    }
                 }
             })
         
@@ -253,11 +268,11 @@ const Home = () => {
         <>
         <main className='home'>
             {/* side bar start */}
-            <section className="home__side">
+            <section className={darkMod ? "home__side home__side--dark" : "home__side home__side--light"}>
                 <div className='home__side__top'>
                     <div className="home__side__top__titleCont">
                         <img className='home__side__top__titleCont__logo' src={appLogo} alt="app logo" />
-                        <h1>React Kanban</h1>
+                        <h1 className={darkMod ? "home__side__top__titleCont--dark" : ""}>react kanban</h1>
                     </div>
                     <div className="home__side__top__boards">
                         <p className='home__side__top__boards__count'>Tous les tableau ({ allBoards.length })</p>
@@ -269,10 +284,11 @@ const Home = () => {
                                     boards.map(el => {
                                         return (
                                             <div key={el.id} onClick={() => changeProject(el.id)} className={activProject.id === el.id ? "home__side__top__boards__container__board home__side__top__boards__container__board--activ" : "home__side__top__boards__container__board"}>
+                                                <FontAwesomeIcon icon={faRectangleList} className="home__side__top__boards__container__board__img" />
                                                 <p>{el.title}</p>
                                             </div>
                                         )
-                                        })
+                                    })
                                 }
                                 </>
                                 :
@@ -281,16 +297,22 @@ const Home = () => {
                         </div>
                         <div onClick={toggleModalNewBoard
                         } className="home__side__top__boards__addBtnCont">
+                            <FontAwesomeIcon icon={faRectangleList} className="home__side__top__boards__addBtnCont__img" />
                             <p>Créer un nouveau tableau</p>
                         </div>
                     </div>
                 </div>
                 <div className="home__side__bot">
-                    <label className="home__side__bot__darkModOption">
-                        <input onChange={changeDarkMod} checked={darkMod && true} type="checkbox" />
-                        <span className="home__side__bot__darkModOption__slider home__side__bot__darkModOption__round"></span>
-                    </label>
+                    <div className={darkMod ? "home__side__bot__cont home__side__bot__cont--dark" : "home__side__bot__cont home__side__bot__cont--light"}>
+                    <FontAwesomeIcon icon={faSun} className="home__side__bot__cont__img" />
+                        <label className="home__side__bot__cont__darkModOption">
+                            <input onChange={changeDarkMod} checked={darkMod && true} type="checkbox" />
+                            <span className="home__side__bot__cont__darkModOption__slider"></span>
+                        </label>
+                    <FontAwesomeIcon icon={faCloudMoon} className="home__side__bot__cont__img" />
+                    </div>
                     <div className="home__side__bot__hideSide">
+                        <FontAwesomeIcon icon={faEyeSlash} className="home__side__bot__hideSide__img" />
                         <p>Cacher onglet</p>
                     </div>
                 </div>
