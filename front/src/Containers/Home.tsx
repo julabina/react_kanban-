@@ -18,6 +18,7 @@ const Home = () => {
     const [newBoardInput, setNewBoardInput] = useState<NewBoardInput>({ title: "", description: "" });
     const [boards, setBoards] = useState<Board[]>([]);
     const [allBoards, setAllBoards] = useState<Board[]>([]);
+    const [activProject, setActivProject] = useState<Board>({id: "", title: "", updatedAt: 0});
 
     const newBoardErrorCont = document.querySelector('.home__modalNewBoard__modal__errorCont');
 
@@ -85,6 +86,7 @@ const Home = () => {
 
                     setBoards(firstBoard);                    
                     setAllBoards(newArr);
+                    setActivProject(firstBoard[0]);
                 }
             })
     };
@@ -198,6 +200,23 @@ const Home = () => {
         }
     };
 
+    /**
+     * change active project and load it
+     * 
+     * @param id 
+     */
+    const changeProject = (id: string) => {
+
+        const arr: Board[] = allBoards;
+        const test: Board | undefined = arr.find(el => {
+            return el.id === id
+        })
+        
+        if (test !== undefined) {
+            setActivProject(test);
+        }
+    };
+
     return (
         <>
         <main className='home'>
@@ -217,7 +236,7 @@ const Home = () => {
                                 {
                                     boards.map(el => {
                                         return (
-                                            <div key={el.id} className="home__side__top__boards__container__board">
+                                            <div key={el.id} onClick={() => changeProject(el.id)} className="home__side__top__boards__container__board">
                                                 <p>{el.title}</p>
                                             </div>
                                         )
@@ -246,12 +265,17 @@ const Home = () => {
             {/* side bar ended */}
             <section className="home__right">
                 <div className="home__right__header">
-                    <h2>TITRE</h2>
-                    <div className='home__right__header__right'>
-                        <input className='home__right__header__right__newBtn' type="button" value="Ajouter une tache" />
-                        <input className='home__right__header__right__menuBtn' type="button" value="..." />
-                        <div className="home__right__header__right__menu"></div>
-                    </div>
+                    {
+                        activProject.id !== "" &&
+                        <>
+                        <h2>{ activProject.title }</h2>
+                        <div className='home__right__header__right'>
+                            <input className='home__right__header__right__newBtn' type="button" value="Ajouter une tache" />
+                            <input className='home__right__header__right__menuBtn' type="button" value="..." />
+                            <div className="home__right__header__right__menu"></div>
+                        </div>
+                        </>
+                    }
                 </div>
                 <div className="home__right__main">
                     
