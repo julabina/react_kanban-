@@ -35,11 +35,14 @@ const Home = () => {
     type Token = {version: string, content: string};
     type DecodedToken = {userId: string, token: Token};
     type NewBoardInput = {title: string, description: string};
+    type NewColumnInput = {title: string, description: string};
     type Board = {id: string, title: string, updatedAt: number}
 
     const [actualUser, setActualUser] = useState<DecodedToken>({ userId: "", token: {version: "", content: ""} });
     const [toggleNewBoardModal, setToggleNewBoardModal] = useState<boolean>(false);
+    const [toggleNewColumnModal, setToggleNewColumnModal] = useState<boolean>(false);
     const [newBoardInput, setNewBoardInput] = useState<NewBoardInput>({ title: "", description: "" });
+    const [newColumnInput, setNewColumnInput] = useState<NewColumnInput>({ title: "", description: "" });
     const [boards, setBoards] = useState<Board[]>([]);
     const [allBoards, setAllBoards] = useState<Board[]>([]);
     const [activProject, setActivProject] = useState<Board>({id: "", title: "", updatedAt: 0});
@@ -141,6 +144,18 @@ const Home = () => {
         }
 
         setToggleNewBoardModal(!toggleNewBoardModal);
+        
+    };
+
+    /**
+     * toggle modal for create new column
+     */
+    const toggleModalNewColumn = () => {
+        if (toggleNewColumnModal) {
+            setNewColumnInput({ title: "", description: "" });
+        }
+
+        setToggleNewColumnModal(!toggleNewColumnModal);
         
     };
 
@@ -432,6 +447,29 @@ const Home = () => {
             </div>
         }
         {/* modal new board ended */}
+        {/* modal new column start */}
+        {
+            toggleNewBoardModal &&
+            <div className="home__modalNewColumn">
+                <div className={darkMod ? "home__modalNewColumn__modal home__modalNewColumn__modal--dark" : "home__modalNewColumn__modal home__modalNewColumn__modal--light"}>
+                    <input className='home__modalNewColumn__modal__closeBtn' onClick={toggleModalNewColumn} type="button" value="X" />
+                    <h2>Ajouter un tableau</h2>
+                    <div className='home__modalNewColumn__modal__errorCont'></div>
+                    <form className='home__modalNewColumn__modal__form' onSubmit={validateNewBoard}>
+                        <div className="home__modalNewColumn__modal__form__inputCont">
+                            <label htmlFor="newBoardTitle">Titre *</label>
+                            <input onInput={(e) => ctrlNewBoardInput("title", (e.target as HTMLInputElement).value)} value={newBoardInput.title} type="text" id="newBoardTitle" placeholder='e.g. Créer un potager' />
+                        </div>
+                        <div className="home__modalNewColumn__modal__form__inputCont">
+                            <label htmlFor="newBoardDescription">Description</label>
+                            <textarea onInput={(e) => ctrlNewBoardInput("description", (e.target as HTMLInputElement).value)} value={newBoardInput.description} id="newBoardDescription" placeholder='e.g. Un potager complet avec tomates, courgettes et aubergines.'/>
+                        </div>
+                        <input className='home__modalNewColumn__modal__form__submitBtn' type="submit" value="Créer tableau" />
+                    </form>
+                </div>
+            </div>
+        }
+        {/* modal new column ended */}
         </>
     );
 };
