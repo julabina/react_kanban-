@@ -1,0 +1,26 @@
+.column {
+    width: 260px;
+    border: 1px solid red;
+    margin-right: 25px ;
+    &__header {
+        display: flex;
+        border: 1px solid beige;
+        h3, span {
+            color: map-get($map: $colors, $key:gray-dark );
+            font-size: 1em;
+        }
+        h3 {
+            text-transform: uppercase;
+            margin: 0 7px 0 9px;
+        }
+        &__colors {
+            background: red;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+        }
+    }
+    &:last-child {
+        margin-right: 0;
+    }
+}

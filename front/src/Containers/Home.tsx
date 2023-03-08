@@ -1,14 +1,35 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { decodeToken, isExpired } from 'react-jwt';
 import { faRectangleList, faSun } from '@fortawesome/free-regular-svg-icons';
 import { faCloudMoon, faEyeSlash, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import appLogo from '../assets/logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { DndContext, DragEndEvent } from "@dnd-kit/core";
+import Column, { IElement } from '../Components/Column';
 
 const Home = () => {
 
     const navigate = useNavigate();
+    // CHANGER DATA
+    const [data, setData] = useState<IElement[]>([]);
+    const handleOnDragEnd = useCallback(
+        ({ active, over }: DragEndEvent) => {
+            const elementId = active.id;
+            const deepCopy = [...data];
+        
+            const updatedState = deepCopy.map((elm): IElement => {
+                if (elm.id === elementId) {
+                const column = over?.id ? String(over.id) : elm.column;
+                return { ...elm, column };
+                }
+                return elm;
+            });
+        
+            setData(updatedState);
+        },
+        [data, setData]
+    );
 
     type StoredToken = {version: string, content: string};
     type Token = {version: string, content: string};
@@ -24,6 +45,7 @@ const Home = () => {
     const [activProject, setActivProject] = useState<Board>({id: "", title: "", updatedAt: 0});
     const [darkMod, setDarkMod] = useState<boolean>(false);
     const [displayAllBoard, setDisplayAllBoard] = useState<boolean>(false);
+    const [columns, setColumns] = useState<string[]>(["A faire", "En cour", "Terminé"]);
 
     useEffect(() => {
         console.log("1");
@@ -370,7 +392,20 @@ const Home = () => {
                     }
                 </div>
                 <div className={darkMod ? "home__right__main home__right__main--dark" : "home__right__main home__right__main--light"}>
-                    
+                    <DndContext onDragEnd={handleOnDragEnd}>
+                        <div className="home__right__main__container">
+                            {
+                                columns.map((el, columnIndex) => {
+                                        return (
+                                            <Column key={`column-${columnIndex}`} heading={el} elements={[]} />
+                                        )
+                                })
+                            }
+                            <div className={darkMod ? "home__right__main__container__addBtn home__right__main__container__addBtn--dark" : "home__right__main__container__addBtn home__right__main__container__addBtn--light"}>
+                                <p>Ajouter Colonne</p>
+                            </div>
+                        </div>
+                    </DndContext>
                 </div>
             </section>
         </main>
