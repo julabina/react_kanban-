@@ -33,7 +33,27 @@ module.exports = (sequelize, DataTypes) => {
                 len: { args: [0, 100], msg: "La description doit comprendre maximum 100 caractères." },
                 is: {args: /^[\wé èà\-\']*$/i, msg: "la description ne doit contenir que des lettres et des chiffres"}
             }
-        }
+        },
+        columns: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+            get() {
+                return this.getDataValue('columns').split(',')
+            },
+            set(columns) {
+                this.setDataValue('columns', columns.join())
+            }
+        },
+        columnsColor: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+            get() {
+                return this.getDataValue('columnsColor').split(',')
+            },
+            set(columnsColor) {
+                this.setDataValue('columnsColor', columnsColor.join())
+            }
+        },
     },{
         timestamps: true,
         createdAt: 'createdAt',

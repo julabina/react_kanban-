@@ -1,5 +1,6 @@
 .column {
     width: 260px;
+    min-width: 260px;
     border: 1px solid red;
     margin-right: 25px ;
     &__header {
@@ -14,7 +15,6 @@
             margin: 0 7px 0 9px;
         }
         &__colors {
-            background: red;
             height: 16px;
             width: 16px;
             border-radius: 50%;

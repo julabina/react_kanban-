@@ -35,20 +35,19 @@ const Home = () => {
     type Token = {version: string, content: string};
     type DecodedToken = {userId: string, token: Token};
     type NewBoardInput = {title: string, description: string};
-    type NewColumnInput = {title: string, description: string};
-    type Board = {id: string, title: string, updatedAt: number}
+    type NewColumnInput = {name: string, color: string, position: string};
+    type Board = {id: string, title: string, columns: string[], columnsColor: string[], updatedAt: number}
 
     const [actualUser, setActualUser] = useState<DecodedToken>({ userId: "", token: {version: "", content: ""} });
     const [toggleNewBoardModal, setToggleNewBoardModal] = useState<boolean>(false);
     const [toggleNewColumnModal, setToggleNewColumnModal] = useState<boolean>(false);
     const [newBoardInput, setNewBoardInput] = useState<NewBoardInput>({ title: "", description: "" });
-    const [newColumnInput, setNewColumnInput] = useState<NewColumnInput>({ title: "", description: "" });
+    const [newColumnInput, setNewColumnInput] = useState<NewColumnInput>({ name: "", color: "#000", position: "start"});
     const [boards, setBoards] = useState<Board[]>([]);
     const [allBoards, setAllBoards] = useState<Board[]>([]);
-    const [activProject, setActivProject] = useState<Board>({id: "", title: "", updatedAt: 0});
+    const [activProject, setActivProject] = useState<Board>({id: "", title: "", columns: [], columnsColor: [], updatedAt: 0});
     const [darkMod, setDarkMod] = useState<boolean>(false);
     const [displayAllBoard, setDisplayAllBoard] = useState<boolean>(false);
-    const [columns, setColumns] = useState<string[]>(["A faire", "En cour", "Terminé"]);
 
     useEffect(() => {
         console.log("1");
@@ -118,6 +117,8 @@ const Home = () => {
                         const newObj: Board = {
                             id: data.data[i].id,
                             title: data.data[i].title,
+                            columns: data.data[i].columns,
+                            columnsColor: data.data[i].columnsColor,
                             updatedAt: Math.floor((new Date(data.data[i].updatedAt)).getTime() / 1000)
                         };
 
@@ -150,9 +151,9 @@ const Home = () => {
     /**
      * toggle modal for create new column
      */
-    const toggleModalNewColumn = () => {
+    const toggleModalNewColumn = () => {        
         if (toggleNewColumnModal) {
-            setNewColumnInput({ title: "", description: "" });
+            setNewColumnInput({ name: "", color: "", position: "" });
         }
 
         setToggleNewColumnModal(!toggleNewColumnModal);
@@ -265,6 +266,98 @@ const Home = () => {
     };
 
     /**
+     * control new column input
+     * 
+     * @param action 
+     * @param value 
+     */
+    const ctrlNewColInput = (action: string, value: string) => {
+        if (action === "name") {
+            const newObj: NewColumnInput = {
+                ...newColumnInput,
+                name: value
+            };
+            setNewColumnInput(newObj);
+        } else if (action === 'color') {
+            const newObj: NewColumnInput = {
+                ...newColumnInput,
+                color: value
+            };
+            setNewColumnInput(newObj);        
+        } else if (action === "position") {
+            const newObj: NewColumnInput = {
+                ...newColumnInput,
+                position: value
+            };
+            setNewColumnInput(newObj);
+        }
+    };
+
+    /**
+     * validate new column input before create new column
+     * 
+     * @param e 
+     */
+    const validateNewColumn = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const errorCont = document.querySelector(".home__modalNewColumn__modal__errorCont");
+        let error = "";
+
+        if (errorCont) {
+            errorCont.innerHTML = "";
+            
+            if (newColumnInput.name === "") {
+                return errorCont.innerHTML = `<p>- Le nom de la colonne est requis.</p>`;
+            } else if (newColumnInput.name.length > 50) {
+                return errorCont.innerHTML = `<p>- Le nom de la colonne doit contenir 50 caractères maximum.</p>`;
+            } else if (!newColumnInput.name.match(/^[\w éèàêî]*$/i)) {
+                return errorCont.innerHTML = `<p>- Le nom de la colonne ne doit contenir que des lettres et des chiffres.</p>`;
+            }
+            
+            if (!newColumnInput.color.match(/^[\w#]*$/i) || newColumnInput.color === "") {
+                const newObj: NewColumnInput = {
+                    ...newColumnInput,
+                    color: "#ccc"
+                };
+                setNewColumnInput(newObj);
+            }
+            if (newColumnInput.position === "") {
+                const newObj: NewColumnInput = {
+                    ...newColumnInput,
+                    position: "start"
+                };
+                setNewColumnInput(newObj);  
+            }
+
+            tryToCreateNewColumn();
+        }
+    };
+
+    /**
+     * create on database, one new column for one project
+     */
+    const tryToCreateNewColumn = () => {
+        fetch(process.env.REACT_APP_API_URL + "/api/project/addColumn/" + activProject.id, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + actualUser.token.version,
+            },
+            method: "PUT",
+            body: JSON.stringify({ name: newColumnInput.name, color: newColumnInput.color, position: newColumnInput.position })
+        })
+            .then(res => {
+                if (res.status === 201) {
+                    getAllProjects(actualUser.userId, actualUser.token.version);
+                    toggleModalNewColumn();
+                    setNewColumnInput({ name: "", color: "#000", position: "start"})
+                } else {
+
+                }
+            })
+    };
+
+    /**
      * change active project and load it
      * 
      * @param id 
@@ -272,12 +365,13 @@ const Home = () => {
     const changeProject = (id: string) => {
 
         const arr: Board[] = allBoards;
-        const test: Board | undefined = arr.find(el => {
+        const arrFinded: Board | undefined = arr.find(el => {
             return el.id === id
         })
         
-        if (test !== undefined) {
-            setActivProject(test);
+        if (arrFinded !== undefined) {
+            setActivProject(arrFinded);
+            
         }
     };
 
@@ -410,13 +504,13 @@ const Home = () => {
                     <DndContext onDragEnd={handleOnDragEnd}>
                         <div className="home__right__main__container">
                             {
-                                columns.map((el, columnIndex) => {
+                                activProject.columns.map((el, columnIndex) => {
                                         return (
-                                            <Column key={`column-${columnIndex}`} heading={el} elements={[]} />
+                                            <Column key={`column-${columnIndex}`} heading={el} elements={[]} columnsColor={activProject.columnsColor[columnIndex]} />
                                         )
                                 })
                             }
-                            <div className={darkMod ? "home__right__main__container__addBtn home__right__main__container__addBtn--dark" : "home__right__main__container__addBtn home__right__main__container__addBtn--light"}>
+                            <div onClick={toggleModalNewColumn} className={darkMod ? "home__right__main__container__addBtn home__right__main__container__addBtn--dark" : "home__right__main__container__addBtn home__right__main__container__addBtn--light"}>
                                 <p>Ajouter Colonne</p>
                             </div>
                         </div>
@@ -449,22 +543,35 @@ const Home = () => {
         {/* modal new board ended */}
         {/* modal new column start */}
         {
-            toggleNewBoardModal &&
+            toggleNewColumnModal &&
             <div className="home__modalNewColumn">
                 <div className={darkMod ? "home__modalNewColumn__modal home__modalNewColumn__modal--dark" : "home__modalNewColumn__modal home__modalNewColumn__modal--light"}>
                     <input className='home__modalNewColumn__modal__closeBtn' onClick={toggleModalNewColumn} type="button" value="X" />
-                    <h2>Ajouter un tableau</h2>
+                    <h2>Ajouter une colonne</h2>
                     <div className='home__modalNewColumn__modal__errorCont'></div>
-                    <form className='home__modalNewColumn__modal__form' onSubmit={validateNewBoard}>
+                    <form className='home__modalNewColumn__modal__form' onSubmit={validateNewColumn}>
                         <div className="home__modalNewColumn__modal__form__inputCont">
-                            <label htmlFor="newBoardTitle">Titre *</label>
-                            <input onInput={(e) => ctrlNewBoardInput("title", (e.target as HTMLInputElement).value)} value={newBoardInput.title} type="text" id="newBoardTitle" placeholder='e.g. Créer un potager' />
+                            <label htmlFor="newColumnTitle">Nom de la colonne *</label>
+                            <input onInput={(e) => ctrlNewColInput("name", (e.target as HTMLInputElement).value)} value={newColumnInput.name} placeholder="e.g. Test" type="text" id="newColumnTitle" />
                         </div>
-                        <div className="home__modalNewColumn__modal__form__inputCont">
-                            <label htmlFor="newBoardDescription">Description</label>
-                            <textarea onInput={(e) => ctrlNewBoardInput("description", (e.target as HTMLInputElement).value)} value={newBoardInput.description} id="newBoardDescription" placeholder='e.g. Un potager complet avec tomates, courgettes et aubergines.'/>
+                        <div className="home__modalNewColumn__modal__form__colOptions">
+                            <div className="home__modalNewColumn__modal__form__colOptions__color">
+                                <label htmlFor="newColumnColor">Couleur</label>
+                                <input onInput={(e) => ctrlNewColInput("color", (e.target as HTMLInputElement).value)} value={newColumnInput.color} type="color" id="newColumnColor" />
+                            </div>
+                            <div className="home__modalNewColumn__modal__form__colOptions__position">
+                                <label htmlFor="newColumnSelect">position</label>
+                                <select onChange={(e) => ctrlNewColInput("position", (e.target as HTMLSelectElement).value)} value={newColumnInput.position} className={darkMod ? 'home__modalNewColumn__modal__form__colOptions__position__select home__modalNewColumn__modal__form__colOptions__position__select--dark' : "home__modalNewColumn__modal__form__colOptions__position__select home__modalNewColumn__modal__form__colOptions__position__select--light"} id="newColumnSelect">
+                                    <option value="start">Au début</option>
+                                    {
+                                        activProject.columns.map((el, colInd) => {
+                                            return <option key={'col' + colInd} value={colInd}>Après { el }</option>
+                                        })
+                                    }
+                                </select>
+                            </div>
                         </div>
-                        <input className='home__modalNewColumn__modal__form__submitBtn' type="submit" value="Créer tableau" />
+                        <input className='home__modalNewColumn__modal__form__submitBtn' type="submit" value="Ajouter une colonne" />
                     </form>
                 </div>
             </div>

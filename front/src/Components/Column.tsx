@@ -10,10 +10,11 @@ export interface IElement {
 }
 
 interface IColumn {
-  heading: string;
-  elements: IElement[];
+    heading: string;
+    columnsColor: string;
+    elements: IElement[];
 }
-const Column: FC<IColumn> = ({ heading, elements }) => {
+const Column: FC<IColumn> = ({ heading, elements, columnsColor }) => {
     const columnIdentifier = useMemo(() => _.camel(heading), [heading]);
 
     const amounts = useMemo(
@@ -24,7 +25,7 @@ const Column: FC<IColumn> = ({ heading, elements }) => {
     return (
         <div className="column">
             <div className="column__header">
-                <div className="column__header__colors"></div>
+                <div style={{ "backgroundColor": columnsColor }} className="column__header__colors"></div>
                 <h3>{ heading }</h3>
                 <span>({amounts})</span>
             </div>

@@ -59,12 +59,17 @@ html, body {
   box-sizing: border-box;
 }
 
+html {
+  width: auto;
+}
+
 html, body {
   font-family: "Kanit", sans-serif;
 }
 
 .column {
   width: 260px;
+  min-width: 260px;
   border: 1px solid red;
   margin-right: 25px;
 }
@@ -81,7 +86,6 @@ html, body {
   margin: 0 7px 0 9px;
 }
 .column__header__colors {
-  background: red;
   height: 16px;
   width: 16px;
   border-radius: 50%;
@@ -376,11 +380,12 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   height: 100%;
   padding-top: 100px;
   transition: all 120ms ease-in-out;
+  width: auto;
 }
 .home__right__main__container {
   box-sizing: border-box;
   display: flex;
-  width: 100%;
+  min-width: 100%;
   height: 100%;
   padding: 25px;
 }
@@ -527,6 +532,143 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
 .home__modalNewBoard__modal--light {
   background: #ffffff;
   color: light-black;
+}
+.home__modalNewColumn {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: #000000b6;
+}
+.home__modalNewColumn__modal {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 40px 30px;
+  border-radius: 6px;
+}
+.home__modalNewColumn__modal__closeBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  text-align: center;
+  font-weight: 700;
+  height: 22px;
+  width: 22px;
+  background: inherit;
+  border: 2px solid #635EC6;
+  border-radius: 50%;
+  color: #635EC6;
+  cursor: pointer;
+  transition: all 120ms ease-in-out;
+}
+.home__modalNewColumn__modal__closeBtn:hover {
+  transition: all 120ms ease-in-out;
+  border-color: #36328c;
+  color: #36328c;
+}
+.home__modalNewColumn__modal__errorCont {
+  font-size: 0.8em;
+  height: 13px;
+  margin-top: 13px;
+  color: #c41b1b;
+}
+.home__modalNewColumn__modal h2 {
+  font-size: 1.3em;
+  font-weight: 600;
+}
+.home__modalNewColumn__modal__form__inputCont {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+}
+.home__modalNewColumn__modal__form__inputCont label {
+  font-size: 0.85em;
+  margin-bottom: 9px;
+}
+.home__modalNewColumn__modal__form__inputCont input {
+  height: 30px;
+  background: inherit;
+  border: 1px solid #939cad70;
+  border-radius: 6px;
+  padding: 0 15px;
+  color: #ffffff;
+  width: 380px;
+}
+.home__modalNewColumn__modal__form__inputCont input::placeholder {
+  color: #939cad70;
+}
+.home__modalNewColumn__modal__form__inputCont textarea {
+  height: 80px;
+  background: inherit;
+  border: 1px solid #939cad70;
+  border-radius: 6px;
+  padding: 0 15px;
+  color: #ffffff;
+  width: 380px;
+}
+.home__modalNewColumn__modal__form__inputCont textarea::placeholder {
+  color: #939cad70;
+}
+.home__modalNewColumn__modal__form__inputCont:first-child {
+  margin-top: 8px;
+}
+.home__modalNewColumn__modal__form__submitBtn {
+  background: #635EC6;
+  border: none;
+  font-weight: 500;
+  color: #ffffff;
+  height: 42px;
+  width: 100%;
+  border-radius: 42px;
+  margin-top: 30px;
+  cursor: pointer;
+  transition: all 150ms ease-in-out;
+}
+.home__modalNewColumn__modal__form__submitBtn:hover {
+  transition: all 150ms ease-in-out;
+  background: #453fb2;
+}
+.home__modalNewColumn__modal--dark {
+  background: #2C2C37;
+  color: #ffffff;
+}
+.home__modalNewColumn__modal--light {
+  background: #ffffff;
+  color: light-black;
+}
+.home__modalNewColumn__modal__form__colOptions {
+  display: flex;
+  margin-top: 30px;
+}
+.home__modalNewColumn__modal__form__colOptions__color, .home__modalNewColumn__modal__form__colOptions__position {
+  display: flex;
+  flex-direction: column;
+}
+.home__modalNewColumn__modal__form__colOptions__color label, .home__modalNewColumn__modal__form__colOptions__position label {
+  margin-bottom: 7px;
+}
+.home__modalNewColumn__modal__form__colOptions__color {
+  margin-right: 50px;
+}
+.home__modalNewColumn__modal__form__colOptions__color input {
+  width: 64px;
+  height: 32px;
+}
+.home__modalNewColumn__modal__form__colOptions__position__select {
+  height: 30px;
+  background: inherit;
+  padding: 0 15px;
+  border: 1px solid #939cad70;
+  border-radius: 6px;
+}
+.home__modalNewColumn__modal__form__colOptions__position__select--dark {
+  color: #ffffff;
+}
+.home__modalNewColumn__modal__form__colOptions__position__select--light {
+  color: #0f0f0f;
 }
 
 /*# sourceMappingURL=style.css.map */
