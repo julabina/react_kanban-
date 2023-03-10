@@ -35,6 +35,7 @@ const Home = () => {
     const [darkMod, setDarkMod] = useState<boolean>(false);
     const [displayAllBoard, setDisplayAllBoard] = useState<boolean>(false);
     const [tasks, setTasks] = useState<IElement[]>([]);
+
     const [columns, setColumns] = useState<Columns[]>([]);
 
     const handleOnDragEnd = useCallback(
@@ -719,16 +720,18 @@ const Home = () => {
                 </div>
                 <div className={darkMod ? "home__right__main home__right__main--dark" : "home__right__main home__right__main--light"}>
                     <DndContext onDragEnd={handleOnDragEnd}>
+                        
                         <div className="home__right__main__container">
                             {
                                 columns.map((el, columnIndex) => {                                        
-                                        return (
+                                    return (
+                                        
                                             <Column key={`column-${columnIndex}`} id={el.id} heading={el.name} darkMod={darkMod} elements={_.select(
                                                 tasks,
                                                 (elm) => elm,
                                                 (f) => f.column === _.camel(el.id)
-                                              )} columnsColor={el.color} />
-                                        )
+                                                )} columnsColor={el.color} />
+                                    )
                                 })
                             }
                             <div onClick={toggleModalNewColumn} className={darkMod ? "home__right__main__container__addBtn home__right__main__container__addBtn--dark" : "home__right__main__container__addBtn home__right__main__container__addBtn--light"}>

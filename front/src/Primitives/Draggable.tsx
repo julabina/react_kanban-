@@ -19,10 +19,19 @@ const Draggable: FC<IDraggable> = ({ id, children }) => {
         return undefined;
     }, [transform]);
 
+    const test = () => {
+        console.log("test" + id);
+      };
+
     return (
-        <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
-            {children}
+        <>
+        <div>
+            <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
+                {children}
+            </div>
+            <input onClick={test}  style={style} type="button" value="TEST" />
         </div>
+        </>
     );
 };
 

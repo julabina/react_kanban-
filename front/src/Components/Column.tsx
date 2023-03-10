@@ -4,6 +4,8 @@ import Droppable from "../Primitives/Droppable";
 import DraggableElement from "./DraggableElement";
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { SortableContext } from "@dnd-kit/sortable";
+import { DndContext } from "@dnd-kit/core";
 
 export interface IElement {
   id: string;
@@ -23,7 +25,6 @@ interface IColumn {
 
 const Column: FC<IColumn> = ({ id, heading, elements, columnsColor, darkMod }) => {
     const columnIdentifier = useMemo(() => _.camel(id), [id]);   
-    console.log(elements);     
 
     const amounts = useMemo(
         () => elements.filter((elm) => elm.column === columnIdentifier).length,
@@ -64,7 +65,9 @@ const Column: FC<IColumn> = ({ id, heading, elements, columnsColor, darkMod }) =
                         subTasks={elm.subTasks}
                         darkMod={darkMod}
                     />
-                ))}
+                        
+                            
+                    ))}
             </Droppable>
         </div>
     );
