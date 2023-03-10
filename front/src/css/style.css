@@ -70,28 +70,113 @@ html, body {
 .column {
   width: 260px;
   min-width: 260px;
-  border: 1px solid red;
   margin-right: 25px;
 }
 .column__header {
+  position: relative;
   display: flex;
-  border: 1px solid beige;
+  justify-content: space-between;
+  margin-bottom: 25px;
 }
-.column__header h3, .column__header span {
+.column__header__cont {
+  display: flex;
+}
+.column__header__cont h3, .column__header__cont span {
   color: #939CAD;
   font-size: 1em;
 }
-.column__header h3 {
+.column__header__cont h3 {
   text-transform: uppercase;
   margin: 0 7px 0 9px;
 }
-.column__header__colors {
+.column__header__cont__colors {
   height: 16px;
   width: 16px;
   border-radius: 50%;
 }
+.column__header__menuBtn {
+  color: #939CAD;
+  padding-right: 7px;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: all 120ms ease-in-out;
+}
+.column__header__menuBtn:hover {
+  transition: all 120ms ease-in-out;
+  color: #768197;
+}
 .column:last-child {
   margin-right: 0;
+}
+.column__columnMenu {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  background: #2C2C37;
+  border: 1px solid #939cad70;
+  border-radius: 7px;
+  color: #939CAD;
+  padding: 0 10px 10px;
+  text-align: end;
+  line-height: 1.5;
+  transition: all 120ms ease-in-out;
+}
+.column__columnMenu p {
+  cursor: pointer;
+}
+.column__columnMenu p:hover {
+  transition: all 120ms ease-in-out;
+  color: #69758a;
+}
+.column__columnMenu__separator {
+  width: 100%;
+  border-bottom: 1px solid rgba(147, 156, 173, 0.4492156863);
+  margin: 5px 0 7px;
+}
+
+.droppable {
+  min-height: 100px;
+}
+
+.draggableElement {
+  padding: 20px 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: all 120ms ease-in-out;
+}
+.draggableElement h3 {
+  font-size: 1.1em;
+}
+.draggableElement h3::first-letter {
+  text-transform: uppercase;
+}
+.draggableElement p {
+  font-size: 0.8em;
+  margin-top: 10px;
+  color: #939CAD;
+}
+.draggableElement--dark {
+  transition: all 120ms ease-in-out;
+  background: #2C2C37;
+}
+.draggableElement--dark h3 {
+  color: #ffffff;
+}
+.draggableElement--dark:hover {
+  transition: all 120ms ease-in-out;
+  background: #333340;
+}
+.draggableElement--light {
+  transition: all 120ms ease-in-out;
+  background: #ffffff;
+}
+.draggableElement--light h3 {
+  color: #0f0f0f;
+}
+.draggableElement--light:hover {
+  transition: all 120ms ease-in-out;
+  background: rgba(205, 209, 217, 0.4392156863);
 }
 
 .home {
@@ -465,8 +550,9 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
 }
 .home__modalNewBoard__modal__errorCont {
   font-size: 0.8em;
-  height: 13px;
+  min-height: 13px;
   margin-top: 13px;
+  max-width: 410px;
   color: #c41b1b;
 }
 .home__modalNewBoard__modal h2 {
@@ -476,7 +562,7 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
 .home__modalNewBoard__modal__form__inputCont {
   display: flex;
   flex-direction: column;
-  margin-top: 30px;
+  margin-top: 22px;
 }
 .home__modalNewBoard__modal__form__inputCont label {
   font-size: 0.85em;
@@ -484,24 +570,25 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
 }
 .home__modalNewBoard__modal__form__inputCont input {
   height: 30px;
+  width: 380px;
   background: inherit;
   border: 1px solid #939cad70;
   border-radius: 6px;
   padding: 0 15px;
   color: #ffffff;
-  width: 380px;
 }
 .home__modalNewBoard__modal__form__inputCont input::placeholder {
   color: #939cad70;
 }
 .home__modalNewBoard__modal__form__inputCont textarea {
+  resize: none;
   height: 80px;
+  width: 380px;
   background: inherit;
   border: 1px solid #939cad70;
   border-radius: 6px;
   padding: 0 15px;
   color: #ffffff;
-  width: 380px;
 }
 .home__modalNewBoard__modal__form__inputCont textarea::placeholder {
   color: #939cad70;
@@ -571,8 +658,9 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
 }
 .home__modalNewColumn__modal__errorCont {
   font-size: 0.8em;
-  height: 13px;
+  min-height: 13px;
   margin-top: 13px;
+  max-width: 410px;
   color: #c41b1b;
 }
 .home__modalNewColumn__modal h2 {
@@ -582,7 +670,7 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
 .home__modalNewColumn__modal__form__inputCont {
   display: flex;
   flex-direction: column;
-  margin-top: 30px;
+  margin-top: 22px;
 }
 .home__modalNewColumn__modal__form__inputCont label {
   font-size: 0.85em;
@@ -590,24 +678,25 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
 }
 .home__modalNewColumn__modal__form__inputCont input {
   height: 30px;
+  width: 380px;
   background: inherit;
   border: 1px solid #939cad70;
   border-radius: 6px;
   padding: 0 15px;
   color: #ffffff;
-  width: 380px;
 }
 .home__modalNewColumn__modal__form__inputCont input::placeholder {
   color: #939cad70;
 }
 .home__modalNewColumn__modal__form__inputCont textarea {
+  resize: none;
   height: 80px;
+  width: 380px;
   background: inherit;
   border: 1px solid #939cad70;
   border-radius: 6px;
   padding: 0 15px;
   color: #ffffff;
-  width: 380px;
 }
 .home__modalNewColumn__modal__form__inputCont textarea::placeholder {
   color: #939cad70;
@@ -668,6 +757,197 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   color: #ffffff;
 }
 .home__modalNewColumn__modal__form__colOptions__position__select--light {
+  color: #0f0f0f;
+}
+.home__modalNewTask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: #000000b6;
+}
+.home__modalNewTask__modal {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 40px 30px;
+  border-radius: 6px;
+}
+.home__modalNewTask__modal__closeBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  text-align: center;
+  font-weight: 700;
+  height: 22px;
+  width: 22px;
+  background: inherit;
+  border: 2px solid #635EC6;
+  border-radius: 50%;
+  color: #635EC6;
+  cursor: pointer;
+  transition: all 120ms ease-in-out;
+}
+.home__modalNewTask__modal__closeBtn:hover {
+  transition: all 120ms ease-in-out;
+  border-color: #36328c;
+  color: #36328c;
+}
+.home__modalNewTask__modal__errorCont {
+  font-size: 0.8em;
+  min-height: 13px;
+  margin-top: 13px;
+  max-width: 410px;
+  color: #c41b1b;
+}
+.home__modalNewTask__modal h2 {
+  font-size: 1.3em;
+  font-weight: 600;
+}
+.home__modalNewTask__modal__form__inputCont {
+  display: flex;
+  flex-direction: column;
+  margin-top: 22px;
+}
+.home__modalNewTask__modal__form__inputCont label {
+  font-size: 0.85em;
+  margin-bottom: 9px;
+}
+.home__modalNewTask__modal__form__inputCont input {
+  height: 30px;
+  width: 380px;
+  background: inherit;
+  border: 1px solid #939cad70;
+  border-radius: 6px;
+  padding: 0 15px;
+  color: #ffffff;
+}
+.home__modalNewTask__modal__form__inputCont input::placeholder {
+  color: #939cad70;
+}
+.home__modalNewTask__modal__form__inputCont textarea {
+  resize: none;
+  height: 80px;
+  width: 380px;
+  background: inherit;
+  border: 1px solid #939cad70;
+  border-radius: 6px;
+  padding: 0 15px;
+  color: #ffffff;
+}
+.home__modalNewTask__modal__form__inputCont textarea::placeholder {
+  color: #939cad70;
+}
+.home__modalNewTask__modal__form__inputCont:first-child {
+  margin-top: 8px;
+}
+.home__modalNewTask__modal__form__submitBtn {
+  background: #635EC6;
+  border: none;
+  font-weight: 500;
+  color: #ffffff;
+  height: 42px;
+  width: 100%;
+  border-radius: 42px;
+  margin-top: 30px;
+  cursor: pointer;
+  transition: all 150ms ease-in-out;
+}
+.home__modalNewTask__modal__form__submitBtn:hover {
+  transition: all 150ms ease-in-out;
+  background: #453fb2;
+}
+.home__modalNewTask__modal--dark {
+  background: #2C2C37;
+  color: #ffffff;
+}
+.home__modalNewTask__modal--light {
+  background: #ffffff;
+  color: light-black;
+}
+.home__modalNewTask__modal__form__checkList {
+  margin-top: 22px;
+}
+.home__modalNewTask__modal__form__checkList label {
+  font-size: 0.85em;
+}
+.home__modalNewTask__modal__form__checkList__cont {
+  margin-top: 9px;
+}
+.home__modalNewTask__modal__form__checkList__cont__inputCont {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 11px;
+}
+.home__modalNewTask__modal__form__checkList__cont__inputCont input[type=text] {
+  height: 30px;
+  width: 82%;
+  background: inherit;
+  border: 1px solid #939cad70;
+  border-radius: 6px;
+  padding: 0 15px;
+  color: #ffffff;
+}
+.home__modalNewTask__modal__form__checkList__cont__inputCont input[type=text]::placeholder {
+  color: #939cad70;
+}
+.home__modalNewTask__modal__form__checkList__cont__inputCont__closeCont {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  cursor: pointer;
+  color: #939CAD;
+  transition: all 120ms ease-in-out;
+}
+.home__modalNewTask__modal__form__checkList__cont__inputCont__closeCont__closeBtn {
+  font-size: 1.3em;
+}
+.home__modalNewTask__modal__form__checkList__cont__inputCont__closeCont:hover {
+  transition: all 120ms ease-in-out;
+  color: #5e687c;
+}
+.home__modalNewTask__modal__form__checkList__cont__addSubBtn {
+  width: 100%;
+  border: none;
+  height: 35px;
+  border-radius: 35px;
+  font-weight: 500;
+  cursor: pointer;
+  background: #ffffff;
+  color: #635EC6;
+  transition: all 120ms ease-in-out;
+}
+.home__modalNewTask__modal__form__checkList__cont__addSubBtn--light {
+  border: 1px solid #635EC6;
+}
+.home__modalNewTask__modal__form__checkList__cont__addSubBtn:hover {
+  transition: all 120ms ease-in-out;
+  background: #d0cfee;
+}
+.home__modalNewTask__modal__form__status {
+  display: flex;
+  flex-direction: column;
+  margin-top: 22px;
+}
+.home__modalNewTask__modal__form__status label {
+  font-size: 0.85em;
+  margin-bottom: 9px;
+}
+.home__modalNewTask__modal__form__status__select {
+  height: 33px;
+  background: inherit;
+  padding: 0 15px;
+  border: 1px solid #939cad70;
+  border-radius: 5px;
+}
+.home__modalNewTask__modal__form__status__select--dark {
+  color: #ffffff;
+}
+.home__modalNewTask__modal__form__status__select--light {
   color: #0f0f0f;
 }
 

@@ -1,0 +1,40 @@
+.draggableElement {
+    padding: 20px 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: all 120ms ease-in-out;
+    h3 {
+        font-size: 1.1em;
+        &::first-letter {
+            text-transform: uppercase;
+        }
+    }
+    p {
+        font-size: 0.8em;
+        margin-top: 10px;
+        color: map-get($map: $colors, $key:gray-dark );
+    }
+    &--dark {
+        transition: all 120ms ease-in-out;
+        background: map-get($map: $colors, $key: primary-dark);
+        h3 {
+            color: map-get($map: $colors, $key: light-white);
+        }
+        &:hover {
+            transition: all 120ms ease-in-out;
+            background: lighten($color: map-get($map: $colors, $key: primary-dark), $amount: 3);
+        }
+    }
+    &--light {
+        transition: all 120ms ease-in-out;
+        background: map-get($map: $colors, $key: light-white);
+        h3 {
+            color: map-get($map: $colors, $key: light-black);
+        }
+        &:hover {
+            transition: all 120ms ease-in-out;
+            background: lighten($color: map-get($map: $colors, $key: gray-light), $amount: 20);
+        }
+    }
+}

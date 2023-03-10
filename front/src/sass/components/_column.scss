@@ -1,26 +1,66 @@
 .column {
     width: 260px;
     min-width: 260px;
-    border: 1px solid red;
     margin-right: 25px ;
     &__header {
+        position: relative;
         display: flex;
-        border: 1px solid beige;
-        h3, span {
+        justify-content: space-between;
+        margin-bottom: 25px;
+        &__cont {
+            display: flex;
+            h3, span {
+                color: map-get($map: $colors, $key:gray-dark );
+                font-size: 1em;
+            }
+            h3 {
+                text-transform: uppercase;
+                margin: 0 7px 0 9px;
+            }
+            &__colors {
+                height: 16px;
+                width: 16px;
+                border-radius: 50%;
+            }
+        }
+        &__menuBtn {
             color: map-get($map: $colors, $key:gray-dark );
-            font-size: 1em;
-        }
-        h3 {
-            text-transform: uppercase;
-            margin: 0 7px 0 9px;
-        }
-        &__colors {
-            height: 16px;
-            width: 16px;
-            border-radius: 50%;
+            padding-right: 7px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 120ms ease-in-out;
+            &:hover {
+                transition: all 120ms ease-in-out;
+                color: darken($color: map-get($map: $colors, $key:gray-dark ), $amount: 10);
+            }
         }
     }
     &:last-child {
         margin-right: 0;
+    }
+    &__columnMenu {
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        background: map-get($map: $colors, $key: primary-dark);
+        border: 1px solid map-get($map: $colors, $key: gray-light);
+        border-radius: 7px;
+        color: map-get($map: $colors, $key:gray-dark );
+        padding:0 10px 10px;
+        text-align: end;
+        line-height: 1.5;
+        transition: all 120ms ease-in-out;
+        p {
+            cursor: pointer;
+            &:hover {
+                transition: all 120ms ease-in-out;
+                color: darken($color: map-get($map: $colors, $key:gray-dark ), $amount: 15);
+            }
+        }
+        &__separator {
+            width: 100%;
+            border-bottom: 1px solid opacify(map-get($map: $colors, $key:gray-light ), 0.01);
+            margin: 5px 0 7px;
+        }
     }
 }

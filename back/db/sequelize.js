@@ -1,6 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const UserModel = require('../models/user');
 const ProjectModel = require('../models/project');
+const TaskModel = require('../models/task');
 
 const sequelize = new Sequelize(
     'react_kanban',
@@ -24,7 +25,8 @@ const sequelize = new Sequelize(
 
 const User = UserModel(sequelize, DataTypes);
 const Project = ProjectModel(sequelize, DataTypes);
+const Task = TaskModel(sequelize, DataTypes);
 
 module.exports = {  
-    User, Project
+    User, Project, Task
 };

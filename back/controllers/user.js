@@ -14,12 +14,9 @@ const { ValidationError, UniqueConstraintError } = require('sequelize');
  */
 exports.create = (req, res, next) => {
     if (req.body.mail === undefined || req.body.password === undefined) {
-
         const message = "Toutes les informations n'ont pas été envoyées.";
         return res.status(401).json({ message });
-
     } else if (req.body.password !== "" && req.body.password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/)) {
-
         User.findOne({ where: { email: req.body.mail }})
             .then(u => {
                 if (u !== null) {
@@ -125,32 +122,31 @@ exports.toggleDarkmod = (req, res, next) => {
     if (req.body.userId === undefined || req.body.dark === undefined) {
         const message = "Toutes les informations n'ont pas été envoyées.";
         return res.status(401).json({ message });
-    } else {
-        User.findOne({ where : { id: req.body.userId} })
-            .then(user => {
-                if (user === null) {
-                    const message ="Aucun utilisateur trouvé.";
-                    return res.status(404).json({ message });
-                }
+    } 
 
-                user.darkOption = req.body.dark;
+    User.findOne({ where : { id: req.body.userId} })
+        .then(user => {
+            if (user === null) {
+                const message ="Aucun utilisateur trouvé.";
+                return res.status(404).json({ message });
+            }
 
-                user.save()
-                    .then(() => {
-                        const message = "Option bien modifiée.";
-                        res.status(201).json({ message });
-                    })
-                    .catch(error => {
-                        if (error instanceof ValidationError) {
-                            return res.status(401).json({ message: error.message, data: error }); 
-                        }
-                        if (error instanceof UniqueConstraintError) {
-                            return res.status(401).json({ message: error.message, data: error });
-                        }
-                        res.status(500).json({ message: "Une erreur est survenue lors de la création de l'utilisateur.", error });
-                    });
-            })
-            .catch(error => res.status(500).json({ message: error }));
-    }
+            user.darkOption = req.body.dark;
 
+            user.save()
+                .then(() => {
+                    const message = "Option bien modifiée.";
+                    res.status(201).json({ message });
+                })
+                .catch(error => {
+                    if (error instanceof ValidationError) {
+                        return res.status(401).json({ message: error.message, data: error }); 
+                    }
+                    if (error instanceof UniqueConstraintError) {
+                        return res.status(401).json({ message: error.message, data: error });
+                    }
+                    res.status(500).json({ message: "Une erreur est survenue lors de la création de l'utilisateur.", error });
+                });
+        })
+        .catch(error => res.status(500).json({ message: error }));
 };

@@ -2,17 +2,35 @@ import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { decodeToken, isExpired } from 'react-jwt';
 import { faRectangleList, faSun } from '@fortawesome/free-regular-svg-icons';
-import { faCloudMoon, faEyeSlash, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
+import { faCloudMoon, faEyeSlash, faEllipsisVertical, faXmark } from '@fortawesome/free-solid-svg-icons';
 import appLogo from '../assets/logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import Column, { IElement } from '../Components/Column';
+import * as _ from "radash";
 
 const Home = () => {
 
     const navigate = useNavigate();
     // CHANGER DATA
-    const [data, setData] = useState<IElement[]>([]);
+
+    const DEFAULT_COLUMN = "afaire";
+
+    const [data, setData] = useState<IElement[]>([{
+        id: "12",
+        content: "Hello world 1",
+        column: DEFAULT_COLUMN,
+      },
+      {
+        id: "11",
+        content: "Hello world 2",
+        column: DEFAULT_COLUMN,
+      },]);
+
+
+
+
+
     const handleOnDragEnd = useCallback(
         ({ active, over }: DragEndEvent) => {
             const elementId = active.id;
@@ -36,22 +54,23 @@ const Home = () => {
     type DecodedToken = {userId: string, token: Token};
     type NewBoardInput = {title: string, description: string};
     type NewColumnInput = {name: string, color: string, position: string};
+    type NewTaskInput = {title: string, description: string, subTasks: string[], status: number};
     type Board = {id: string, title: string, columns: string[], columnsColor: string[], updatedAt: number}
 
     const [actualUser, setActualUser] = useState<DecodedToken>({ userId: "", token: {version: "", content: ""} });
     const [toggleNewBoardModal, setToggleNewBoardModal] = useState<boolean>(false);
     const [toggleNewColumnModal, setToggleNewColumnModal] = useState<boolean>(false);
+    const [toggleNewTaskModal, setToggleNewTaskModal] = useState<boolean>(false);
     const [newBoardInput, setNewBoardInput] = useState<NewBoardInput>({ title: "", description: "" });
     const [newColumnInput, setNewColumnInput] = useState<NewColumnInput>({ name: "", color: "#000", position: "start"});
+    const [newTaskInput, setNewTaskInput] = useState<NewTaskInput>({title: "", description: "", subTasks: ["", ""], status: 0});
     const [boards, setBoards] = useState<Board[]>([]);
     const [allBoards, setAllBoards] = useState<Board[]>([]);
     const [activProject, setActivProject] = useState<Board>({id: "", title: "", columns: [], columnsColor: [], updatedAt: 0});
     const [darkMod, setDarkMod] = useState<boolean>(false);
     const [displayAllBoard, setDisplayAllBoard] = useState<boolean>(false);
 
-    useEffect(() => {
-        console.log("1");
-        
+    useEffect(() => {        
         if (localStorage.getItem('react_kanban_token') !== null) {
             let getToken = localStorage.getItem('react_kanban_token') || "";
             
@@ -60,17 +79,12 @@ const Home = () => {
                 content: JSON.parse(getToken).content
             }
             
-            console.log("2", getToken);
             let token: StoredToken = tokenObj;
             if (token !== null) {
-                console.log("3");
                 let decodedToken: DecodedToken = decodeToken(token.version) || {userId: "",token: {version: "", content: ""}};
                 let isTokenExpired = isExpired(token.version);
-                console.log("decodedToken", decodedToken);
-                console.log("dec", decodedToken.userId);
-                console.log("tok", token.content );
+
                 if (decodedToken.userId !== token.content || isTokenExpired === true) {
-                    console.log("4");
                     // DISCONNECT
                     localStorage.removeItem('react_kanban_token');
                     return navigate('/connexion', { replace: true });
@@ -83,13 +97,11 @@ const Home = () => {
                 getAllProjects(user.userId, user.token.version);
                 
             } else {
-                console.log("5");
                 // DISCONNECT
                 localStorage.removeItem('react_kanban_token');
                 navigate('/connexion', { replace: true });
             };
         } else {
-            console.log("6");
             // DISCONNECT
             navigate('/connexion', { replace: true });
         };   
@@ -157,6 +169,18 @@ const Home = () => {
         }
 
         setToggleNewColumnModal(!toggleNewColumnModal);
+        
+    };
+
+    /**
+     * toggle modal for create new task
+     */
+    const toggleModalNewTask = () => {        
+        if (toggleNewTaskModal) {
+            setNewTaskInput({title: "", description: "", subTasks: ["", ""], status: 0});
+        }
+
+        setToggleNewTaskModal(!toggleNewTaskModal);
         
     };
 
@@ -334,6 +358,119 @@ const Home = () => {
     };
 
     /**
+     * control new task input
+     * 
+     * @param action 
+     * @param value 
+     */
+    const ctrlNewTaskInput = (action: string, value: string, subInd?: number) => {       
+        if (action === 'title') {
+            const newObj: NewTaskInput = {
+                ...newTaskInput,
+                title: value
+            }
+            setNewTaskInput(newObj);
+        } else if (action === 'description') {
+            const newObj: NewTaskInput = {
+                ...newTaskInput,
+                description: value
+            }
+            setNewTaskInput(newObj);
+        } if (action === "subTask" && subInd !== undefined) {
+            let arr = newTaskInput.subTasks;
+            arr[subInd] = value;
+            
+            const newObj: NewTaskInput = {
+                ...newTaskInput,
+                subTasks: arr
+            }
+            setNewTaskInput(newObj);
+        } if (action === "status") {            
+            const newObj: NewTaskInput = {
+                ...newTaskInput,
+                status: parseInt(value)
+            }
+            setNewTaskInput(newObj);
+        }
+    };
+
+    /**
+     * validate new task input before create new task
+     * 
+     * @param e 
+     */
+    const validateNewTask = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        const errorCont = document.querySelector('.home__modalNewTask__modal__errorCont');
+
+        if (errorCont) {
+            let error = "";
+            errorCont.innerHTML = "";
+
+            if (newTaskInput.title === "") {
+                return errorCont.innerHTML = `<p>- le titre est requis.</p>`;
+            }
+            
+            if (newTaskInput.subTasks.length > 0) {
+                for (let i = 0; i < newTaskInput.subTasks.length; i++) {
+                    if (newTaskInput.subTasks[i] === "") {
+                        return errorCont.innerHTML = `<p>- Tous les champs de sous tache sont requis.</p>`;
+                    }
+                }
+            }
+
+            if (newTaskInput.title.length < 2 || newTaskInput.title.length > 100) {
+                error = `<p>- La taille du titre doit etre comprise entre 2 et 100 caractères.</p>`;
+            } else if (!newTaskInput.title.match(/^[\wé èà\-\']*$/i)) {
+                error = `<p>- Le titre ne doit contenir que des lettres et des chiffres.</p>`;
+            }
+            
+            if (newTaskInput.description.length > 100) {
+                error += `<p>- La description ne doit contenir que 100 caractères maximum.</p>`;   
+            } else if (!newTaskInput.description.match(/^[\wé èà\-\']*$/im)) {
+                error += `<p>- La description ne doit contenir que des lettres et des chiffres.</p>`;
+            }
+            
+            if (newTaskInput.subTasks.length > 0) {
+                for (let i = 0; i < newTaskInput.subTasks.length; i++) {
+                    if (newTaskInput.subTasks[i].length < 2 || newTaskInput.subTasks[i].length > 100) {
+                        error += `<p>- Les champs de sous tache ne doivent contenir que des lettres et des chiffres, et etre d'une taille comprise entre 2 et 100 caractères.</p>`;
+                        break;
+                    } else if (!newTaskInput.title.match(/^[\wé èà\-\']*$/i)) {
+                        error += `<p>- Les champs de sous tache ne doivent contenir que des lettres et des chiffres, et etre d'une taille comprise entre 2 et 100 caractères.</p>`;
+                        break;
+                    }
+                }             
+            }
+
+            if (error !== "") {
+                return errorCont.innerHTML = error;
+            }
+
+            tryToCreateNewTask();
+        }        
+    };
+
+    const tryToCreateNewTask = () => {
+        fetch(process.env.REACT_APP_API_URL + "/api/task/create/" + activProject.id, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + actualUser.token.version,
+            },
+            method: "POST",
+            body: JSON.stringify({ title: newTaskInput.title, description: newTaskInput.description, subTask: newTaskInput.subTasks, status: activProject.columns[newTaskInput.status], userId: actualUser.userId })
+        })
+            .then(res => {
+                if (res.status === 201) {
+                    setNewTaskInput({title: "", description: "", subTasks: ["", ""], status: 0});
+                    toggleModalNewTask();
+                }
+            })        
+    };
+
+    /**
      * create on database, one new column for one project
      */
     const tryToCreateNewColumn = () => {
@@ -427,6 +564,41 @@ const Home = () => {
         }
     };
 
+    /**
+     * add subtask field to new task form
+     */
+    const addSubtaskField = () => {
+        let arr = newTaskInput.subTasks;
+        arr.push("");
+
+        const newObj: NewTaskInput = {
+            ...newTaskInput,
+            subTasks: arr
+        }
+        setNewTaskInput(newObj); 
+    };
+
+    /**
+     * remove subtask field to new task form
+     */
+    const removeSubtaskField = (ind: number) => {
+        console.log("----------------");
+        
+        const arr = newTaskInput.subTasks;
+        console.log(ind);
+        console.log(arr);
+        const arrFiltered = arr.filter((el, elInd) => {
+            return elInd !== ind;
+        });
+        
+        console.log(arrFiltered);
+       const newObj: NewTaskInput = {
+            ...newTaskInput,
+            subTasks: arrFiltered
+        }
+        setNewTaskInput(newObj); 
+    };
+
     return (
         <>
         <main className='home'>
@@ -493,7 +665,7 @@ const Home = () => {
                         <>
                         <h2 className={darkMod ? "home__right__header__title home__right__header__title--dark" : "home__right__header__title home__right__header__title--light"}>{ activProject.title }</h2>
                         <div className='home__right__header__right'>
-                            <input className='home__right__header__right__newBtn' type="button" value="Ajouter une tache" />
+                            <input onClick={toggleModalNewTask} className='home__right__header__right__newBtn' type="button" value="Ajouter une tache" />
                             <FontAwesomeIcon icon={faEllipsisVertical} className="home__right__header__right__menuBtn" />
                             <div className="home__right__header__right__menu"></div>
                         </div>
@@ -506,7 +678,11 @@ const Home = () => {
                             {
                                 activProject.columns.map((el, columnIndex) => {
                                         return (
-                                            <Column key={`column-${columnIndex}`} heading={el} elements={[]} columnsColor={activProject.columnsColor[columnIndex]} />
+                                            <Column key={`column-${columnIndex}`} heading={el} darkMod={darkMod} elements={_.select(
+                                                data,
+                                                (elm) => elm,
+                                                (f) => f.column === _.camel(el)
+                                              )} columnsColor={activProject.columnsColor[columnIndex]} />
                                         )
                                 })
                             }
@@ -577,6 +753,55 @@ const Home = () => {
             </div>
         }
         {/* modal new column ended */}
+        {/* modal new task start */}
+        {
+            toggleNewTaskModal &&
+            <div className="home__modalNewTask">
+                <div className={darkMod ? "home__modalNewTask__modal home__modalNewTask__modal--dark" : "home__modalNewTask__modal home__modalNewTask__modal--light"}>
+                    <input className='home__modalNewTask__modal__closeBtn' onClick={toggleModalNewTask} type="button" value="X" />
+                    <h2>Ajouter une tache</h2>
+                    <div className='home__modalNewTask__modal__errorCont'></div>
+                    <form className='home__modalNewTask__modal__form' onSubmit={validateNewTask}>
+                        <div className="home__modalNewTask__modal__form__inputCont">
+                            <label htmlFor="newTaskTitle">Titre *</label>
+                            <input onInput={(e) => ctrlNewTaskInput("title", (e.target as HTMLInputElement).value)} value={newTaskInput.title} type="text" id="newTaskTitle" placeholder='e.g. Planter des tomates' />
+                        </div>
+                        <div className="home__modalNewTask__modal__form__inputCont">
+                            <label htmlFor="newTaskDescription">Description</label>
+                            <textarea onInput={(e) => ctrlNewTaskInput("description", (e.target as HTMLInputElement).value)} value={newTaskInput.description} id="newTaskDescription" placeholder='e.g. Faire un trou de minimum 20cm.'/>
+                        </div>
+                        <div className="home__modalNewTask__modal__form__checkList">
+                            <label htmlFor="newTaskCheckList">Check-list</label>
+                            <div className='home__modalNewTask__modal__form__checkList__cont' id='newTaskCheckList'>
+                                {
+                                    newTaskInput.subTasks.map((el, elInd) => {
+                                        return <div key={"task" + elInd} className='home__modalNewTask__modal__form__checkList__cont__inputCont'>
+                                            <input onInput={(e) => ctrlNewTaskInput("subTask", (e.target as HTMLInputElement).value, elInd)} value={el} type="text" placeholder='e.g. creuser un trou.' />
+                                            <div className="home__modalNewTask__modal__form__checkList__cont__inputCont__closeCont">
+                                                <FontAwesomeIcon onClick={(e) => removeSubtaskField(elInd)} icon={faXmark} className="home__modalNewTask__modal__form__checkList__cont__inputCont__closeCont__closeBtn" />
+                                            </div>
+                                        </div>
+                                    })
+                                }
+                                <input onClick={addSubtaskField} className={darkMod ? "home__modalNewTask__modal__form__checkList__cont__addSubBtn home__modalNewTask__modal__form__checkList__cont__addSubBtn--dark" : "home__modalNewTask__modal__form__checkList__cont__addSubBtn home__modalNewTask__modal__form__checkList__cont__addSubBtn--light"} type="button" value="Ajouter une sous tache" />
+                            </div>
+                        </div>
+                        <div className="home__modalNewTask__modal__form__status">
+                            <label htmlFor="">Status</label>
+                            <select onChange={(e) => ctrlNewTaskInput("status", (e.target as HTMLSelectElement).value)} value={newTaskInput.status} className={darkMod ? "home__modalNewTask__modal__form__status__select home__modalNewTask__modal__form__status__select--dark" : "home__modalNewTask__modal__form__status__select home__modalNewTask__modal__form__status__select--light"} id="">
+                                {
+                                    activProject.columns.map((el, elInd) => {
+                                        return <option key={"opt" + elInd} value={elInd}>{el}</option>
+                                    })
+                                }
+                            </select>
+                        </div>
+                        <input className='home__modalNewTask__modal__form__submitBtn' type="submit" value="Créer tache" />
+                    </form>
+                </div>
+            </div>
+        }
+        {/* modal new task ended */}
         </>
     );
 };

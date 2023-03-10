@@ -333,4 +333,87 @@
             }
         }
     }
+    &__modalNewTask {
+        @include modal;
+        &__modal {
+            &__form {
+                &__checkList {
+                    margin-top: 22px;
+                    label {
+                        font-size: 0.85em;
+                    }
+                    &__cont {
+                        margin-top: 9px;
+                        &__inputCont {
+                            width: 100%;
+                            display: flex;
+                            justify-content: space-between;
+                            margin-bottom: 11px;
+                            input[type=text] {
+                                height: 30px;
+                                width: 82%;
+                                @include inputCont;
+                            }
+                            &__closeCont {
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                width: 20px;
+                                cursor: pointer;
+                                color: map-get($map: $colors, $key:gray-dark );
+                                transition: all 120ms ease-in-out;
+                                &__closeBtn {
+                                    font-size: 1.3em;
+                                }
+                                &:hover {
+                                    transition: all 120ms ease-in-out;
+                                    color: darken($color: map-get($map: $colors, $key:gray-dark ), $amount: 20);
+                                }
+                            }
+                        }
+                        &__addSubBtn {
+                            width: 100%;
+                            border: none;
+                            height: 35px;
+                            border-radius: 35px;
+                            font-weight: 500;
+                            cursor: pointer;
+                            background: map-get($map: $colors, $key:light-white );
+                            color: map-get($map: $colors, $key: blue-dark);     
+                            transition: all 120ms ease-in-out;
+                            &--light {
+                                border: 1px solid map-get($map: $colors, $key:blue-dark );
+                            }
+                            &:hover {
+                                transition: all 120ms ease-in-out;
+                                background:  lighten(map-get($map: $colors, $key: blue-dark), 30);
+                            }
+                        }
+                    }
+                }
+                &__status {
+                    display: flex;
+                    flex-direction: column;
+                    margin-top: 22px;
+                    label {
+                        font-size: 0.85em;
+                        margin-bottom: 9px;
+                    }
+                    &__select {
+                        height: 33px;
+                        background: inherit;
+                        padding: 0 15px;
+                        border: 1px solid map-get($map: $colors, $key: gray-light);
+                        border-radius: 5px;
+                        &--dark {
+                            color: map-get($map: $colors, $key: light-white);
+                        }
+                        &--light {
+                            color: map-get($map: $colors, $key: light-black);
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

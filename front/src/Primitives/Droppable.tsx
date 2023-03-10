@@ -17,7 +17,7 @@ const Droppable: FC<IDroppable> = ({ id, children }) => {
     );
 
     return (
-        <div ref={setNodeRef} style={style}>
+        <div ref={setNodeRef} style={style} className="droppable">
             {children}
         </div>
     );

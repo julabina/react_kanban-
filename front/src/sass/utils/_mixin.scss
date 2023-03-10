@@ -31,8 +31,9 @@
         }
         &__errorCont {
             font-size: 0.8em;
-            height: 13px;
+            min-height: 13px;
             margin-top: 13px;
+            max-width: 410px;
             color: map-get($map: $colors, $key: error);
         }
         h2{
@@ -43,17 +44,20 @@
             &__inputCont {
                 display: flex;
                 flex-direction: column;
-                margin-top: 30px;
+                margin-top: 22px;
                 label {
                     font-size: 0.85em;
                     margin-bottom: 9px;
                 }
                 input {
                     height: 30px;
+                    width: 380px;
                     @include inputCont;
                 }
                 textarea {
+                    resize: none;
                     height: 80px;
+                    width: 380px;
                     @include inputCont;
                 }
                 &:first-child {
@@ -94,7 +98,6 @@
     border-radius: 6px;
     padding: 0 15px;
     color: map-get($map: $colors, $key:light-white );
-    width: 380px;
     &::placeholder {
         color: map-get($map: $colors, $key: gray-light);
     }
