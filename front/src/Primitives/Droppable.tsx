@@ -12,6 +12,7 @@ const Droppable: FC<IDroppable> = ({ id, children }) => {
     const style = useMemo(
         () => ({
         opacity: isOver ? 0.5 : 1,
+        backgroundColor: isOver ? "blue" : ""
         }),
         [isOver]
     );

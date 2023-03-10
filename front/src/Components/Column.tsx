@@ -58,15 +58,14 @@ const Column: FC<IColumn> = ({ id, heading, elements, columnsColor, darkMod }) =
             </div>
             <Droppable id={columnIdentifier}>
                 {elements.map((elm, elmIndex) => (
-                    <DraggableElement
-                        key={`draggable-element-${elmIndex}-${columnIdentifier}`}
-                        identifier={elm.id}
-                        content={elm.content}
-                        subTasks={elm.subTasks}
-                        darkMod={darkMod}
-                    />
-                        
-                            
+                        <DraggableElement
+                            key={`draggable-element-${elmIndex}-${columnIdentifier}`}
+                            identifier={elm.id}
+                            content={elm.content}
+                            subTasks={elm.subTasks}
+                            darkMod={darkMod}
+                            columnId={id}
+                        />        
                     ))}
             </Droppable>
         </div>

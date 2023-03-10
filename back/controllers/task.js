@@ -53,3 +53,44 @@ exports.create = (req, res, next) => {
         })
         .catch(error => res.status(500).json({ message: error }));
 };
+
+/**
+ * update one task column position
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+exports.updatePosition = (req, res, next) => {
+    console.log(req.body);
+    if (req.body.tasks === undefined) {
+        const message = "Toutes les informations n'ont pas été envoyées.";
+        return res.status(401).json({ message }); 
+    }
+
+    Task.findOne({ where: { id: req.body.tasks.id } })
+        .then(task => {
+            if (task === null) {
+                const message = "Aucune tache trouvée.";
+                return res.status(404).json({ message });
+            }
+           
+            task.status = req.body.tasks.column;
+
+            task.save()
+                .then(() => {
+                    const message = "Tache bien modifiée.";
+                    res.status(201).json({ message });
+                })
+                .catch(error => {
+                    if (error instanceof ValidationError) {
+                        return res.status(401).json({ message: error.message, data: error }); 
+                    }
+                    if (error instanceof UniqueConstraintError) {
+                        return res.status(401).json({ message: error.message, data: error });
+                    }
+                    res.status(500).json({ message: "Une erreur est survenue lors de la création de la tache.", error });
+                });
+        })
+        .catch(error => res.status(500).json({ message: error }));
+};

@@ -41,8 +41,8 @@ const Home = () => {
     const handleOnDragEnd = useCallback(
         ({ active, over }: DragEndEvent) => {
             const elementId = active.id;
-            const deepCopy = [...tasks];
-        
+            const deepCopy = [...tasks];  
+                    
             const updatedState = deepCopy.map((elm): IElement => {
                 if (elm.id === elementId) {
                     const column = over?.id ? String(over.id) : elm.column;
@@ -50,7 +50,13 @@ const Home = () => {
                 }
                 return elm;
             });
-        
+
+            
+            const elementIdFiltered = updatedState.filter(el => {
+                return el.id === elementId;
+            });
+            
+            updateTaskPosition(elementIdFiltered[0]);
             setTasks(updatedState);
         },
         [tasks, setTasks]
@@ -165,7 +171,6 @@ const Home = () => {
                     setColumns(colArr);
 
                     if (data.data[1] && data.data[1].length !== 0) {
-                        console.log(data.data[1][0]);
                         
                         let arr: IElement[] = [];
                         
@@ -186,6 +191,23 @@ const Home = () => {
                     }
                 }
             })
+    };
+
+    /**
+     * Update task position after drag and drop
+     * 
+     * @param tasks 
+     */
+    const updateTaskPosition = (tasks: IElement) => {
+        fetch(process.env.REACT_APP_API_URL + "/api/task/updatePosition", {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + actualUser.token.version,
+            },
+            method: "PUT",
+            body: JSON.stringify({ tasks })
+        })  
     };
 
     /**

@@ -7,22 +7,24 @@ interface IDraggableElement {
   content: string;
   subTasks: string[];
   darkMod: boolean;
+  columnId: string;
 }
 const DraggableElement: FC<IDraggableElement> = ({
     identifier,
     content,
     subTasks,
-    darkMod
+    darkMod,
+    columnId
   }) => {
     const itemIdentifier = useMemo(() => identifier, [identifier]);
-
+    
     return (
       <>
         <Draggable id={itemIdentifier}>
-          <div className={darkMod ? "draggableElement draggableElement--dark" : "draggableElement draggableElement--light"}>
-              <h3>{ content }</h3>
-              <p>0 sur {subTasks.length} sous taches.</p>
-          </div>
+            <div className={darkMod ? "draggableElement draggableElement--dark" : "draggableElement draggableElement--light"}>
+                <h3>{ content }</h3>
+                <p>0 sur {subTasks.length} sous taches.</p>
+            </div>
         </Draggable>
       </>
     );

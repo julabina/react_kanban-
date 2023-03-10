@@ -20,8 +20,8 @@ const Draggable: FC<IDraggable> = ({ id, children }) => {
     }, [transform]);
 
     const test = () => {
-        console.log("test" + id);
-      };
+
+    };
 
     return (
         <>
@@ -29,7 +29,7 @@ const Draggable: FC<IDraggable> = ({ id, children }) => {
             <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
                 {children}
             </div>
-            <input onClick={test}  style={style} type="button" value="TEST" />
+            <input onClick={test} type="button" value="TEST" />
         </div>
         </>
     );
