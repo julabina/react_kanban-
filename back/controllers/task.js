@@ -2,6 +2,14 @@ const { v4 } = require('uuid');
 const { Task, Project } = require('../db/sequelize');
 const { ValidationError, UniqueConstraintError } = require('sequelize');
 
+/**
+ * create one task for one project
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ * @returns 
+ */
 exports.create = (req, res, next) => {
     if (req.body.title === undefined || req.body.description === undefined || req.body.subTask === undefined || req.body.status === undefined || req.body.userId === undefined) {
         const message = "Toutes les informations n'ont pas été envoyées.";

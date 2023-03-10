@@ -44,16 +44,6 @@ module.exports = (sequelize, DataTypes) => {
                 this.setDataValue('columns', columns.join())
             }
         },
-        columnsColor: {
-            type: DataTypes.TEXT,
-            allowNull: true,
-            get() {
-                return this.getDataValue('columnsColor').split(',')
-            },
-            set(columnsColor) {
-                this.setDataValue('columnsColor', columnsColor.join())
-            }
-        },
     },{
         timestamps: true,
         createdAt: 'createdAt',

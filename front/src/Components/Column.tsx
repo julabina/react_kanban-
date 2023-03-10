@@ -8,18 +8,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 export interface IElement {
   id: string;
   content: string;
+  description: string;
   column: string;
+  subTasks: string[];
 }
 
 interface IColumn {
+    id: string;
     heading: string;
     columnsColor: string;
     elements: IElement[];
     darkMod: boolean;
 }
 
-const Column: FC<IColumn> = ({ heading, elements, columnsColor, darkMod }) => {
-    const columnIdentifier = useMemo(() => _.camel(heading), [heading]);
+const Column: FC<IColumn> = ({ id, heading, elements, columnsColor, darkMod }) => {
+    const columnIdentifier = useMemo(() => _.camel(id), [id]);   
+    console.log(elements);     
 
     const amounts = useMemo(
         () => elements.filter((elm) => elm.column === columnIdentifier).length,
@@ -57,6 +61,7 @@ const Column: FC<IColumn> = ({ heading, elements, columnsColor, darkMod }) => {
                         key={`draggable-element-${elmIndex}-${columnIdentifier}`}
                         identifier={elm.id}
                         content={elm.content}
+                        subTasks={elm.subTasks}
                         darkMod={darkMod}
                     />
                 ))}

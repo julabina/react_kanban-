@@ -12,42 +12,6 @@ import * as _ from "radash";
 const Home = () => {
 
     const navigate = useNavigate();
-    // CHANGER DATA
-
-    const DEFAULT_COLUMN = "afaire";
-
-    const [data, setData] = useState<IElement[]>([{
-        id: "12",
-        content: "Hello world 1",
-        column: DEFAULT_COLUMN,
-      },
-      {
-        id: "11",
-        content: "Hello world 2",
-        column: DEFAULT_COLUMN,
-      },]);
-
-
-
-
-
-    const handleOnDragEnd = useCallback(
-        ({ active, over }: DragEndEvent) => {
-            const elementId = active.id;
-            const deepCopy = [...data];
-        
-            const updatedState = deepCopy.map((elm): IElement => {
-                if (elm.id === elementId) {
-                const column = over?.id ? String(over.id) : elm.column;
-                return { ...elm, column };
-                }
-                return elm;
-            });
-        
-            setData(updatedState);
-        },
-        [data, setData]
-    );
 
     type StoredToken = {version: string, content: string};
     type Token = {version: string, content: string};
@@ -55,20 +19,41 @@ const Home = () => {
     type NewBoardInput = {title: string, description: string};
     type NewColumnInput = {name: string, color: string, position: string};
     type NewTaskInput = {title: string, description: string, subTasks: string[], status: number};
-    type Board = {id: string, title: string, columns: string[], columnsColor: string[], updatedAt: number}
+    type Board = {id: string, title: string, columns: string[], updatedAt: number};
+    type Columns = {id: string, name: string, color: string};
 
     const [actualUser, setActualUser] = useState<DecodedToken>({ userId: "", token: {version: "", content: ""} });
     const [toggleNewBoardModal, setToggleNewBoardModal] = useState<boolean>(false);
     const [toggleNewColumnModal, setToggleNewColumnModal] = useState<boolean>(false);
     const [toggleNewTaskModal, setToggleNewTaskModal] = useState<boolean>(false);
     const [newBoardInput, setNewBoardInput] = useState<NewBoardInput>({ title: "", description: "" });
-    const [newColumnInput, setNewColumnInput] = useState<NewColumnInput>({ name: "", color: "#000", position: "start"});
+    const [newColumnInput, setNewColumnInput] = useState<NewColumnInput>({ name: "", color: "white", position: "start"});
     const [newTaskInput, setNewTaskInput] = useState<NewTaskInput>({title: "", description: "", subTasks: ["", ""], status: 0});
     const [boards, setBoards] = useState<Board[]>([]);
     const [allBoards, setAllBoards] = useState<Board[]>([]);
-    const [activProject, setActivProject] = useState<Board>({id: "", title: "", columns: [], columnsColor: [], updatedAt: 0});
+    const [activProject, setActivProject] = useState<Board>({id: "", title: "", columns: [], updatedAt: 0});
     const [darkMod, setDarkMod] = useState<boolean>(false);
     const [displayAllBoard, setDisplayAllBoard] = useState<boolean>(false);
+    const [tasks, setTasks] = useState<IElement[]>([]);
+    const [columns, setColumns] = useState<Columns[]>([]);
+
+    const handleOnDragEnd = useCallback(
+        ({ active, over }: DragEndEvent) => {
+            const elementId = active.id;
+            const deepCopy = [...tasks];
+        
+            const updatedState = deepCopy.map((elm): IElement => {
+                if (elm.id === elementId) {
+                    const column = over?.id ? String(over.id) : elm.column;
+                    return { ...elm, column };
+                }
+                return elm;
+            });
+        
+            setTasks(updatedState);
+        },
+        [tasks, setTasks]
+    );
 
     useEffect(() => {        
         if (localStorage.getItem('react_kanban_token') !== null) {
@@ -130,7 +115,6 @@ const Home = () => {
                             id: data.data[i].id,
                             title: data.data[i].title,
                             columns: data.data[i].columns,
-                            columnsColor: data.data[i].columnsColor,
                             updatedAt: Math.floor((new Date(data.data[i].updatedAt)).getTime() / 1000)
                         };
 
@@ -144,6 +128,61 @@ const Home = () => {
                     setBoards(firstBoard);                    
                     setAllBoards(newArr);
                     setActivProject(firstBoard[0]);
+                    getAllColumns(firstBoard[0].id, token);
+                }
+            })
+    };
+
+    /**
+     * get all task for one project
+     */
+    const getAllColumns = (id: string, token: string) => {
+        fetch(process.env.REACT_APP_API_URL + "/api/column/getAll/" + id, {
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+            method: "GET"
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.data[0] && data.data[0].length !== 0) {
+                    console.log(data.data[0]);
+                    
+                    let colArr: Columns[] = [];
+
+                    for (let i = 0; i < data.data[0].length; i++) {
+                        const newObj: Columns = {
+                            id: data.data[0][i].id.toString(),
+                            name: data.data[0][i].name,
+                            color: data.data[0][i].color
+                        };
+
+                        colArr.push(newObj);
+                        
+                    }
+                    
+                    setColumns(colArr);
+
+                    if (data.data[1] && data.data[1].length !== 0) {
+                        console.log(data.data[1][0]);
+                        
+                        let arr: IElement[] = [];
+                        
+                        for (let i = 0; i < data.data[1].length; i++) {
+                            const newObj: IElement = {
+                                id: data.data[1][i].id,
+                                content: data.data[1][i].title,
+                                description: data.data[1][i].description,
+                                column: data.data[1][i].status,
+                                subTasks: data.data[1][i].subTask,
+                            };                            
+                            
+                            arr.push(newObj);
+                        }
+                        
+                        setTasks(arr);
+                        
+                    }
                 }
             })
     };
@@ -452,6 +491,9 @@ const Home = () => {
         }        
     };
 
+    /**
+     * create new task on database
+     */
     const tryToCreateNewTask = () => {
         fetch(process.env.REACT_APP_API_URL + "/api/task/create/" + activProject.id, {
             headers: {
@@ -466,6 +508,7 @@ const Home = () => {
                 if (res.status === 201) {
                     setNewTaskInput({title: "", description: "", subTasks: ["", ""], status: 0});
                     toggleModalNewTask();
+                    getAllColumns(activProject.id, actualUser.token.version);
                 }
             })        
     };
@@ -474,20 +517,22 @@ const Home = () => {
      * create on database, one new column for one project
      */
     const tryToCreateNewColumn = () => {
-        fetch(process.env.REACT_APP_API_URL + "/api/project/addColumn/" + activProject.id, {
+        console.log(newColumnInput);
+        
+        fetch(process.env.REACT_APP_API_URL + "/api/column/create/" + activProject.id, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 "Authorization": "Bearer " + actualUser.token.version,
             },
-            method: "PUT",
+            method: "POST",
             body: JSON.stringify({ name: newColumnInput.name, color: newColumnInput.color, position: newColumnInput.position })
         })
             .then(res => {
                 if (res.status === 201) {
                     getAllProjects(actualUser.userId, actualUser.token.version);
                     toggleModalNewColumn();
-                    setNewColumnInput({ name: "", color: "#000", position: "start"})
+                    setNewColumnInput({ name: "", color: "white", position: "start"})
                 } else {
 
                 }
@@ -508,7 +553,7 @@ const Home = () => {
         
         if (arrFinded !== undefined) {
             setActivProject(arrFinded);
-            
+            getAllColumns(arrFinded.id, actualUser.token.version);
         }
     };
 
@@ -676,13 +721,13 @@ const Home = () => {
                     <DndContext onDragEnd={handleOnDragEnd}>
                         <div className="home__right__main__container">
                             {
-                                activProject.columns.map((el, columnIndex) => {
+                                columns.map((el, columnIndex) => {                                        
                                         return (
-                                            <Column key={`column-${columnIndex}`} heading={el} darkMod={darkMod} elements={_.select(
-                                                data,
+                                            <Column key={`column-${columnIndex}`} id={el.id} heading={el.name} darkMod={darkMod} elements={_.select(
+                                                tasks,
                                                 (elm) => elm,
-                                                (f) => f.column === _.camel(el)
-                                              )} columnsColor={activProject.columnsColor[columnIndex]} />
+                                                (f) => f.column === _.camel(el.id)
+                                              )} columnsColor={el.color} />
                                         )
                                 })
                             }
@@ -740,8 +785,8 @@ const Home = () => {
                                 <select onChange={(e) => ctrlNewColInput("position", (e.target as HTMLSelectElement).value)} value={newColumnInput.position} className={darkMod ? 'home__modalNewColumn__modal__form__colOptions__position__select home__modalNewColumn__modal__form__colOptions__position__select--dark' : "home__modalNewColumn__modal__form__colOptions__position__select home__modalNewColumn__modal__form__colOptions__position__select--light"} id="newColumnSelect">
                                     <option value="start">Au début</option>
                                     {
-                                        activProject.columns.map((el, colInd) => {
-                                            return <option key={'col' + colInd} value={colInd}>Après { el }</option>
+                                        columns.map((el, colInd) => {
+                                            return <option key={'col' + colInd} value={colInd}>Après { el.name }</option>
                                         })
                                     }
                                 </select>
@@ -790,8 +835,8 @@ const Home = () => {
                             <label htmlFor="">Status</label>
                             <select onChange={(e) => ctrlNewTaskInput("status", (e.target as HTMLSelectElement).value)} value={newTaskInput.status} className={darkMod ? "home__modalNewTask__modal__form__status__select home__modalNewTask__modal__form__status__select--dark" : "home__modalNewTask__modal__form__status__select home__modalNewTask__modal__form__status__select--light"} id="">
                                 {
-                                    activProject.columns.map((el, elInd) => {
-                                        return <option key={"opt" + elInd} value={elInd}>{el}</option>
+                                    columns.map((el, elInd) => {
+                                        return <option key={"opt" + elInd} value={elInd}>{el.name}</option>
                                     })
                                 }
                             </select>
