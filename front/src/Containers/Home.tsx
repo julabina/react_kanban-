@@ -180,6 +180,7 @@ const Home = () => {
                                 content: data.data[1][i].title,
                                 description: data.data[1][i].description,
                                 column: data.data[1][i].status,
+                                checkedTask: data.data[1][i].checked,
                                 subTasks: data.data[1][i].subTask,
                             };                            
                             

@@ -38,3 +38,87 @@
         }
     }
 }
+
+.draggable {
+    position: relative;
+    &__taskBtn {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        right: 10px;
+        background: none;
+        border: none;
+        color: map-get($map: $colors, $key: gray-dark);
+        font-weight: 600;
+        font-size: 1.4em;
+        &:hover {
+            color: darken($color: map-get($map: $colors, $key: gray-dark), $amount: 20);
+        }
+    }
+    &__taskMenu {
+        z-index: 100;
+        @include modal;
+        &__modal {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 300px;
+            &__titleCont {
+                margin-top: 30px;
+                padding-bottom: 30px;
+                &__input {
+                    input[type=text] {
+                        height: 30px;
+                        width: 380px;
+                        @include inputCont;
+                    }
+                    &__btnCont {
+                        display: flex;
+                        justify-content: space-between;
+                        margin-top: 15px;
+                        input {
+                            height: 30px;
+                            width: 48%;
+                            background: inherit;
+                            border: 1px solid darken($color:map-get($map: $colors, $key: gray-dark) , $amount: 20);
+                            border-radius: 8px;
+                            padding: 0 15px;
+                            color: darken($color:map-get($map: $colors, $key: gray-dark) , $amount: 20);
+                            cursor: pointer;
+                            transition: all 120ms ease-in-out;
+                            &:hover {
+                                transition: all 120ms ease-in-out;
+                                border-color: map-get($map: $colors, $key: gray-dark);
+                                color: map-get($map: $colors, $key: gray-dark);
+                            }
+                        }
+                    }
+                }
+                &__content {
+                    display: flex;
+                    h2 {
+                        &::first-letter {
+                            text-transform: uppercase;
+                        }
+                    }
+                    &__btn {
+                        margin: 5px 0 0 10px;
+                        cursor: pointer;
+                        &:hover {
+                            color: map-get($map: $colors, $key:gray-dark );
+                        }
+                    }
+                }
+            }
+            &__subTasks {
+                min-width: 200px;
+                &__check {
+                    margin-bottom: 7px;
+                    label {
+                        margin-left: 4px;
+                    }
+                }
+            }
+        }
+    }
+}

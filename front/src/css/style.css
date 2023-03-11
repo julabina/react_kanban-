@@ -179,6 +179,198 @@ html, body {
   background: rgba(205, 209, 217, 0.4392156863);
 }
 
+.draggable {
+  position: relative;
+}
+.draggable__taskBtn {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #939CAD;
+  font-weight: 600;
+  font-size: 1.4em;
+}
+.draggable__taskBtn:hover {
+  color: #5e687c;
+}
+.draggable__taskMenu {
+  z-index: 100;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: #000000b6;
+}
+.draggable__taskMenu__modal {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 40px 30px;
+  border-radius: 6px;
+}
+.draggable__taskMenu__modal__closeBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  text-align: center;
+  font-weight: 700;
+  height: 22px;
+  width: 22px;
+  background: inherit;
+  border: 2px solid #635EC6;
+  border-radius: 50%;
+  color: #635EC6;
+  cursor: pointer;
+  transition: all 120ms ease-in-out;
+}
+.draggable__taskMenu__modal__closeBtn:hover {
+  transition: all 120ms ease-in-out;
+  border-color: #36328c;
+  color: #36328c;
+}
+.draggable__taskMenu__modal__errorCont {
+  font-size: 0.8em;
+  min-height: 13px;
+  margin-top: 13px;
+  max-width: 410px;
+  color: #c41b1b;
+}
+.draggable__taskMenu__modal h2 {
+  font-size: 1.3em;
+  font-weight: 600;
+}
+.draggable__taskMenu__modal__form__inputCont {
+  display: flex;
+  flex-direction: column;
+  margin-top: 22px;
+}
+.draggable__taskMenu__modal__form__inputCont label {
+  font-size: 0.85em;
+  margin-bottom: 9px;
+}
+.draggable__taskMenu__modal__form__inputCont input {
+  height: 30px;
+  width: 380px;
+  background: inherit;
+  border: 1px solid #939cad70;
+  border-radius: 6px;
+  padding: 0 15px;
+  color: #ffffff;
+}
+.draggable__taskMenu__modal__form__inputCont input::placeholder {
+  color: #939cad70;
+}
+.draggable__taskMenu__modal__form__inputCont textarea {
+  resize: none;
+  height: 80px;
+  width: 380px;
+  background: inherit;
+  border: 1px solid #939cad70;
+  border-radius: 6px;
+  padding: 0 15px;
+  color: #ffffff;
+}
+.draggable__taskMenu__modal__form__inputCont textarea::placeholder {
+  color: #939cad70;
+}
+.draggable__taskMenu__modal__form__inputCont:first-child {
+  margin-top: 8px;
+}
+.draggable__taskMenu__modal__form__submitBtn {
+  background: #635EC6;
+  border: none;
+  font-weight: 500;
+  color: #ffffff;
+  height: 42px;
+  width: 100%;
+  border-radius: 42px;
+  margin-top: 30px;
+  cursor: pointer;
+  transition: all 150ms ease-in-out;
+}
+.draggable__taskMenu__modal__form__submitBtn:hover {
+  transition: all 150ms ease-in-out;
+  background: #453fb2;
+}
+.draggable__taskMenu__modal--dark {
+  background: #2C2C37;
+  color: #ffffff;
+}
+.draggable__taskMenu__modal--light {
+  background: #ffffff;
+  color: light-black;
+}
+.draggable__taskMenu__modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 300px;
+}
+.draggable__taskMenu__modal__titleCont {
+  margin-top: 30px;
+  padding-bottom: 30px;
+}
+.draggable__taskMenu__modal__titleCont__input input[type=text] {
+  height: 30px;
+  width: 380px;
+  background: inherit;
+  border: 1px solid #939cad70;
+  border-radius: 6px;
+  padding: 0 15px;
+  color: #ffffff;
+}
+.draggable__taskMenu__modal__titleCont__input input[type=text]::placeholder {
+  color: #939cad70;
+}
+.draggable__taskMenu__modal__titleCont__input__btnCont {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+.draggable__taskMenu__modal__titleCont__input__btnCont input {
+  height: 30px;
+  width: 48%;
+  background: inherit;
+  border: 1px solid #5e687c;
+  border-radius: 8px;
+  padding: 0 15px;
+  color: #5e687c;
+  cursor: pointer;
+  transition: all 120ms ease-in-out;
+}
+.draggable__taskMenu__modal__titleCont__input__btnCont input:hover {
+  transition: all 120ms ease-in-out;
+  border-color: #939CAD;
+  color: #939CAD;
+}
+.draggable__taskMenu__modal__titleCont__content {
+  display: flex;
+}
+.draggable__taskMenu__modal__titleCont__content h2::first-letter {
+  text-transform: uppercase;
+}
+.draggable__taskMenu__modal__titleCont__content__btn {
+  margin: 5px 0 0 10px;
+  cursor: pointer;
+}
+.draggable__taskMenu__modal__titleCont__content__btn:hover {
+  color: #939CAD;
+}
+.draggable__taskMenu__modal__subTasks {
+  min-width: 200px;
+}
+.draggable__taskMenu__modal__subTasks__check {
+  margin-bottom: 7px;
+}
+.draggable__taskMenu__modal__subTasks__check label {
+  margin-left: 4px;
+}
+
 .home {
   display: flex;
 }

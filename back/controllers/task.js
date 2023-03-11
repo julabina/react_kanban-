@@ -26,12 +26,20 @@ exports.create = (req, res, next) => {
                 const message = "Requete non authorisée.";
                 return res.status(403).json({ message });
             }
+            let checkedArr = [];
+
+            if (req.body.subTask.length > 0) {
+                for (let i = 0; i < req.body.subTask.length; i++) {
+                    checkedArr.push("false");                    
+                }
+            }
 
             const task = new Task({
                 id: v4(),
                 projectId: project.id,
                 title: req.body.title,
                 description: req.body.description,
+                checked: checkedArr,
                 subTask: req.body.subTask,
                 status: req.body.status,
             });

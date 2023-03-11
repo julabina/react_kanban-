@@ -34,6 +34,16 @@ module.exports = (sequelize, DataTypes) => {
                 is: {args: /^[\wé èà\-\']*$/im, msg: "la description ne doit contenir que des lettres et des chiffres"}
             }
         },
+        checked: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+            get() {
+                return this.getDataValue('checked').split(',')
+            },
+            set(checked) {
+                this.setDataValue('checked', checked.join())
+            }
+        },
         subTask: {
             type: DataTypes.TEXT,
             allowNull: true,

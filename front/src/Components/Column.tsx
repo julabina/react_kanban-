@@ -12,6 +12,7 @@ export interface IElement {
   content: string;
   description: string;
   column: string;
+  checkedTask: string[];
   subTasks: string[];
 }
 
@@ -62,6 +63,7 @@ const Column: FC<IColumn> = ({ id, heading, elements, columnsColor, darkMod }) =
                             key={`draggable-element-${elmIndex}-${columnIdentifier}`}
                             identifier={elm.id}
                             content={elm.content}
+                            checkTasks={elm.checkedTask}
                             subTasks={elm.subTasks}
                             darkMod={darkMod}
                             columnId={id}

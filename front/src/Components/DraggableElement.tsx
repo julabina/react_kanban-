@@ -5,6 +5,7 @@ import Draggable from "../Primitives/Draggable";
 interface IDraggableElement {
   identifier: string;
   content: string;
+  checkTasks: string[];
   subTasks: string[];
   darkMod: boolean;
   columnId: string;
@@ -12,6 +13,7 @@ interface IDraggableElement {
 const DraggableElement: FC<IDraggableElement> = ({
     identifier,
     content,
+    checkTasks,
     subTasks,
     darkMod,
     columnId
@@ -20,10 +22,15 @@ const DraggableElement: FC<IDraggableElement> = ({
     
     return (
       <>
-        <Draggable id={itemIdentifier}>
+        <Draggable id={itemIdentifier} darkMod={darkMod} content={content} subTasks={subTasks} checkTasks={checkTasks}>
             <div className={darkMod ? "draggableElement draggableElement--dark" : "draggableElement draggableElement--light"}>
                 <h3>{ content }</h3>
-                <p>0 sur {subTasks.length} sous taches.</p>
+                {
+                  subTasks[0] !== "" ?
+                  <p>0 sur {subTasks.length} sous taches.</p>
+                  :
+                  <p>Aucune sous taches.</p>
+                }
             </div>
         </Draggable>
       </>
