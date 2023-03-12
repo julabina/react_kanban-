@@ -135,7 +135,8 @@ html, body {
 }
 
 .droppable {
-  min-height: 100px;
+  min-height: 90%;
+  border-radius: 8px;
 }
 
 .draggableElement {
@@ -198,6 +199,7 @@ html, body {
 }
 .draggable__taskMenu {
   z-index: 100;
+  z-index: 10;
   position: fixed;
   top: 0;
   left: 0;
@@ -375,6 +377,7 @@ html, body {
   display: flex;
 }
 .home__side {
+  z-index: 1;
   position: fixed;
   left: 0;
   display: flex;
@@ -705,6 +708,7 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   background: #F3F6FE;
 }
 .home__modalNewBoard {
+  z-index: 10;
   position: fixed;
   top: 0;
   left: 0;
@@ -813,6 +817,7 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   color: light-black;
 }
 .home__modalNewColumn {
+  z-index: 10;
   position: fixed;
   top: 0;
   left: 0;
@@ -952,6 +957,7 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   color: #0f0f0f;
 }
 .home__modalNewTask {
+  z-index: 10;
   position: fixed;
   top: 0;
   left: 0;
@@ -1141,6 +1147,47 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
 }
 .home__modalNewTask__modal__form__status__select--light {
   color: #0f0f0f;
+}
+
+.notFound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+}
+.notFound h1 {
+  font-size: 4vw;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+  margin-top: -40px;
+}
+.notFound a {
+  text-decoration: none;
+  color: inherit;
+}
+.notFound h2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  border-radius: 40px;
+  background: #635EC6;
+  width: 110px;
+  color: #ffffff;
+}
+.notFound h2:hover {
+  background: #453fb2;
+}
+.notFound--dark {
+  background: #2C2C37;
+}
+.notFound--dark h1 {
+  color: #ffffff;
+}
+.notFound--light {
+  background: #ffffff;
 }
 
 /*# sourceMappingURL=style.css.map */
