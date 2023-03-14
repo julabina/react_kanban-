@@ -27,7 +27,7 @@ const Home = () => {
     const [toggleNewColumnModal, setToggleNewColumnModal] = useState<boolean>(false);
     const [toggleNewTaskModal, setToggleNewTaskModal] = useState<boolean>(false);
     const [newBoardInput, setNewBoardInput] = useState<NewBoardInput>({ title: "", description: "" });
-    const [newColumnInput, setNewColumnInput] = useState<NewColumnInput>({ name: "", color: "white", position: "start"});
+    const [newColumnInput, setNewColumnInput] = useState<NewColumnInput>({ name: "", color: "#FFFFFF", position: "start"});
     const [newTaskInput, setNewTaskInput] = useState<NewTaskInput>({title: "", description: "", subTasks: ["", ""], status: 0});
     const [boards, setBoards] = useState<Board[]>([]);
     const [allBoards, setAllBoards] = useState<Board[]>([]);
@@ -556,7 +556,7 @@ const Home = () => {
                 if (res.status === 201) {
                     getAllProjects(actualUser.userId, actualUser.token.version);
                     toggleModalNewColumn();
-                    setNewColumnInput({ name: "", color: "white", position: "start"})
+                    setNewColumnInput({ name: "", color: "#FFFFFF", position: "start"})
                 } else {
 
                 }
@@ -749,7 +749,7 @@ const Home = () => {
                                 columns.map((el, columnIndex) => {                                        
                                     return (
                                         
-                                            <Column key={`column-${columnIndex}`} id={el.id} heading={el.name} darkMod={darkMod} elements={_.select(
+                                            <Column key={`column-${columnIndex}`} id={el.id} heading={el.name} darkMod={darkMod} columns={columns} elements={_.select(
                                                 tasks,
                                                 (elm) => elm,
                                                 (f) => f.column === _.camel(el.id)

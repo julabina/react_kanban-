@@ -108,30 +108,137 @@ html, body {
 .column:last-child {
   margin-right: 0;
 }
-.column__columnMenu {
+.column__menu {
+  z-index: 10;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: #000000b6;
+}
+.column__menu__modal {
   position: absolute;
-  right: 5px;
-  top: 5px;
-  background: #2C2C37;
-  border: 1px solid #939cad70;
-  border-radius: 7px;
-  color: #939CAD;
-  padding: 0 10px 10px;
-  text-align: end;
-  line-height: 1.5;
-  transition: all 120ms ease-in-out;
+  top: 42%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 40px 30px;
+  border-radius: 6px;
 }
-.column__columnMenu p {
+.column__menu__modal__closeBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  text-align: center;
+  font-weight: 700;
+  height: 22px;
+  width: 22px;
+  background: inherit;
+  border: 2px solid #635EC6;
+  border-radius: 50%;
+  color: #635EC6;
   cursor: pointer;
-}
-.column__columnMenu p:hover {
   transition: all 120ms ease-in-out;
-  color: #69758a;
 }
-.column__columnMenu__separator {
+.column__menu__modal__closeBtn:hover {
+  transition: all 120ms ease-in-out;
+  border-color: #36328c;
+  color: #36328c;
+}
+.column__menu__modal__errorCont {
+  font-size: 0.8em;
+  min-height: 13px;
+  margin-top: 13px;
+  max-width: 410px;
+  color: #c41b1b;
+}
+.column__menu__modal h2 {
+  font-size: 1.3em;
+  font-weight: 600;
+}
+.column__menu__modal__form__inputCont {
+  display: flex;
+  flex-direction: column;
+  margin-top: 22px;
+}
+.column__menu__modal__form__inputCont label {
+  font-size: 0.85em;
+  margin-bottom: 9px;
+}
+.column__menu__modal__form__inputCont input {
+  height: 30px;
+  width: 380px;
+  background: inherit;
+  border: 1px solid #939cad70;
+  border-radius: 6px;
+  padding: 0 15px;
+  color: #ffffff;
+}
+.column__menu__modal__form__inputCont input::placeholder {
+  color: #939cad70;
+}
+.column__menu__modal__form__inputCont textarea {
+  resize: none;
+  height: 80px;
+  width: 380px;
+  background: inherit;
+  border: 1px solid #939cad70;
+  border-radius: 6px;
+  padding: 0 15px;
+  color: #ffffff;
+}
+.column__menu__modal__form__inputCont textarea::placeholder {
+  color: #939cad70;
+}
+.column__menu__modal__form__inputCont:first-child {
+  margin-top: 8px;
+}
+.column__menu__modal__form__submitBtn {
+  background: #635EC6;
+  border: none;
+  font-weight: 500;
+  color: #ffffff;
+  height: 42px;
   width: 100%;
-  border-bottom: 1px solid rgba(147, 156, 173, 0.4492156863);
-  margin: 5px 0 7px;
+  border-radius: 42px;
+  margin-top: 30px;
+  cursor: pointer;
+  transition: all 150ms ease-in-out;
+}
+.column__menu__modal__form__submitBtn:hover {
+  transition: all 150ms ease-in-out;
+  background: #453fb2;
+}
+.column__menu__modal--dark {
+  background: #2C2C37;
+  color: #ffffff;
+}
+.column__menu__modal--light {
+  background: #ffffff;
+  color: light-black;
+}
+.column__menu__modal__titleCont__title {
+  display: flex;
+}
+.column__menu__modal__titleCont__title h2 {
+  text-transform: uppercase;
+}
+.column__menu__modal__titleCont__title__color {
+  height: 15px;
+  width: 15px;
+  margin-top: 5px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+.column__menu__modal__titleCont__title__btn {
+  margin-top: 5px;
+  margin-left: 15px;
+  cursor: pointer;
+  transition: all 120ms ease-in-out;
+}
+.column__menu__modal__titleCont__title__btn:hover {
+  transition: all 120ms ease-in-out;
+  color: #939CAD;
 }
 
 .droppable {
@@ -359,8 +466,10 @@ html, body {
 .draggable__taskMenu__modal__titleCont__content__btn {
   margin: 5px 0 0 10px;
   cursor: pointer;
+  transition: all 120ms ease-in-out;
 }
 .draggable__taskMenu__modal__titleCont__content__btn:hover {
+  transition: all 120ms ease-in-out;
   color: #939CAD;
 }
 .draggable__taskMenu__modal__subTasks {

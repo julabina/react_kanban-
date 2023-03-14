@@ -38,29 +38,34 @@
     &:last-child {
         margin-right: 0;
     }
-    &__columnMenu {
-        position: absolute;
-        right: 5px;
-        top: 5px;
-        background: map-get($map: $colors, $key: primary-dark);
-        border: 1px solid map-get($map: $colors, $key: gray-light);
-        border-radius: 7px;
-        color: map-get($map: $colors, $key:gray-dark );
-        padding:0 10px 10px;
-        text-align: end;
-        line-height: 1.5;
-        transition: all 120ms ease-in-out;
-        p {
-            cursor: pointer;
-            &:hover {
-                transition: all 120ms ease-in-out;
-                color: darken($color: map-get($map: $colors, $key:gray-dark ), $amount: 15);
+    &__menu {
+        @include modal;
+        &__modal {
+            &__titleCont {
+                &__title {
+                    display: flex;
+                    h2 {
+                    text-transform: uppercase;
+                    }
+                    &__color {
+                        height: 15px;
+                        width: 15px;
+                        margin-top: 5px;
+                        margin-right: 10px;
+                        border-radius: 50%;
+                    }
+                    &__btn {
+                        margin-top: 5px;
+                        margin-left: 15px;
+                        cursor: pointer;
+                        transition: all 120ms ease-in-out;
+                        &:hover {
+                            transition: all 120ms ease-in-out;
+                            color: map-get($map: $colors, $key:gray-dark );
+                        }
+                    }
+                }
             }
-        }
-        &__separator {
-            width: 100%;
-            border-bottom: 1px solid opacify(map-get($map: $colors, $key:gray-light ), 0.01);
-            margin: 5px 0 7px;
         }
     }
 }

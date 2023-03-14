@@ -32,19 +32,19 @@ exports.create = (req, res, next) => {
             const todo = new Column({
                 projectId: projectId,
                 name: "A faire",
-                color: "red"
+                color: "#FF0000"
             });
 
             const doing = new Column({
                 projectId: projectId,
                 name: "En cour",
-                color: "blue"
+                color: "#0000FF"
             });
 
             const done = new Column({
                 projectId: projectId,
                 name: "Terminé",
-                color: "green"
+                color: "#008000"
             });
 
             todo.save()

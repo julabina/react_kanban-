@@ -104,7 +104,9 @@
                     &__btn {
                         margin: 5px 0 0 10px;
                         cursor: pointer;
+                        transition: all 120ms ease-in-out;
                         &:hover {
+                            transition: all 120ms ease-in-out;
                             color: map-get($map: $colors, $key:gray-dark );
                         }
                     }
