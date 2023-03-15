@@ -43,6 +43,9 @@ const Column: FC<IColumn> = ({ id, heading, elements, columns, columnsColor, dar
     const [toggleDeleteConfirmation, setToggleDeleteConfirmation] = useState<boolean>(false);
     const [modifColumnInput, steModifColumnInput] = useState<ColumnInput>({color: "", title: ""});
 
+    /**
+     * toggle column menu modal
+     */
     const toggleDisplayMenu = () => {        
         if (toggleInput === true) {
             setToggleInput(false);
@@ -52,14 +55,26 @@ const Column: FC<IColumn> = ({ id, heading, elements, columns, columnsColor, dar
         setToggleMenu(!toggleMenu);
     };
 
+    /**
+     * toggle input for modifying title and color for one column
+     */
     const toggleDisplayInput = () => {
         setToggleInput(!toggleInput);
     };
 
+    /**
+     * toggle delete confirmation section
+     */
     const toggleDelete = () => {
         setToggleDeleteConfirmation(!toggleDeleteConfirmation);
     };
 
+    /**
+     * control input for modify informations
+     * 
+     * @param action 
+     * @param value 
+     */
     const ctrlModifColumnInput = (action: string, value: string) => {
         if (action === "title") {
             const newObj: ColumnInput = {
@@ -76,6 +91,13 @@ const Column: FC<IColumn> = ({ id, heading, elements, columns, columnsColor, dar
         }
     };
 
+    /**
+     * 
+     * validate modif informations inputs
+     * 
+     * @param e 
+     * @returns 
+     */
     const validateModifColumn = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const errorCont = document.querySelector(".column__menu__modal__titleCont__forModif__errorCont");
@@ -105,6 +127,9 @@ const Column: FC<IColumn> = ({ id, heading, elements, columns, columnsColor, dar
         }
     };
 
+    /**
+     * update column on database 
+     */
     const updateColumn = () => {
         fetch(process.env.REACT_APP_API_URL + "/api/column/update", {
             headers: {
