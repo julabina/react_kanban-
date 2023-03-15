@@ -254,7 +254,7 @@
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    width: 260px;
+                    min-width: 260px;
                     border-radius: 8px;
                     color: map-get($map: $colors, $key:gray-dark );
                     cursor: pointer;

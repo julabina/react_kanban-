@@ -21,11 +21,14 @@ interface IColumn {
     heading: string;
     columnsColor: string;
     elements: IElement[];
-    columns: Columns[]
+    columns: Columns[];
     darkMod: boolean;
+    projectId: string;
+    token: string;
+    getAllColumn: () => void;
 }
 
-const Column: FC<IColumn> = ({ id, heading, elements, columns, columnsColor, darkMod }) => {
+const Column: FC<IColumn> = ({ id, heading, elements, columns, columnsColor, darkMod, projectId, token, getAllColumn }) => {
     const columnIdentifier = useMemo(() => _.camel(id), [id]);   
 
     const amounts = useMemo(
@@ -33,13 +36,18 @@ const Column: FC<IColumn> = ({ id, heading, elements, columns, columnsColor, dar
         [elements, columnIdentifier]
     );
 
+    type ColumnInput = {color: string, title: string};
+
     const [toggleMenu, setToggleMenu] = useState<boolean>(false);
     const [toggleInput, setToggleInput] = useState<boolean>(false);
     const [toggleDeleteConfirmation, setToggleDeleteConfirmation] = useState<boolean>(false);
+    const [modifColumnInput, steModifColumnInput] = useState<ColumnInput>({color: "", title: ""});
 
-    const toggleDisplayMenu = () => {
+    const toggleDisplayMenu = () => {        
         if (toggleInput === true) {
             setToggleInput(false);
+        } else {
+            steModifColumnInput({color: columnsColor, title: heading});
         }
         setToggleMenu(!toggleMenu);
     };
@@ -50,6 +58,68 @@ const Column: FC<IColumn> = ({ id, heading, elements, columns, columnsColor, dar
 
     const toggleDelete = () => {
         setToggleDeleteConfirmation(!toggleDeleteConfirmation);
+    };
+
+    const ctrlModifColumnInput = (action: string, value: string) => {
+        if (action === "title") {
+            const newObj: ColumnInput = {
+                ...modifColumnInput,
+                title: value
+            };
+            steModifColumnInput(newObj);
+        } else if (action === "color") {
+            const newObj: ColumnInput = {
+                ...modifColumnInput,
+                color: value
+            };
+            steModifColumnInput(newObj);
+        }
+    };
+
+    const validateModifColumn = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const errorCont = document.querySelector(".column__menu__modal__titleCont__forModif__errorCont");
+
+        if (errorCont) {
+            errorCont.innerHTML = "";
+
+            if (modifColumnInput.title === "") {
+                return errorCont.innerHTML = `<p>- Le titre ne peut pas etre vide.</p>`;
+            } else if (modifColumnInput.title.length > 50) {
+                return errorCont.innerHTML = `<p>- Le nom de la colonne doit contenir 50 caractères maximum.</p>`;
+            } else if (!modifColumnInput.title.match(/^[\w éèàêî]*$/i)) {
+                return errorCont.innerHTML = `<p>- Le nom de la colonne ne doit contenir que des lettres et des chiffres.</p>`;
+            }
+            
+            if (!modifColumnInput.color.match(/^[\w#]*$/i) || modifColumnInput.color === "") {
+                const newObj: ColumnInput = {
+                    ...modifColumnInput,
+                    color: "#ccc"
+                };
+                steModifColumnInput(newObj);
+            }
+
+            if (modifColumnInput.color !== columnsColor || modifColumnInput.title !== heading) {   
+                updateColumn();
+            }
+        }
+    };
+
+    const updateColumn = () => {
+        fetch(process.env.REACT_APP_API_URL + "/api/column/update", {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + token,
+            }, method: "PUT",
+            body: JSON.stringify({ title: modifColumnInput.title, color: modifColumnInput.color, id: id })
+        })
+            .then(res => {
+                if (res.status === 201) {
+                    toggleDisplayMenu();  
+                    getAllColumn(); 
+                }
+            })
     };
 
     return (
@@ -96,24 +166,25 @@ const Column: FC<IColumn> = ({ id, heading, elements, columns, columnsColor, dar
                         <div className="column__menu__modal__titleCont">
                             {
                                 toggleInput ?
-                                <div className="column__menu__modal__titleCont__forModif">
-                                    <div className="">
-                                        <input type="color" name="" id="" value={columnsColor} />
-                                        <label htmlFor="">Modifier la couleur</label>
+                                <form onSubmit={validateModifColumn} className="column__menu__modal__titleCont__forModif">
+                                    <div className="column__menu__modal__titleCont__forModif__errorCont"></div>
+                                    <div className="column__menu__modal__titleCont__forModif__color">
+                                        <input onInput={(e) => ctrlModifColumnInput('color', (e.target as HTMLInputElement).value)} type="color" id="modifColumnColor" value={modifColumnInput.color} />
+                                        <label htmlFor="modifColumnColor">Modifier la couleur</label>
                                     </div>
-                                    <div className="">
-                                        <label htmlFor="">Nom de la colonne</label>
-                                        <input type="text" name="" id="" />
+                                    <div className="column__menu__modal__titleCont__forModif__title">
+                                        <label htmlFor="modifColumnTitle">Nom de la colonne</label>
+                                        <input onInput={(e) => ctrlModifColumnInput('title', (e.target as HTMLInputElement).value)} value={modifColumnInput.title} type="text" id="modifColumnTitle" />
                                     </div>
-                                    <div className="">
-                                        <input type="button" value="Changer" />
+                                    <div className="column__menu__modal__titleCont__forModif__btns">
+                                        <input type="submit" value="Changer" />
                                         <input onClick={toggleDisplayInput} type="button" value="Annuler" />
                                     </div>
-                                </div>
+                                </form>
                                 :
                                 <div className="column__menu__modal__titleCont__title">
                                     <div style={{ "backgroundColor": columnsColor }} className="column__menu__modal__titleCont__title__color"></div>
-                                    <h2>{heading}</h2>
+                                    <h2>{ heading }</h2>
                                     <FontAwesomeIcon onClick={toggleDisplayInput} icon={faPencil} className="column__menu__modal__titleCont__title__btn" />
                                 </div>
                             }
@@ -135,7 +206,7 @@ const Column: FC<IColumn> = ({ id, heading, elements, columns, columnsColor, dar
                                         }
                                         
                                         if (el.id !== id && elInd !== (ind - 1)) {
-                                            return <option value="">Après {el.name}</option>
+                                            return <option key={'option' + elInd} value="">Après {el.name}</option>
                                         }
                                     })
                                 }

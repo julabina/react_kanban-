@@ -146,3 +146,48 @@ exports.getAll = (req, res, next) => {
         })
         .catch(error => res.status(500).json({ message: error }));       
 };
+
+/**
+ * update color and/or color for one column
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+exports.update = (req, res, next) => {
+    if (req.body.title === undefined || req.body.color === undefined || req.body.id === undefined) {
+        const message = "Toutes les informations n'ont pas été envoyées.";
+        return res.status(401).json({ message });
+    }
+
+    Column.findOne({ where: { id: req.body.id } })
+        .then(column => {
+            if (column === null) {
+                const message = "Aucune colonne trouvée.";
+                return res.status(404).json({ message });
+            }
+            
+            if (req.body.title !== column.name) {
+                column.name = req.body.title;
+            }
+            if (req.body.color !== column.color) {
+                column.color = req.body.color;
+            }
+
+            column.save()
+                .then(() => {
+                    const message = "Column bien modifiée.";
+                    res.status(201).json({ message });
+                })
+                .catch(error => {
+                    if (error instanceof ValidationError) {
+                        return res.status(401).json({ message: error.message, data: error }); 
+                    }
+                    if (error instanceof UniqueConstraintError) {
+                        return res.status(401).json({ message: error.message, data: error });
+                    }
+                    res.status(500).json({ message: "Une erreur est survenue lors de la création de la colonne.", error });
+                });  
+        })
+        .catch(error => res.status(500).json({ message: error }));
+};

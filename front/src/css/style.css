@@ -782,7 +782,7 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 260px;
+  min-width: 260px;
   border-radius: 8px;
   color: #939CAD;
   cursor: pointer;

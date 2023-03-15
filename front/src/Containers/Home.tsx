@@ -144,6 +144,8 @@ const Home = () => {
      * get all task for one project
      */
     const getAllColumns = (id: string, token: string) => {
+        console.log('RERETEZGZFREV');
+        
         fetch(process.env.REACT_APP_API_URL + "/api/column/getAll/" + id, {
             headers: {
                 "Authorization": "Bearer " + token
@@ -167,6 +169,7 @@ const Home = () => {
                         colArr.push(newObj);
                         
                     }
+                    console.log(colArr);
                     
                     setColumns(colArr);
 
@@ -569,11 +572,14 @@ const Home = () => {
      * @param id 
      */
     const changeProject = (id: string) => {
+        console.log(id);        
 
         const arr: Board[] = allBoards;
         const arrFinded: Board | undefined = arr.find(el => {
             return el.id === id
         })
+        console.log(arrFinded);
+        
         
         if (arrFinded !== undefined) {
             setActivProject(arrFinded);
@@ -749,11 +755,14 @@ const Home = () => {
                                 columns.map((el, columnIndex) => {                                        
                                     return (
                                         
-                                            <Column key={`column-${columnIndex}`} id={el.id} heading={el.name} darkMod={darkMod} columns={columns} elements={_.select(
+                                            <Column key={`column-${columnIndex}`} id={el.id} heading={el.name} darkMod={darkMod} columns={columns} projectId={activProject.id} token={actualUser.token.version} elements={_.select(
                                                 tasks,
                                                 (elm) => elm,
                                                 (f) => f.column === _.camel(el.id)
-                                                )} columnsColor={el.color} />
+                                                )} 
+                                                columnsColor={el.color}
+                                                getAllColumn={() => getAllColumns(activProject.id, actualUser.token.version)}
+                                                />
                                     )
                                 })
                             }
