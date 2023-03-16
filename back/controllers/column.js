@@ -191,3 +191,111 @@ exports.update = (req, res, next) => {
         })
         .catch(error => res.status(500).json({ message: error }));
 };
+
+/**
+ * update column position
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+exports.updatePosition = (req, res, next) => {
+    if (req.body.position === undefined || req.body.id === undefined) {
+        const message = "Toutes les informations n'ont pas été envoyées.";
+        return res.status(401).json({ message });
+    }
+
+    Column.findOne({ where: { id: req.body.id } })
+        .then(column => {
+            if (column === null) {
+                const message = "Aucune colonne trouvée.";
+                return res.status(404).json({ message });
+            }
+            
+            Project.findOne({ where: { id: column.projectId } })
+            .then(project => {
+                    if (project === null) {
+                        const message = "Aucun projet trouvé.";
+                        return res.status(404).json({ message });
+                    }
+                    const arr = project.columns;
+                    let newArr = [];
+
+                    for (let i = 0; i < arr.length; i++) {
+                        if (req.body.position === "0" && i === 0) {
+                            newArr.push(req.body.id);
+                        } 
+                        if (arr[i] !== req.body.id) {
+                            newArr.push(arr[i]);
+                        }
+                        if (i === parseInt(req.body.position) && req.body.position !== "0") {
+                            newArr.push(req.body.id);
+                        }
+                    }
+
+                    project.columns = newArr;
+
+                    project.save()
+                        .then(() => {
+                            const message = "Projet bien modifié.";
+                            res.status(201).json({ message });
+                        })
+                        .catch(error => res.status(500).json({ message: error }));
+                })
+                .catch(error => res.status(500).json({ message: error }));
+        })
+        .catch(error => res.status(500).json({ message: error }));
+};
+
+/**
+ * delete one column
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+exports.delete = (req, res, next) => {
+    Column.findByPk(req.params.id)
+        .then(column => {
+            if (column === null) {
+                const message = "Aucune colonne trouvée.";
+                return res.status(404).json({ message });
+            }
+            
+            Project.findByPk(column.projectId)
+                .then(project => {
+                    if (project === null) {
+                        const message = "Aucun projet trouvé.";
+                        return res.status(404).json({ message });
+                    }
+                    if (project.userId !== req.auth.userId) {
+                        const message = "Requete non authentifiée.";
+                        return res.status(403).json({ message });
+                    }
+                    if (project.columns.length === 1) {
+                        const message = "Impossible de supprimer cette colonne.";
+                        return res.status(401).json({ message });
+                    }
+
+                    Column.destroy({ where: { id: req.params.id } })
+                        .then(() => {
+                            const arr = project.columns;
+                            let newArr = arr.filter(el => {
+                                return el !== req.params.id;
+                            });
+                            
+                            project.columns = newArr;
+
+                            project.save()
+                                .then(() => {
+                                    const message = "Colonne bien supprimée.";
+                                    res.status(201).json({ message });
+                                })
+
+                        })
+                        .catch(error => res.status(500).json({ message: error }));
+                })
+                .catch(error => res.status(500).json({ message: error }));
+        })
+        .catch(error => res.status(500).json({ message: error }));
+};

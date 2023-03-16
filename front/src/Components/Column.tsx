@@ -25,10 +25,10 @@ interface IColumn {
     darkMod: boolean;
     projectId: string;
     token: string;
-    getAllColumn: () => void;
+    getAllProject: () => void;
 }
 
-const Column: FC<IColumn> = ({ id, heading, elements, columns, columnsColor, darkMod, projectId, token, getAllColumn }) => {
+const Column: FC<IColumn> = ({ id, heading, elements, columns, columnsColor, darkMod, projectId, token, getAllProject }) => {
     const columnIdentifier = useMemo(() => _.camel(id), [id]);   
 
     const amounts = useMemo(
@@ -46,7 +46,10 @@ const Column: FC<IColumn> = ({ id, heading, elements, columns, columnsColor, dar
     /**
      * toggle column menu modal
      */
-    const toggleDisplayMenu = () => {        
+    const toggleDisplayMenu = () => {  
+        if (toggleDeleteConfirmation) {
+            setToggleDeleteConfirmation(false);
+        }      
         if (toggleInput === true) {
             setToggleInput(false);
         } else {
@@ -128,7 +131,7 @@ const Column: FC<IColumn> = ({ id, heading, elements, columns, columnsColor, dar
     };
 
     /**
-     * update column on database 
+     * update title and color column on database 
      */
     const updateColumn = () => {
         fetch(process.env.REACT_APP_API_URL + "/api/column/update", {
@@ -142,7 +145,48 @@ const Column: FC<IColumn> = ({ id, heading, elements, columns, columnsColor, dar
             .then(res => {
                 if (res.status === 201) {
                     toggleDisplayMenu();  
-                    getAllColumn(); 
+                    changePosition("0");
+                }
+            });
+    };
+
+    /**
+     * update column position on database
+     */
+    const changePosition = (value: string) => {
+        if (value !== "null") {
+            fetch(process.env.REACT_APP_API_URL + "/api/column/updatePosition", {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    "Authorization": "Bearer " + token,
+                }, 
+                method: "PUT",
+                body: JSON.stringify({ position: value, id: id })
+            })
+                .then(res => {
+                    if (res.status === 201) {
+                        toggleDisplayMenu();  
+                        getAllProject(); 
+                    }
+                });
+            }
+        };
+        
+        const deleteColumn = () => {
+        fetch(process.env.REACT_APP_API_URL + '/api/column/delete/' + id, {
+            headers: {
+                "Authorization": "Bearer " + token,
+            }, 
+            method: "DELETE",
+        })
+            .then(res => {
+                if (res.status === 201) {
+                    toggleDisplayMenu();
+                    getAllProject(); 
+                } else if (res.status === 401) {
+                    toggleDisplayMenu();
+                    alert("Impossible de supprimer la derniere colonne.");
                 }
             })
     };
@@ -181,7 +225,7 @@ const Column: FC<IColumn> = ({ id, heading, elements, columns, columnsColor, dar
                         <h2>Supprimer la colonne { heading } ?</h2>
                         <p className="">Cette action est irréversible !</p>
                         <div className="">
-                            <input type="button" value="Supprimer" />
+                            <input onClick={deleteColumn} type="button" value="Supprimer" />
                             <input onClick={toggleDelete} type="button" value="Annuler" />
                         </div>
                     </div>
@@ -216,10 +260,11 @@ const Column: FC<IColumn> = ({ id, heading, elements, columns, columnsColor, dar
                         </div>
                         <div className="">
                             <label htmlFor="">Changer de position</label>
-                            <select name="" id="">
+                            <select onChange={(e) => changePosition((e.target as HTMLSelectElement).value)} name="" id="">
+                                <option value="null">----</option>
                                 {
                                     columns[0].id !== id &&
-                                    <option value="">Début</option>
+                                    <option value="0">Début</option>
                                 }
                                 {
                                     columns.map((el, elInd) => {  
@@ -231,7 +276,7 @@ const Column: FC<IColumn> = ({ id, heading, elements, columns, columnsColor, dar
                                         }
                                         
                                         if (el.id !== id && elInd !== (ind - 1)) {
-                                            return <option key={'option' + elInd} value="">Après {el.name}</option>
+                                            return <option key={'option' + elInd} value={elInd}>Après {el.name}</option>
                                         }
                                     })
                                 }

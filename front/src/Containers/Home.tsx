@@ -761,7 +761,7 @@ const Home = () => {
                                                 (f) => f.column === _.camel(el.id)
                                                 )} 
                                                 columnsColor={el.color}
-                                                getAllColumn={() => getAllColumns(activProject.id, actualUser.token.version)}
+                                                getAllProject={() => getAllProjects(actualUser.userId, actualUser.token.version)}
                                                 />
                                     )
                                 })
