@@ -16,7 +16,7 @@ exports.create = (req, res, next) => {
         return res.status(401).json({ message }); 
     }
 
-    Project.findOne({ where: { id: req.params.id } })
+    Project.findByPk(req.params.id)
         .then(project => {
             if (project === null) {
                 const message = "Aucun projet trouvé.";
@@ -76,7 +76,7 @@ exports.updatePosition = (req, res, next) => {
         return res.status(401).json({ message }); 
     }
 
-    Task.findOne({ where: { id: req.body.tasks.id } })
+    Task.findByPk(req.body.tasks.id)
         .then(task => {
             if (task === null) {
                 const message = "Aucune tache trouvée.";

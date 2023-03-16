@@ -124,7 +124,7 @@ exports.toggleDarkmod = (req, res, next) => {
         return res.status(401).json({ message });
     } 
 
-    User.findOne({ where : { id: req.body.userId} })
+    User.findByPk(req.body.userId)
         .then(user => {
             if (user === null) {
                 const message ="Aucun utilisateur trouvé.";

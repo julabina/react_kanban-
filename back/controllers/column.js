@@ -1,4 +1,3 @@
-const { v4 } = require('uuid');
 const { Project, Column, Task } = require('../db/sequelize');
 const { ValidationError, UniqueConstraintError } = require('sequelize');
 
@@ -15,7 +14,7 @@ exports.create = (req, res, next) => {
         return res.status(401).json({ message });
     } 
     
-    Project.findOne({ where: { id: req.params.id } })
+    Project.findByPk(req.params.id)
         .then(project => {
             if (project === null) {
                 const message = "Aucun projet trouvé.";
@@ -94,7 +93,7 @@ exports.create = (req, res, next) => {
  * @param {*} next 
  */
 exports.getAll = (req, res, next) => {
-    Project.findOne({ where: { id: req.params.id } })
+    Project.findByPk(req.params.id)
         .then(project => {
             if (project === null) {
                 const message = "Aucun projet trouvé.";
@@ -160,7 +159,7 @@ exports.update = (req, res, next) => {
         return res.status(401).json({ message });
     }
 
-    Column.findOne({ where: { id: req.body.id } })
+    Column.findByPk(req.body.id)
         .then(column => {
             if (column === null) {
                 const message = "Aucune colonne trouvée.";
@@ -205,14 +204,14 @@ exports.updatePosition = (req, res, next) => {
         return res.status(401).json({ message });
     }
 
-    Column.findOne({ where: { id: req.body.id } })
+    Column.findByPk(req.body.id)
         .then(column => {
             if (column === null) {
                 const message = "Aucune colonne trouvée.";
                 return res.status(404).json({ message });
             }
             
-            Project.findOne({ where: { id: column.projectId } })
+            Project.findByPk(column.projectId)
             .then(project => {
                     if (project === null) {
                         const message = "Aucun projet trouvé.";

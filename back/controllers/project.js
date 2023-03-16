@@ -21,7 +21,7 @@ exports.create = (req, res, next) => {
         return res.status(403).json({ message });
     }
 
-    User.findOne({ where: { id: req.body.userId } })
+    User.findByPk(req.body.userId)
         .then(user => {
             if (user === null) {
                 const message = "Aucun utilisateur trouvé.";
@@ -136,7 +136,7 @@ exports.create = (req, res, next) => {
  * @param {*} next 
  */
 exports.getAll = (req, res, next) => {
-    User.findOne({ where: { id: req.params.id } })
+    User.findByPk(req.params.id)
         .then(user => {
             if (user === null) {
                 const message = "Aucun utilisateur trouvé.";
@@ -171,7 +171,7 @@ exports.getAll = (req, res, next) => {
  * @param {*} next 
  */
 exports.getOne = (req, res, next) => {
-    Project.findOne({ where: { id: req.params.id } })
+    Project.findByPk(req.params.id)
         .then(project => {
             if (project === null) {
                 const message = "Aucun projet trouvé.";
