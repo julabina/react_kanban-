@@ -1,0 +1,108 @@
+.draggableElement {
+    padding: 20px 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: all 120ms ease-in-out;
+    h3 {
+        font-size: 1.1em;
+        &::first-letter {
+            text-transform: uppercase;
+        }
+    }
+    p {
+        font-size: 0.8em;
+        margin-top: 10px;
+        color: map-get($map: $colors, $key:gray-dark );
+    }
+    &--dark {
+        transition: all 120ms ease-in-out;
+        background: map-get($map: $colors, $key: primary-dark);
+        h3 {
+            color: map-get($map: $colors, $key: light-white);
+        }
+        &:hover {
+            transition: all 120ms ease-in-out;
+            background: lighten($color: map-get($map: $colors, $key: primary-dark), $amount: 3);
+        }
+    }
+    &--light {
+        transition: all 120ms ease-in-out;
+        background: map-get($map: $colors, $key: light-white);
+        h3 {
+            color: map-get($map: $colors, $key: light-black);
+        }
+        &:hover {
+            transition: all 120ms ease-in-out;
+            background: lighten($color: map-get($map: $colors, $key: gray-light), $amount: 20);
+        }
+    }
+}
+
+.draggable {
+    position: relative;
+    &__taskBtn {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        right: 10px;
+        background: none;
+        border: none;
+        color: map-get($map: $colors, $key: gray-dark);
+        font-weight: 600;
+        font-size: 1.4em;
+        &:hover {
+            color: darken($color: map-get($map: $colors, $key: gray-dark), $amount: 20);
+        }
+    }
+    &__taskMenu {
+        z-index: 100;
+        @include modal;
+        &__modal {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 300px;
+            &__titleCont {
+                margin-top: 30px;
+                padding-bottom: 30px;
+                &__input {
+                    input[type=text] {
+                        height: 30px;
+                        width: 380px;
+                        @include inputCont;
+                    }
+                    &__btnCont {
+                        @include btnsModal;
+                    }
+                }
+                &__content {
+                    display: flex;
+                    h2 {
+                        &::first-letter {
+                            text-transform: uppercase;
+                        }
+                    }
+                    &__btn {
+                        margin: 5px 0 0 10px;
+                        cursor: pointer;
+                        transition: all 120ms ease-in-out;
+                        &:hover {
+                            transition: all 120ms ease-in-out;
+                            color: map-get($map: $colors, $key:gray-dark );
+                        }
+                    }
+                }
+            }
+            &__subTasks {
+                min-width: 200px;
+                &__check {
+                    margin-bottom: 7px;
+                    label {
+                        margin-left: 4px;
+                    }
+                }
+            }
+        }
+    }
+}

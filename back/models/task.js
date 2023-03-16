@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    return sequelize.define('Project', {
+    return sequelize.define('Task', {
         id: {
             type: DataTypes.STRING,
             primaryKey: true,
@@ -9,12 +9,12 @@ module.exports = (sequelize, DataTypes) => {
                 notNull: {msg: "L'id est une propriétée requise."}
             }
         },
-        userId: {
+        projectId: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                notEmpty: {msg: "Le createur ne doit pas etre vide."},
-                notNull: {msg: "Le createur est une propriétée requise."}
+                notEmpty: {msg: "Le project id ne doit pas etre vide."},
+                notNull: {msg: "Le project id est une propriétée requise."}
             }
         },
         title: {
@@ -31,19 +31,33 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             validate: {
                 len: { args: [0, 100], msg: "La description doit comprendre maximum 100 caractères." },
-                is: {args: /^[\wé èà\-\']*$/i, msg: "la description ne doit contenir que des lettres et des chiffres"}
+                is: {args: /^[\wé èà\-\']*$/im, msg: "la description ne doit contenir que des lettres et des chiffres"}
             }
         },
-        columns: {
+        checked: {
             type: DataTypes.TEXT,
             allowNull: true,
             get() {
-                return this.getDataValue('columns').split(',')
+                return this.getDataValue('checked').split(',')
             },
-            set(columns) {
-                this.setDataValue('columns', columns.join())
+            set(checked) {
+                this.setDataValue('checked', checked.join())
             }
         },
+        subTask: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+            get() {
+                return this.getDataValue('subTask').split(',')
+            },
+            set(subTask) {
+                this.setDataValue('subTask', subTask.join())
+            }
+        },
+        status: {
+            type: DataTypes.STRING,
+            allowNull: false
+        }
     },{
         timestamps: true,
         createdAt: 'createdAt',

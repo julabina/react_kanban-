@@ -1,0 +1,162 @@
+.column {
+    width: 260px;
+    min-width: 260px;
+    margin-right: 25px ;
+    &__header {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 25px;
+        &__cont {
+            display: flex;
+            h3, span {
+                color: map-get($map: $colors, $key:gray-dark );
+                font-size: 1em;
+            }
+            h3 {
+                text-transform: uppercase;
+                margin: 0 7px 0 9px;
+            }
+            &__colors {
+                height: 16px;
+                width: 16px;
+                border-radius: 50%;
+            }
+        }
+        &__menuBtn {
+            color: map-get($map: $colors, $key:gray-dark );
+            padding-right: 7px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 120ms ease-in-out;
+            &:hover {
+                transition: all 120ms ease-in-out;
+                color: darken($color: map-get($map: $colors, $key:gray-dark ), $amount: 10);
+            }
+        }
+    }
+    &:last-child {
+        margin-right: 0;
+    }
+    &__menu {
+        @include modal;
+        &__modal {
+            &__titleCont {
+                margin-bottom: 20px;
+                &__title {
+                    display: flex;
+                    justify-content: center;
+                    h2 {
+                    text-transform: uppercase;
+                    }
+                    &__color {
+                        height: 15px;
+                        width: 15px;
+                        margin-top: 5px;
+                        margin-right: 10px;
+                        border-radius: 50%;
+                        input {
+                            width: 64px;
+                            height: 32px;
+                        }
+                    }
+                    &__btn {
+                        margin-top: 5px;
+                        margin-left: 15px;
+                        cursor: pointer;
+                        transition: all 120ms ease-in-out;
+                        &:hover {
+                            transition: all 120ms ease-in-out;
+                            color: map-get($map: $colors, $key:gray-dark );
+                        }
+                    }
+                }
+                &__forModif {
+                    &__errorCont {
+                        font-size: 0.8em;
+                        color: map-get($map: $colors, $key:error );
+                        margin-bottom: 10px;
+                    }
+                    &__color {
+                        display: flex;
+                        flex-direction: column-reverse;
+                        margin-bottom: 10px;
+                        label {
+                            margin-bottom: 5px;
+                        }
+                    }
+                    &__title {
+                        display: flex;
+                        flex-direction: column;
+                        input {
+                            height: 30px;
+                            @include inputCont;
+                        }
+                        label {
+                            margin-bottom: 5px;
+                        }
+                    }
+                    &__btns {
+                        @include btnsModal;
+                    }
+                }
+            }
+            &__position {
+                display: flex;
+                flex-direction: column;
+                label {
+                    margin-bottom: 5px;
+                }
+                &__select {
+                    height: 30px;
+                    width: 235px;
+                    background: inherit;
+                    padding: 0 15px;
+                    border: 1px solid map-get($map: $colors, $key: gray-light);
+                    border-radius: 6px;
+                    &--dark {
+                        color: map-get($map: $colors, $key: light-white);
+                    }
+                    &--light {
+                        color: map-get($map: $colors, $key: light-black);
+                    }
+                }
+            }
+            &__deleteBtn {
+                margin-top: 25px;
+                input {
+                    background: map-get($map: $colors, $key:blue-dark );
+                    border: none;
+                    font-weight: 500;
+                    color: map-get($map: $colors, $key: light-white);
+                    height: 42px;
+                    width: 100%;
+                    border-radius: 42px;
+                    margin-top: 30px;
+                    cursor: pointer;
+                    transition: all 150ms ease-in-out;
+                    &:hover {
+                        transition: all 150ms ease-in-out;
+                        background: map-get($colors, error);
+                    }
+                }
+            }
+            &__alertDeleteConfirm {
+                text-align: center;
+                color: map-get($map: $colors, $key: error);
+                margin: 5px 0 20px;
+            }
+            &__btnsConfirm {
+                @include btnsModal;
+            }
+        }
+    }
+}
+
+#confirmDelete {
+    &:hover {
+        transition: all 120ms ease-in-out;
+        border-color: map-get($map: $colors, $key: error);
+        color: map-get($map: $colors, $key: error);
+    }
+}

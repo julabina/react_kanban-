@@ -2,6 +2,8 @@ const express = require('express');
 const morgan = require('morgan');
 const userRoute = require('./routes/user');
 const projectRoute = require('./routes/project');
+const taskRoute = require('./routes/task');
+const columnRoute = require('./routes/column');
 
 const app = express();
 
@@ -18,5 +20,7 @@ app.use(morgan('dev'));
 
 app.use('/api/user', userRoute);
 app.use('/api/project', projectRoute);
+app.use('/api/task', taskRoute);
+app.use('/api/column', columnRoute);
 
 module.exports = app;

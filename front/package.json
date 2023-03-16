@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@dnd-kit/core": "^6.0.8",
+    "@dnd-kit/sortable": "^7.0.2",
     "@fortawesome/free-regular-svg-icons": "^6.3.0",
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
@@ -14,6 +16,7 @@
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "dotenv": "^16.0.3",
+    "radash": "^10.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-jwt": "^1.1.8",
