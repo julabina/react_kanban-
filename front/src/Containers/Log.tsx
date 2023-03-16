@@ -298,7 +298,7 @@ const Log = () => {
                     <div className="log__signin__errorCont"></div>
                     <form className='log__signin__form' onSubmit={validateSign}>
                         <div className="log__signin__form__cont"> 
-                            <div className="log__signin__form__cont__inputCont">
+                            <div className="log__signin__form__cont__inputCont log__signin__form__cont__inputCont--first">
                                 <label htmlFor="signEmail">Email</label>
                                 <input onInput={(e) => ctrlSign('mail', (e.target as HTMLInputElement).value)} value={signInput.mail} type="email" id="signEmail" placeholder='user@gmail.com' />
                             </div>
@@ -308,7 +308,7 @@ const Log = () => {
                             </div>
                         </div>
                         <div className="log__signin__form__cont"> 
-                            <div className="log__signin__form__cont__inputCont">
+                            <div className="log__signin__form__cont__inputCont log__signin__form__cont__inputCont--first">
                                 <label htmlFor="signPassword">Mot de passe</label>
                                 <input onInput={(e) => ctrlSign('password', (e.target as HTMLInputElement).value)} value={signInput.password} type="password" id="signPassword" />
                             </div>

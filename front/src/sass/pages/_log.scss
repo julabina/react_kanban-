@@ -1,0 +1,73 @@
+.log {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+    width: 100vw;
+    section {
+        height: 300px;
+        padding: 18px 18px 28px;
+        border: 1px solid map-get($map: $colors, $key:gray-light );
+        border-radius: 8px;
+        box-sizing: border-box;
+    }
+    &__login {
+        margin-right: 15px;
+    }
+    &__signin, &__login {
+        h2 {
+            text-align: center;
+            font-weight: 500;
+            font-size: 1.4em;
+            margin-bottom: 25px;
+        }
+        &__form {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            &__cont {
+                display: flex;
+                
+            }
+            &__cont__inputCont, &__inputCont {
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 10px;
+                input {
+                    height: 30px;
+                    border: 1px solid map-get($map: $colors, $key:gray-dark );
+                    border-radius: 30px;
+                    padding-left: 15px;
+                }
+                label {
+                    margin-bottom: 5px;
+                }
+                &--first {
+                    margin-right: 10px;
+                }
+            }
+            &__btnCont {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+                position: absolute;
+                bottom: 35px;
+                input[type=submit] {
+                    height: 30px;
+                    width: 150px;
+                    background: map-get($map: $colors, $key:blue-dark );
+                    color: map-get($map: $colors, $key:light-white );
+                    border: none;
+                    border-radius: 30px;
+                    cursor: pointer;
+                    transition: all 120ms ease-in-out;
+                    &:hover {
+                        transition: all 120ms ease-in-out;
+                        background: darken($color: map-get($map: $colors, $key:blue-dark ), $amount: 15);
+                    }
+                }
+            }
+        }
+    }
+}

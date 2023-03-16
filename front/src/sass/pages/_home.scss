@@ -194,6 +194,9 @@
                 &--light {
                     color: map-get($map: $colors, $key:light-black );
                 }
+                &::first-letter {
+                    text-transform: uppercase;
+                }
             }
             &__right {
                 display: flex;
