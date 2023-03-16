@@ -276,6 +276,11 @@ exports.delete = (req, res, next) => {
                         return res.status(401).json({ message });
                     }
 
+                    const arr = project.columns;
+                    let newArr = arr.filter(el => {
+                        return el !== req.params.id;
+                    });
+
                     Column.destroy({ where: { id: req.params.id } })
                         .then(() => {
                             const arr = project.columns;
@@ -287,8 +292,21 @@ exports.delete = (req, res, next) => {
 
                             project.save()
                                 .then(() => {
-                                    const message = "Colonne bien supprimée.";
-                                    res.status(201).json({ message });
+                                    Task.findAll({ where : { status: req.params.id } })
+                                        .then(tasks => {
+                                            if (tasks === null) {
+                                                const message = "Colonne bien supprimée.";
+                                                return res.status(201).json({ message });
+                                            }
+                                            
+                                            for (let i = 0; i < tasks.length; i++) {
+                                                tasks[i].status = newArr[0];
+                                                tasks[i].save();
+                                            }   
+                                            
+                                            const message = "Colonne bien supprimée.";
+                                            res.status(201).json({ message });
+                                        });
                                 })
 
                         })

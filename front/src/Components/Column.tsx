@@ -187,6 +187,13 @@ const Column: FC<IColumn> = ({ id, heading, elements, columns, columnsColor, dar
                 } else if (res.status === 401) {
                     toggleDisplayMenu();
                     alert("Impossible de supprimer la derniere colonne.");
+                } else {
+                    res.json()
+                        .then(data => {
+                            console.log(data);
+                            
+                            alert(data.message);
+                        })
                 }
             })
     };
