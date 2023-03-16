@@ -217,8 +217,12 @@ html, body {
   background: #ffffff;
   color: light-black;
 }
+.column__menu__modal__titleCont {
+  margin-bottom: 20px;
+}
 .column__menu__modal__titleCont__title {
   display: flex;
+  justify-content: center;
 }
 .column__menu__modal__titleCont__title h2 {
   text-transform: uppercase;
@@ -230,6 +234,10 @@ html, body {
   margin-right: 10px;
   border-radius: 50%;
 }
+.column__menu__modal__titleCont__title__color input {
+  width: 64px;
+  height: 32px;
+}
 .column__menu__modal__titleCont__title__btn {
   margin-top: 5px;
   margin-left: 15px;
@@ -239,6 +247,130 @@ html, body {
 .column__menu__modal__titleCont__title__btn:hover {
   transition: all 120ms ease-in-out;
   color: #939CAD;
+}
+.column__menu__modal__titleCont__forModif__errorCont {
+  font-size: 0.8em;
+  color: #c41b1b;
+  margin-bottom: 10px;
+}
+.column__menu__modal__titleCont__forModif__color {
+  display: flex;
+  flex-direction: column-reverse;
+  margin-bottom: 10px;
+}
+.column__menu__modal__titleCont__forModif__color label {
+  margin-bottom: 5px;
+}
+.column__menu__modal__titleCont__forModif__title {
+  display: flex;
+  flex-direction: column;
+}
+.column__menu__modal__titleCont__forModif__title input {
+  height: 30px;
+  background: inherit;
+  border: 1px solid #939cad70;
+  border-radius: 6px;
+  padding: 0 15px;
+  color: #ffffff;
+}
+.column__menu__modal__titleCont__forModif__title input::placeholder {
+  color: #939cad70;
+}
+.column__menu__modal__titleCont__forModif__title label {
+  margin-bottom: 5px;
+}
+.column__menu__modal__titleCont__forModif__btns {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+.column__menu__modal__titleCont__forModif__btns input {
+  height: 30px;
+  width: 48%;
+  background: inherit;
+  border: 1px solid #5e687c;
+  border-radius: 8px;
+  padding: 0 15px;
+  color: #5e687c;
+  cursor: pointer;
+  transition: all 120ms ease-in-out;
+}
+.column__menu__modal__titleCont__forModif__btns input:hover {
+  transition: all 120ms ease-in-out;
+  border-color: #939CAD;
+  color: #939CAD;
+}
+.column__menu__modal__position {
+  display: flex;
+  flex-direction: column;
+}
+.column__menu__modal__position label {
+  margin-bottom: 5px;
+}
+.column__menu__modal__position__select {
+  height: 30px;
+  width: 235px;
+  background: inherit;
+  padding: 0 15px;
+  border: 1px solid #939cad70;
+  border-radius: 6px;
+}
+.column__menu__modal__position__select--dark {
+  color: #ffffff;
+}
+.column__menu__modal__position__select--light {
+  color: #0f0f0f;
+}
+.column__menu__modal__deleteBtn {
+  margin-top: 25px;
+}
+.column__menu__modal__deleteBtn input {
+  background: #635EC6;
+  border: none;
+  font-weight: 500;
+  color: #ffffff;
+  height: 42px;
+  width: 100%;
+  border-radius: 42px;
+  margin-top: 30px;
+  cursor: pointer;
+  transition: all 150ms ease-in-out;
+}
+.column__menu__modal__deleteBtn input:hover {
+  transition: all 150ms ease-in-out;
+  background: #c41b1b;
+}
+.column__menu__modal__alertDeleteConfirm {
+  text-align: center;
+  color: #c41b1b;
+  margin: 5px 0 20px;
+}
+.column__menu__modal__btnsConfirm {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+.column__menu__modal__btnsConfirm input {
+  height: 30px;
+  width: 48%;
+  background: inherit;
+  border: 1px solid #5e687c;
+  border-radius: 8px;
+  padding: 0 15px;
+  color: #5e687c;
+  cursor: pointer;
+  transition: all 120ms ease-in-out;
+}
+.column__menu__modal__btnsConfirm input:hover {
+  transition: all 120ms ease-in-out;
+  border-color: #939CAD;
+  color: #939CAD;
+}
+
+#confirmDelete:hover {
+  transition: all 120ms ease-in-out;
+  border-color: #c41b1b;
+  color: #c41b1b;
 }
 
 .droppable {

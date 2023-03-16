@@ -73,25 +73,7 @@
                         @include inputCont;
                     }
                     &__btnCont {
-                        display: flex;
-                        justify-content: space-between;
-                        margin-top: 15px;
-                        input {
-                            height: 30px;
-                            width: 48%;
-                            background: inherit;
-                            border: 1px solid darken($color:map-get($map: $colors, $key: gray-dark) , $amount: 20);
-                            border-radius: 8px;
-                            padding: 0 15px;
-                            color: darken($color:map-get($map: $colors, $key: gray-dark) , $amount: 20);
-                            cursor: pointer;
-                            transition: all 120ms ease-in-out;
-                            &:hover {
-                                transition: all 120ms ease-in-out;
-                                border-color: map-get($map: $colors, $key: gray-dark);
-                                color: map-get($map: $colors, $key: gray-dark);
-                            }
-                        }
+                        @include btnsModal;
                     }
                 }
                 &__content {

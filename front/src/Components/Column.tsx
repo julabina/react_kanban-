@@ -223,9 +223,9 @@ const Column: FC<IColumn> = ({ id, heading, elements, columns, columnsColor, dar
                     toggleDeleteConfirmation ?
                     <div className={darkMod ? "column__menu__modal column__menu__modal--dark" : "column__menu__modal column__menu__modal--light"}>
                         <h2>Supprimer la colonne { heading } ?</h2>
-                        <p className="">Cette action est irréversible !</p>
-                        <div className="">
-                            <input onClick={deleteColumn} type="button" value="Supprimer" />
+                        <p className="column__menu__modal__alertDeleteConfirm">Cette action est irréversible !</p>
+                        <div className="column__menu__modal__btnsConfirm">
+                            <input id="confirmDelete" onClick={deleteColumn} type="button" value="Supprimer" />
                             <input onClick={toggleDelete} type="button" value="Annuler" />
                         </div>
                     </div>
@@ -258,9 +258,9 @@ const Column: FC<IColumn> = ({ id, heading, elements, columns, columnsColor, dar
                                 </div>
                             }
                         </div>
-                        <div className="">
-                            <label htmlFor="">Changer de position</label>
-                            <select onChange={(e) => changePosition((e.target as HTMLSelectElement).value)} name="" id="">
+                        <div className="column__menu__modal__position">
+                            <label htmlFor="modifPositionColumn">Changer de position</label>
+                            <select className={darkMod ? "column__menu__modal__position__select column__menu__modal__position__select--dark" : "column__menu__modal__position__select column__menu__modal__position__select--light"} onChange={(e) => changePosition((e.target as HTMLSelectElement).value)} id="modifPositionColumn">
                                 <option value="null">----</option>
                                 {
                                     columns[0].id !== id &&
@@ -282,7 +282,7 @@ const Column: FC<IColumn> = ({ id, heading, elements, columns, columnsColor, dar
                                 }
                             </select>
                         </div>
-                        <div className="">
+                        <div className="column__menu__modal__deleteBtn">
                             <input onClick={toggleDelete} type="button" value="Supprimer la colonne" />
                         </div>
                     </div>
