@@ -1,0 +1,126 @@
+.profil {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    &__backBtn {
+        position: absolute;
+        left: 0;
+        top: 20px;
+        background: map-get($map: $colors, $key:blue-dark );
+        border: none;
+        border-radius: 0 50px 50px 0;
+        height: 50px;
+        padding: 0 25px 0 15px;
+        font-size: 1.1em;
+        font-weight: 500;
+        color: map-get($map: $colors, $key: light-white);
+        cursor: pointer;
+        transition: all 120ms ease-in-out;
+        &:hover {
+            transition: all 120ms ease-in-out;
+            background: darken($color: map-get($map: $colors, $key:blue-dark ), $amount: 15);
+        }
+    }
+    h1 {
+        font-size: 2em;
+        font-weight: 500;
+        text-align: center;
+        margin: 100px 0 80px;
+    }
+    &__section {
+        &__projectCont {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            &__project {
+                position: relative;
+                padding: 15px;
+                width: 500px;
+                border: 5px double map-get($map: $colors, $key: gray-light);
+                border-radius: 7px;
+                margin-top: 25px;
+                h2 {
+                    font-size: 1.2em;
+                    font-weight: 600;
+                    text-align: center;
+                }
+                p {
+                    border-top: 1px solid map-get($map: $colors, $key: gray-light);
+                    margin-top: 15px;
+                    padding-top: 20px;
+                }
+                &__menuBtn {
+                    position: absolute;
+                    top: 15px;
+                    right: 15px;
+                    cursor: pointer;
+                    transition: all 120ms ease-in-out;
+                    &:hover {
+                        transition: all 120ms ease-in-out;
+                        color: darken($color: map-get($map: $colors, $key: gray-dark), $amount: 15);
+                    }
+                }
+            }
+        }
+    }
+    &__modalMenu {
+        @include modal;
+        &__modal {
+            &__form {
+                margin-bottom: 50px;
+                &__btnCont {
+                    @include btnsModal;
+                }
+            }
+            &__main {
+                width: 400px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                p {
+                    margin: 15px 0 50px;
+                }
+                &__title {
+                    display: flex;
+                    justify-content: center;
+                    &__icon {
+                        margin: 5px 0 0 15px;
+                        cursor: pointer;
+                        &:hover {
+                            color:map-get($colors, gray-dark);
+                        }
+                    }
+                }
+            }
+            &__deleteBtn {
+                display: flex;
+                justify-content: center;
+                input {
+                    height: 35px;
+                    background: map-get($map: $colors, $key:blue-dark );
+                    border: none;
+                    border-radius: 30px;
+                    padding: 0 20px;
+                    color: map-get($map: $colors, $key: light-white);
+                    font-weight: 500;
+                    cursor: pointer;
+                    transition: all 120ms ease-in-out;
+                    &:hover {
+                        transition: all 120ms ease-in-out;
+                        background: map-get($map: $colors, $key: error);
+                    }
+                }
+            }
+        }
+    }
+    &--dark {
+        background: map-get($map: $colors, $key:primary-dark );
+        color: map-get($map: $colors, $key:gray-dark );
+    }
+    &--light {
+        background: map-get($map: $colors, $key: light-white);
+        color: map-get($map: $colors, $key:light-black );
+    }
+}

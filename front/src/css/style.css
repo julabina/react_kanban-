@@ -63,6 +63,10 @@ html {
   width: auto;
 }
 
+a {
+  text-decoration: none;
+}
+
 html, body {
   font-family: "Kanit", sans-serif;
 }
@@ -829,6 +833,7 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   background: #ffffff;
 }
 .home__right {
+  position: relative;
   margin-left: 320px;
   width: 100%;
 }
@@ -889,6 +894,60 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
 .home__right__header__right__menuBtn:hover {
   transition: all 150ms ease-in-out;
   color: #768197;
+}
+.home__right__header__right__menu {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 90px 15px 10px 30px;
+  border-radius: 0 0 0 6px;
+  border-bottom: 1px solid #939cad70;
+  border-left: 1px solid #939cad70;
+}
+.home__right__header__right__menu__menuItem {
+  display: flex;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+.home__right__header__right__menu__menuItem p {
+  margin-left: 10px;
+}
+.home__right__header__right__menu__menuItem--dark {
+  color: #939CAD;
+  transition: all 150ms ease-in-out;
+}
+.home__right__header__right__menu__menuItem--dark:hover {
+  transition: all 150ms ease-in-out;
+  color: #768197;
+}
+.home__right__header__right__menu__menuItem--light {
+  color: #0f0f0f;
+  transition: all 150ms ease-in-out;
+}
+.home__right__header__right__menu__menuItem--light:hover {
+  transition: all 150ms ease-in-out;
+  color: #939CAD;
+}
+.home__right__header__right__menu__menuBtn {
+  position: absolute;
+  right: 25px;
+  top: 40px;
+  font-size: 1.4em;
+  color: #939CAD;
+  margin-left: 25px;
+  cursor: pointer;
+  transition: all 150ms ease-in-out;
+  width: 15px;
+}
+.home__right__header__right__menu__menuBtn:hover {
+  transition: all 150ms ease-in-out;
+  color: #768197;
+}
+.home__right__header__right__menu--dark {
+  background: #2C2C37;
+}
+.home__right__header__right__menu--light {
+  background: #ffffff;
 }
 .home__right__header--dark {
   transition: all 120ms ease-in-out;
@@ -1462,6 +1521,253 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
 .log__signin__form__btnCont input[type=submit]:hover, .log__login__form__btnCont input[type=submit]:hover {
   transition: all 120ms ease-in-out;
   background: #3d389f;
+}
+
+.profil {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+}
+.profil__backBtn {
+  position: absolute;
+  left: 0;
+  top: 20px;
+  background: #635EC6;
+  border: none;
+  border-radius: 0 50px 50px 0;
+  height: 50px;
+  padding: 0 25px 0 15px;
+  font-size: 1.1em;
+  font-weight: 500;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 120ms ease-in-out;
+}
+.profil__backBtn:hover {
+  transition: all 120ms ease-in-out;
+  background: #3d389f;
+}
+.profil h1 {
+  font-size: 2em;
+  font-weight: 500;
+  text-align: center;
+  margin: 100px 0 80px;
+}
+.profil__section__projectCont {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.profil__section__projectCont__project {
+  position: relative;
+  padding: 15px;
+  width: 500px;
+  border: 5px double #939cad70;
+  border-radius: 7px;
+  margin-top: 25px;
+}
+.profil__section__projectCont__project h2 {
+  font-size: 1.2em;
+  font-weight: 600;
+  text-align: center;
+}
+.profil__section__projectCont__project p {
+  border-top: 1px solid #939cad70;
+  margin-top: 15px;
+  padding-top: 20px;
+}
+.profil__section__projectCont__project__menuBtn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+  transition: all 120ms ease-in-out;
+}
+.profil__section__projectCont__project__menuBtn:hover {
+  transition: all 120ms ease-in-out;
+  color: #69758a;
+}
+.profil__modalMenu {
+  z-index: 10;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: #000000b6;
+}
+.profil__modalMenu__modal {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 40px 30px;
+  border-radius: 6px;
+}
+.profil__modalMenu__modal__closeBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  text-align: center;
+  font-weight: 700;
+  height: 22px;
+  width: 22px;
+  background: inherit;
+  border: 2px solid #635EC6;
+  border-radius: 50%;
+  color: #635EC6;
+  cursor: pointer;
+  transition: all 120ms ease-in-out;
+}
+.profil__modalMenu__modal__closeBtn:hover {
+  transition: all 120ms ease-in-out;
+  border-color: #36328c;
+  color: #36328c;
+}
+.profil__modalMenu__modal__errorCont {
+  font-size: 0.8em;
+  min-height: 13px;
+  margin-top: 13px;
+  max-width: 410px;
+  color: #c41b1b;
+}
+.profil__modalMenu__modal h2 {
+  font-size: 1.3em;
+  font-weight: 600;
+}
+.profil__modalMenu__modal__form__inputCont {
+  display: flex;
+  flex-direction: column;
+  margin-top: 22px;
+}
+.profil__modalMenu__modal__form__inputCont label {
+  font-size: 0.85em;
+  margin-bottom: 9px;
+}
+.profil__modalMenu__modal__form__inputCont input {
+  height: 30px;
+  width: 380px;
+  background: inherit;
+  border: 1px solid #939cad70;
+  border-radius: 6px;
+  padding: 0 15px;
+  color: #ffffff;
+}
+.profil__modalMenu__modal__form__inputCont input::placeholder {
+  color: #939cad70;
+}
+.profil__modalMenu__modal__form__inputCont textarea {
+  resize: none;
+  height: 80px;
+  width: 380px;
+  background: inherit;
+  border: 1px solid #939cad70;
+  border-radius: 6px;
+  padding: 0 15px;
+  color: #ffffff;
+}
+.profil__modalMenu__modal__form__inputCont textarea::placeholder {
+  color: #939cad70;
+}
+.profil__modalMenu__modal__form__inputCont:first-child {
+  margin-top: 8px;
+}
+.profil__modalMenu__modal__form__submitBtn {
+  background: #635EC6;
+  border: none;
+  font-weight: 500;
+  color: #ffffff;
+  height: 42px;
+  width: 100%;
+  border-radius: 42px;
+  margin-top: 30px;
+  cursor: pointer;
+  transition: all 150ms ease-in-out;
+}
+.profil__modalMenu__modal__form__submitBtn:hover {
+  transition: all 150ms ease-in-out;
+  background: #453fb2;
+}
+.profil__modalMenu__modal--dark {
+  background: #2C2C37;
+  color: #ffffff;
+}
+.profil__modalMenu__modal--light {
+  background: #ffffff;
+  color: light-black;
+}
+.profil__modalMenu__modal__form {
+  margin-bottom: 50px;
+}
+.profil__modalMenu__modal__form__btnCont {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+.profil__modalMenu__modal__form__btnCont input {
+  height: 30px;
+  width: 48%;
+  background: inherit;
+  border: 1px solid #5e687c;
+  border-radius: 8px;
+  padding: 0 15px;
+  color: #5e687c;
+  cursor: pointer;
+  transition: all 120ms ease-in-out;
+}
+.profil__modalMenu__modal__form__btnCont input:hover {
+  transition: all 120ms ease-in-out;
+  border-color: #939CAD;
+  color: #939CAD;
+}
+.profil__modalMenu__modal__main {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.profil__modalMenu__modal__main p {
+  margin: 15px 0 50px;
+}
+.profil__modalMenu__modal__main__title {
+  display: flex;
+  justify-content: center;
+}
+.profil__modalMenu__modal__main__title__icon {
+  margin: 5px 0 0 15px;
+  cursor: pointer;
+}
+.profil__modalMenu__modal__main__title__icon:hover {
+  color: #939CAD;
+}
+.profil__modalMenu__modal__deleteBtn {
+  display: flex;
+  justify-content: center;
+}
+.profil__modalMenu__modal__deleteBtn input {
+  height: 35px;
+  background: #635EC6;
+  border: none;
+  border-radius: 30px;
+  padding: 0 20px;
+  color: #ffffff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 120ms ease-in-out;
+}
+.profil__modalMenu__modal__deleteBtn input:hover {
+  transition: all 120ms ease-in-out;
+  background: #c41b1b;
+}
+.profil--dark {
+  background: #2C2C37;
+  color: #939CAD;
+}
+.profil--light {
+  background: #ffffff;
+  color: #0f0f0f;
 }
 
 .notFound {

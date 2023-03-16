@@ -172,6 +172,7 @@
         }
     }
     &__right {
+        position: relative;
         margin-left: 320px;
         width: 100%;
         &__header {
@@ -227,6 +228,60 @@
                     &:hover {
                         transition: all 150ms ease-in-out;
                         color: darken($color: map-get($map: $colors, $key: gray-dark), $amount: 10);
+                    }
+                }
+                &__menu {
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                    padding: 90px 15px 10px 30px;
+                    border-radius: 0 0 0 6px;
+                    border-bottom: 1px solid map-get($map: $colors, $key:gray-light );
+                    border-left: 1px solid map-get($map: $colors, $key:gray-light );
+                    &__menuItem {
+                        display: flex;
+                        margin-bottom: 15px;
+                        cursor: pointer;
+                        p {
+                            margin-left: 10px;
+                        }
+                        &--dark {
+                            color: map-get($map: $colors, $key: gray-dark);
+                            transition: all 150ms ease-in-out;
+                            &:hover {
+                                transition: all 150ms ease-in-out;
+                                color: darken($color: map-get($map: $colors, $key: gray-dark), $amount: 10);
+                            }
+                        }
+                        &--light {
+                            color: map-get($map: $colors, $key: light-black);
+                            transition: all 150ms ease-in-out;
+                            &:hover {
+                                transition: all 150ms ease-in-out;
+                                color: map-get($map: $colors, $key: gray-dark);
+                            }
+                        }
+                    }
+                    &__menuBtn {
+                        position: absolute;
+                        right: 25px;
+                        top: 40px;
+                        font-size: 1.4em;
+                        color: map-get($map: $colors, $key:gray-dark );
+                        margin-left: 25px;
+                        cursor: pointer;
+                        transition: all 150ms ease-in-out;
+                        width: 15px;
+                        &:hover {
+                            transition: all 150ms ease-in-out;
+                            color: darken($color: map-get($map: $colors, $key: gray-dark), $amount: 10);
+                        }
+                    }
+                    &--dark {
+                        background: map-get($map: $colors, $key:primary-dark );
+                    }
+                    &--light {
+                        background: map-get($map: $colors, $key: light-white );
                     }
                 }
             }

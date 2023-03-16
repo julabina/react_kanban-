@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { decodeToken, isExpired } from 'react-jwt';
 import { faRectangleList, faSun } from '@fortawesome/free-regular-svg-icons';
-import { faCloudMoon, faEyeSlash, faEllipsisVertical, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faCloudMoon, faEyeSlash, faEllipsisVertical, faXmark, faUser, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import appLogo from '../assets/logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
@@ -26,6 +26,7 @@ const Home = () => {
     const [toggleNewBoardModal, setToggleNewBoardModal] = useState<boolean>(false);
     const [toggleNewColumnModal, setToggleNewColumnModal] = useState<boolean>(false);
     const [toggleNewTaskModal, setToggleNewTaskModal] = useState<boolean>(false);
+    const [togglemenu, setTogglemenu] = useState<boolean>(false);
     const [newBoardInput, setNewBoardInput] = useState<NewBoardInput>({ title: "", description: "" });
     const [newColumnInput, setNewColumnInput] = useState<NewColumnInput>({ name: "", color: "#FFFFFF", position: "start"});
     const [newTaskInput, setNewTaskInput] = useState<NewTaskInput>({title: "", description: "", subTasks: ["", ""], status: 0});
@@ -78,8 +79,7 @@ const Home = () => {
 
                 if (decodedToken.userId !== token.content || isTokenExpired === true) {
                     // DISCONNECT
-                    localStorage.removeItem('react_kanban_token');
-                    return navigate('/connexion', { replace: true });
+                    return logout();
                 };
                 
                 const user: DecodedToken = {userId: decodedToken.userId, token};
@@ -90,8 +90,7 @@ const Home = () => {
                 
             } else {
                 // DISCONNECT
-                localStorage.removeItem('react_kanban_token');
-                navigate('/connexion', { replace: true });
+                logout();
             };
         } else {
             // DISCONNECT
@@ -248,6 +247,13 @@ const Home = () => {
 
         setToggleNewTaskModal(!toggleNewTaskModal);
         
+    };
+
+    /**
+     * toggle header menu
+     */
+    const toggleMenu = () => {        
+        setTogglemenu(!togglemenu);   
     };
 
     /**
@@ -674,6 +680,16 @@ const Home = () => {
         setNewTaskInput(newObj); 
     };
 
+    /**
+     * logout current user
+     */
+    const logout = () => {
+        if (localStorage.getItem('react_kanban_token') !== null) {
+            localStorage.removeItem('react_kanban_token');
+            navigate('/connexion', { replace: true });
+        }
+    };
+
     return (
         <>
         <main className='home'>
@@ -741,8 +757,21 @@ const Home = () => {
                         <h2 className={darkMod ? "home__right__header__title home__right__header__title--dark" : "home__right__header__title home__right__header__title--light"}>{ activProject.title }</h2>
                         <div className='home__right__header__right'>
                             <input onClick={toggleModalNewTask} className='home__right__header__right__newBtn' type="button" value="Ajouter une tache" />
-                            <FontAwesomeIcon icon={faEllipsisVertical} className="home__right__header__right__menuBtn" />
-                            <div className="home__right__header__right__menu"></div>
+                            <FontAwesomeIcon onClick={toggleMenu} icon={faEllipsisVertical} className="home__right__header__right__menuBtn" />
+                            {
+                                togglemenu &&
+                                <div className={darkMod ? "home__right__header__right__menu home__right__header__right__menu--dark" : "home__right__header__right__menu home__right__header__right__menu--light"}>
+                                <FontAwesomeIcon onClick={toggleMenu} icon={faXmark} className="home__right__header__right__menu__menuBtn" />
+                                <a href="/profil"><div className={darkMod ? "home__right__header__right__menu__menuItem home__right__header__right__menu__menuItem--dark" : "home__right__header__right__menu__menuItem home__right__header__right__menu__menuItem--light"}>
+                                    <FontAwesomeIcon icon={faUser} className="home__right__header__right__menu__menuItem__icon" />
+                                    <p>Profil</p>
+                                </div></a>
+                                <div onClick={logout} className={darkMod ? "home__right__header__right__menu__menuItem home__right__header__right__menu__menuItem--dark" : "home__right__header__right__menu__menuItem home__right__header__right__menu__menuItem--light"}>
+                                    <FontAwesomeIcon icon={faRightFromBracket} className="home__right__header__right__menu__menuItem__icon" />
+                                    <p>Se deconnecter</p>
+                                </div>
+                            </div>
+                            }
                         </div>
                         </>
                     }

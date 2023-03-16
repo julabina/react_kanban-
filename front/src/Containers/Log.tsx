@@ -17,7 +17,6 @@ const Log = () => {
 
     const [signInput, setSignInput] = useState<SignInput>({ mail: "", confirmMail: "", password: "", confirmPassword: "", aggree: false });
     const [logInput, setLogInput] = useState<LogInput>({mail: "", password: ""});
-    const [isLogged, setIsLogged] = useState<boolean>(false);
 
     useEffect(() => {
         if (localStorage.getItem('react_kanban_token') !== null) {
@@ -29,9 +28,9 @@ const Log = () => {
                 if (decodedToken.userId !== token.content || isTokenExpired === true) {
                     // DISCONNECT
                     localStorage.removeItem('react_kanban_token');
-                    return navigate('/connexion', { replace: true });
-                };
-                setIsLogged(true);
+                } else {
+                    navigate('/', { replace: true });
+                } 
             } else {
                 // DISCONNECT
                 localStorage.removeItem('react_kanban_token');
@@ -253,25 +252,7 @@ const Log = () => {
             })   
     };
 
-    /**
-     * disconnect an user
-     */
-    const disconnect = () => {       
-        if (localStorage.getItem('react_kanban_token') !== null) {
-            localStorage.removeItem('react_kanban_token');
-            setIsLogged(false);
-        }
-    };
-
     return (
-        <>
-        {isLogged ? 
-            <main>
-                <section>
-                    <button onClick={disconnect}>Se deconnecter</button>
-                </section>
-            </main>
-        : 
             <main className='log'>
                 {/* section login start */}
                 <section className='log__login'>
@@ -328,8 +309,6 @@ const Log = () => {
                 </section>
                 {/* section signin ended */}
             </main>
-        }
-        </>
     );
 };
 
