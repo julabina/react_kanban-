@@ -726,8 +726,7 @@ const Home = () => {
                                 <h2 className='home__side__top__boards__container__nothing'>Aucun tableau</h2>
                             }
                         </div>
-                        <div onClick={toggleModalNewBoard
-                        } className="home__side__top__boards__addBtnCont">
+                        <div onClick={toggleModalNewBoard} className="home__side__top__boards__addBtnCont">
                             <FontAwesomeIcon icon={faRectangleList} className="home__side__top__boards__addBtnCont__img" />
                             <p>Créer un nouveau tableau</p>
                         </div>
@@ -795,9 +794,16 @@ const Home = () => {
                                     )
                                 })
                             }
-                            <div onClick={toggleModalNewColumn} className={darkMod ? "home__right__main__container__addBtn home__right__main__container__addBtn--dark" : "home__right__main__container__addBtn home__right__main__container__addBtn--light"}>
-                                <p>Ajouter Colonne</p>
-                            </div>
+                            {
+                                activProject.id !== "" ?
+                                <div onClick={toggleModalNewColumn} className={darkMod ? "home__right__main__container__addBtn home__right__main__container__addBtn--dark" : "home__right__main__container__addBtn home__right__main__container__addBtn--light"}>
+                                    <p>Ajouter Colonne</p>
+                                </div>
+                                :
+                                <div onClick={toggleModalNewBoard} className="home__right__main__container__newBoardBtnCont">
+                                    <input className='home__right__main__container__newBoardBtnCont__btn' type="button" value="Créer un nouveau tableau" />
+                                </div>
+                            }
                         </div>
                     </DndContext>
                 </div>

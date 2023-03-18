@@ -93,11 +93,16 @@ const Profil = () => {
                     
                     newArr.sort((a, b) => b.updatedAt - a.updatedAt);
                 
-                    setBoards(newArr);
                 }
+                setBoards(newArr);
             })
     };
 
+    /**
+     * change modal information to current project selected
+     * 
+     * @param ind 
+     */
     const openModal = (ind: number) => {
         const obj: Board = boards[ind];
 
@@ -106,6 +111,9 @@ const Profil = () => {
         toggleMenu();
     };
 
+    /**
+     * toggle menu modal for one project
+     */
     const toggleMenu = () => {
         setToggleMenuModal(!toggleMenuModal);
         if (toggleModifInput) {
@@ -113,6 +121,11 @@ const Profil = () => {
         }
     };
 
+    /**
+     * toggle modify input container
+     * 
+     * @param cancel 
+     */
     const toggleModif = (cancel?: boolean) => {
         if (cancel) {
             const obj: Input = { title: modalInfos.title, description: modalInfos.title };
@@ -123,10 +136,19 @@ const Profil = () => {
         setToggleModifInput(!toggleModifInput);
     };
 
+    /**
+     * toggle confirmation modal for deleting project
+     */
     const toggleDelete = () => {
         setToggleDeleteModal(!toggleDeleteModal);
     };
 
+    /**
+     * control modal input
+     * 
+     * @param action 
+     * @param value 
+     */
     const ctrlModifInput = (action: string, value: string) => {
         if (action === "title") {
             const newObj: Input = {
@@ -143,6 +165,12 @@ const Profil = () => {
         }
     };
 
+    /**
+     * validate modal input before project update
+     * 
+     * @param e 
+     * @returns 
+     */
     const validateModif = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -181,6 +209,9 @@ const Profil = () => {
         }
     };
 
+    /**
+     * update one project informations
+     */
     const updateBoard = () => {
         fetch(process.env.REACT_APP_API_URL + "/api/project/updateProject/" + modalInfos.id, {
             headers: {
@@ -199,6 +230,11 @@ const Profil = () => {
             })
     };
 
+    /**
+     * delete one project
+     * 
+     * @param id 
+     */
     const deleteProject = (id: string) => {
         fetch(process.env.REACT_APP_API_URL + "/api/project/deleteProject/" + id, {
             headers: {

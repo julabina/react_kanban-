@@ -1002,6 +1002,30 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   background: #dbe8f9;
   color: #858fa2;
 }
+.home__right__main__container__newBoardBtnCont {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+.home__right__main__container__newBoardBtnCont__btn {
+  background: #635EC6;
+  border: none;
+  font-weight: 500;
+  color: #ffffff;
+  height: 42px;
+  border-radius: 42px;
+  margin-top: 30px;
+  cursor: pointer;
+  padding: 0 25px;
+  transition: all 150ms ease-in-out;
+  margin-top: -60px;
+}
+.home__right__main__container__newBoardBtnCont__btn:hover {
+  transition: all 150ms ease-in-out;
+  background: #453fb2;
+}
 .home__right__main--dark {
   transition: all 120ms ease-in-out;
   background: #21222D;
