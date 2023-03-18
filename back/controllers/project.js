@@ -1,5 +1,5 @@
 const { v4 } = require('uuid');
-const { Project, User, Column } = require('../db/sequelize');
+const { Project, User, Column, Task } = require('../db/sequelize');
 const { ValidationError, UniqueConstraintError } = require('sequelize');
 
 /**
@@ -184,6 +184,83 @@ exports.getOne = (req, res, next) => {
 
             const message = "Un projet a bien été trouvé.";
             res.status(200).json({ message, data: project });
+        })
+        .catch(error => res.status(500).json({ message: error }));
+};
+
+/**
+ * update project informations
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ * @returns 
+ */
+exports.updateProject = (req, res, next) => {
+    if (req.body.title === undefined || req.body.description === undefined) {
+        const message = "Toutes les informations n'ont pas été envoyées.";
+        return res.status(401).json({ message });
+    }
+
+    Project.findByPk(req.params.id)
+        .then(project => {
+            if (project === null) {
+                const message = "Aucun projet trouvé";
+                return res.status(404).json({ message });
+            }
+            if (project.userId !== req.auth.userId) {
+                const message = "Requete non authentifiée.";
+                return res.status(403).json({ message });
+            }
+
+            project.title = req.body.title;
+            project.description = req.body.description;
+
+            project.save()
+                .then(() => {
+                    const message = "Projet bien modifié.";
+                    res.status(201).json({ message });
+                })
+                .catch(error => {
+                    if (error instanceof ValidationError) {
+                        return res.status(401).json({ message: error.message, data: error }); 
+                    }
+                    if (error instanceof UniqueConstraintError) {
+                        return res.status(401).json({ message: error.message, data: error });
+                    }
+                    res.status(500).json({ message: "Une erreur est survenue lors de la création de l'utilisateur.", error });
+                });
+        })
+        .catch(error => res.status(500).json({ message: error }));
+};
+
+/**
+ * delete one project with columns and tasks
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+exports.deleteProject = (req, res, next) => {
+    Project.findByPk(req.params.id)
+        .then(project => {
+            if (project === null) {
+                const message = "Aucun projet trouvé";
+                return res.status(404).json({ message });
+            }
+            if (project.userId !== req.auth.userId) {
+                const message = "Requete non authentifiée.";
+                return res.status(403).json({ message });
+            }
+
+            Task.destroy({ where: { projectId: req.params.id } });
+            Project.destroy({ where: { id: req.params.id } });
+            Column.destroy({ where: { projectId: req.params.id } })             
+                .then(() => {
+                    const message = "Projet supprimé.";
+                    res.status(201).json({ message });
+                })              
+                .catch(error => res.status(500).json({ message: error }));
         })
         .catch(error => res.status(500).json({ message: error }));
 };

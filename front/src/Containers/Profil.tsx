@@ -13,6 +13,7 @@ const Profil = () => {
     type DecodedToken = {userId: string, token: Token};
     type Board = {id: string, title: string, description: string, columns: string[], updatedAt: number};
     type ModalInfos = {id: string, title: string, description: string};
+    type Input = {title:string, description: string};
 
     const [actualUser, setActualUser] = useState<DecodedToken>({ userId: "", token: {version: "", content: ""} });
     const [darkMod, setDarkMod] = useState<boolean>(false);
@@ -21,6 +22,7 @@ const Profil = () => {
     const [toggleDeleteModal, setToggleDeleteModal] = useState<boolean>(false);
     const [toggleModifInput, setToggleModifInput] = useState<boolean>(false);
     const [modalInfos, setModalInfos] = useState<ModalInfos>({ id: "", description: "", title: "" });
+    const [input, setInput] = useState<Input>({ title: "", description: "" });
 
     useEffect(() => {
         if (localStorage.getItem('react_kanban_token') !== null) {
@@ -99,6 +101,7 @@ const Profil = () => {
     const openModal = (ind: number) => {
         const obj: Board = boards[ind];
 
+        setInput({ title: obj.title, description: obj.description });
         setModalInfos({ id: obj.id, title: obj.title, description: obj.description });
         toggleMenu();
     };
@@ -110,27 +113,105 @@ const Profil = () => {
         }
     };
 
-    const toggleModif = () => {
+    const toggleModif = (cancel?: boolean) => {
+        if (cancel) {
+            const obj: Input = { title: modalInfos.title, description: modalInfos.title };
+
+            setInput(obj);
+        }
+
         setToggleModifInput(!toggleModifInput);
     };
 
     const toggleDelete = () => {
-        console.log("erererrerererer");
         setToggleDeleteModal(!toggleDeleteModal);
     };
 
     const ctrlModifInput = (action: string, value: string) => {
-
+        if (action === "title") {
+            const newObj: Input = {
+                ...input,
+                title: value
+            };
+            setInput(newObj);
+        } else if (action === "description") {
+            const newObj: Input = {
+                ...input,
+                description: value
+            };
+            setInput(newObj);
+        }
     };
 
     const validateModif = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        const newBoardErrorCont = document.querySelector('.profil__modalMenu__modal__errorCont');
 
+        if (newBoardErrorCont) {    
+            let errors: string = "";
+            newBoardErrorCont.innerHTML = "";
+            
+            if (input.title === "") {
+                return newBoardErrorCont.innerHTML = `<p>- Le titre est obligatoire.</p>`;
+            }
+
+            if (input.title === "") {
+                errors = `<p>- Le titre est requis.</p>`;
+            } else if (input.title.length < 3 || input.title.length > 100) {
+                errors = `<p>- La taille du titre doit etre comprise entre 2 et 100 caractères.</p>`;          
+            } else if (!input.title.match(/^[\wé èà\-]*$/i)) {
+                errors = `<p>- Le titre ne doit contenir que des lettres et des chiffres.</p>`;
+            }
+
+            if (input.description !== "") {
+                if (input.description.length > 100) {
+                    errors += `<p>- La description doit comprendre maximum 100 caractères.</p>`;          
+                } else if (!input.description.match(/^[\wé èà\-]*$/i)) {
+                    errors += `<p>- La description ne doit contenir que des lettres et des chiffres.</p>`;
+                }
+            }
+
+            if (errors !== "") {
+                newBoardErrorCont.innerHTML = errors;
+            } else {
+                updateBoard();
+            }
+
+        }
+    };
+
+    const updateBoard = () => {
+        fetch(process.env.REACT_APP_API_URL + "/api/project/updateProject/" + modalInfos.id, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + actualUser.token.version,
+            },
+            method: "PUT",
+            body: JSON.stringify({ title: input.title, description: input.description })
+        })
+            .then(res => {
+                if (res.status === 201) {
+                    getAllProjects(actualUser.userId, actualUser.token.version);
+                    toggleMenu();
+                }
+            })
     };
 
     const deleteProject = (id: string) => {
-
+        fetch(process.env.REACT_APP_API_URL + "/api/project/deleteProject/" + id, {
+            headers: {
+                "Authorization": "Bearer " + actualUser.token.version,
+            },
+            method: "DELETE"
+        })
+            .then(res => {
+                if (res.status === 201) {
+                    getAllProjects(actualUser.userId, actualUser.token.version);
+                    toggleMenu();
+                }
+            })
     };
 
     return (
@@ -183,24 +264,25 @@ const Profil = () => {
                         {
                             toggleModifInput ?
                             <form className='profil__modalMenu__modal__form' onSubmit={validateModif}>
+                                <div className='profil__modalMenu__modal__errorCont'></div>
                                 <div className="profil__modalMenu__modal__form__inputCont">
                                     <label htmlFor="profilModifTitle">Nom du projet</label>
-                                    <input type="text" id="profilModifTitle" />
+                                    <input onInput={(e) => ctrlModifInput("title", (e.target as HTMLInputElement).value)} value={input.title} type="text" id="profilModifTitle" />
                                 </div>
                                 <div className="profil__modalMenu__modal__form__inputCont">
                                     <label htmlFor="profilModifDescr">Description</label>
-                                    <textarea id="profilModifDescr"></textarea>
+                                    <textarea onInput={(e) => ctrlModifInput("description", (e.target as HTMLInputElement).value)} value={input.description} id="profilModifDescr"></textarea>
                                 </div>
                                 <div className="profil__modalMenu__modal__form__btnCont">
                                     <input type="submit" value="Changer" />
-                                    <input onClick={toggleModif} type="button" value="Annuler" />
+                                    <input onClick={() => toggleModif(true)} type="button" value="Annuler" />
                                 </div>
                             </form>
                             :
                             <div className="profil__modalMenu__modal__main">
                                 <div className="profil__modalMenu__modal__main__title">
                                     <h2>{modalInfos.title}</h2>
-                                    <FontAwesomeIcon className='profil__modalMenu__modal__main__title__icon' onClick={toggleModif} icon={faPencil} />
+                                    <FontAwesomeIcon className='profil__modalMenu__modal__main__title__icon' onClick={() => toggleModif()} icon={faPencil} />
                                 </div>
                                 <p>{modalInfos.description}</p>
                             </div>
