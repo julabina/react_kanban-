@@ -134,7 +134,7 @@ const Home = () => {
                     setBoards(firstBoard);                    
                     setAllBoards(newArr);
                     setActivProject(firstBoard[0]);
-                    getAllColumns(firstBoard[0].id, token);
+                    getAllColumns(firstBoard[0].id, token, firstBoard[0]);
                 }
             })
     };
@@ -142,7 +142,7 @@ const Home = () => {
     /**
      * get all task for one project
      */
-    const getAllColumns = (id: string, token: string) => {
+    const getAllColumns = (id: string, token: string, col: Board) => {
         console.log('RERETEZGZFREV');
         
         fetch(process.env.REACT_APP_API_URL + "/api/column/getAll/" + id, {
@@ -155,19 +155,28 @@ const Home = () => {
             .then(data => {
                 if (data.data[0] && data.data[0].length !== 0) {
                     console.log(data.data[0]);
+                    console.log(col.columns);
+                    
                     
                     let colArr: Columns[] = [];
-
-                    for (let i = 0; i < data.data[0].length; i++) {
-                        const newObj: Columns = {
-                            id: data.data[0][i].id.toString(),
-                            name: data.data[0][i].name,
-                            color: data.data[0][i].color
-                        };
-
-                        colArr.push(newObj);
+                    
+                    for (let i = 0; i < col.columns.length; i++) {
                         
+                        for (let j = 0; j < data.data[0].length; j++) {
+
+                            if (col.columns[i] === (data.data[0][j].id).toString()) {
+                                
+                                const newObj: Columns = {
+                                    id: data.data[0][j].id.toString(),
+                                    name: data.data[0][j].name,
+                                    color: data.data[0][j].color
+                                };
+                                
+                                colArr.push(newObj);
+                            }
+                        }
                     }
+
                     console.log(colArr);
                     
                     setColumns(colArr);
@@ -544,7 +553,7 @@ const Home = () => {
                 if (res.status === 201) {
                     setNewTaskInput({title: "", description: "", subTasks: ["", ""], status: 0});
                     toggleModalNewTask();
-                    getAllColumns(activProject.id, actualUser.token.version);
+                    getAllColumns(activProject.id, actualUser.token.version, activProject);
                 }
             })        
     };
@@ -592,7 +601,7 @@ const Home = () => {
         
         if (arrFinded !== undefined) {
             setActivProject(arrFinded);
-            getAllColumns(arrFinded.id, actualUser.token.version);
+            getAllColumns(arrFinded.id, actualUser.token.version, arrFinded);
         }
     };
 

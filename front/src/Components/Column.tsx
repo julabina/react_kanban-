@@ -146,7 +146,7 @@ const Column: FC<IColumn> = ({ id, heading, elements, columns, columnsColor, dar
             .then(res => {
                 if (res.status === 201) {
                     toggleDisplayMenu();  
-                    changePosition("0");
+                    getAllProject();
                 }
             });
     };

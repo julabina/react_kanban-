@@ -173,20 +173,36 @@ exports.update = (req, res, next) => {
                 column.color = req.body.color;
             }
 
-            column.save()
-                .then(() => {
-                    const message = "Column bien modifiée.";
-                    res.status(201).json({ message });
-                })
-                .catch(error => {
-                    if (error instanceof ValidationError) {
-                        return res.status(401).json({ message: error.message, data: error }); 
+            Project.findByPk(column.projectId)
+                .then(project => {
+                    if (project === null) {
+                        const message = "Aucun projet trouvé.";
+                        return res.status(404).json({ message });
                     }
-                    if (error instanceof UniqueConstraintError) {
-                        return res.status(401).json({ message: error.message, data: error });
+                    if (project.userId !== req.auth.userId) {
+                        const message = "Requete non authorisée.";
+                        return res.status(403).json({ message });
                     }
-                    res.status(500).json({ message: "Une erreur est survenue lors de la création de la colonne.", error });
-                });  
+
+                    column.save()
+                        .then(() => {
+                            project.changed('updatedAt', true);
+                            project.save();
+
+                            const message = "Column bien modifiée.";
+                            res.status(201).json({ message });
+                        })
+                        .catch(error => {
+                            if (error instanceof ValidationError) {
+                                return res.status(401).json({ message: error.message, data: error }); 
+                            }
+                            if (error instanceof UniqueConstraintError) {
+                                return res.status(401).json({ message: error.message, data: error });
+                            }
+                            res.status(500).json({ message: "Une erreur est survenue lors de la création de la colonne.", error });
+                        });  
+                    })
+                    .catch(error => res.status(500).json({ message: error }));
         })
         .catch(error => res.status(500).json({ message: error }));
 };
