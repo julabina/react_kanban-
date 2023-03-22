@@ -215,10 +215,13 @@ const Column: FC<IColumn> = ({ id, heading, elements, columns, columnsColor, dar
                             key={`draggable-element-${elmIndex}-${columnIdentifier}`}
                             identifier={elm.id}
                             content={elm.content}
+                            description={elm.description}
                             checkTasks={elm.checkedTask}
                             subTasks={elm.subTasks}
                             darkMod={darkMod}
                             columnId={id}
+                            getAllProject={() => getAllProject()}
+                            token={token}
                         />        
                     ))}
             </Droppable>

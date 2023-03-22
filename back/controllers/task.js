@@ -70,7 +70,6 @@ exports.create = (req, res, next) => {
  * @param {*} next 
  */
 exports.updatePosition = (req, res, next) => {
-    console.log(req.body);
     if (req.body.tasks === undefined) {
         const message = "Toutes les informations n'ont pas été envoyées.";
         return res.status(401).json({ message }); 
@@ -101,4 +100,115 @@ exports.updatePosition = (req, res, next) => {
                 });
         })
         .catch(error => res.status(500).json({ message: error }));
+};
+
+/**
+ * update task informations
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+exports.update = (req, res, next) => {
+    if (req.body.title === undefined || req.body.description === undefined) {
+        const message = "Toutes les informations n'ont pas été envoyées.";
+        return res.status(401).json({ message }); 
+    }
+
+    Task.findByPk(req.params.id)
+        .then(task => {
+            if (task === null) {
+                const message = "Aucune tache trouvée.";
+                return res.status(404).json({ message });
+            }
+            if (req.body.title === task.title && req.body.description === task.description) {
+                const message = "Aucune valeur n'a été modifiée.";
+                return res.status(401).json({ message });
+            }
+
+            task.title = req.body.title;
+            task.description = req.body.description;
+
+            task.save()
+                .then(() => {
+                    const message = "Tache bien modifiée.";
+                    res.status(201).json({ message });
+                })
+                .catch(error => {
+                    if (error instanceof ValidationError) {
+                        return res.status(401).json({ message: error.message, data: error }); 
+                    }
+                    if (error instanceof UniqueConstraintError) {
+                        return res.status(401).json({ message: error.message, data: error });
+                    }
+                    res.status(500).json({ message: "Une erreur est survenue lors de la création de la tache.", error });
+                });
+        })
+        .catch(error => res.status(500).json({ message: error }));
+};
+
+/**
+ * delete one task
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+exports.delete = (req, res, next) => {
+    Task.findByPk(req.params.id)
+        .then(task => {
+            if (task === null) {
+                const message = "Aucune tache trouvée.";
+                return res.status(404).json({ message });
+            }
+
+            Task.destroy({ where: { id: req.params.id } })
+                .then(() => {
+                    const message = "Tache bien supprimée.";
+                    res.status(201).json({ message });
+                })
+                .catch(error => res.status(500).json({ message: error }));
+        })
+        .catch(error => res.status(500).json({ message: error }));  
+};
+
+/**
+ * update subtask, checked or not
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+exports.check = (req, res, next) => {
+    if (req.body.index === undefined) {
+        const message = "Toutes les informations n'ont pas été envoyées.";
+        return res.status(401).json({ message }); 
+    }
+
+    const ind = parseInt(req.body.index);
+
+    Task.findByPk(req.params.id)
+        .then(task => {
+            if (task === null) {
+                const message = "Aucune tache trouvée.";
+                return res.status(404).json({ message });
+            }
+            let checkedArr = task.checked; 
+
+            if (checkedArr[ind] === "false") {
+                checkedArr[ind] = "true";
+            } else if (checkedArr[ind] === 'true') {
+                checkedArr[ind] = "false";
+            }
+
+            task.checked = checkedArr;
+
+            task.save()
+                .then(() => {
+                    const message = "Sous tache modifiée.";
+                    res.status(201).json({ message });
+                })
+                .catch(error => res.status(500).json({ message: error })); 
+        })
+        .catch(error => res.status(500).json({ message: error })); 
 };

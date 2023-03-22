@@ -596,6 +596,9 @@ html, body {
 .draggable__taskMenu__modal__titleCont__content {
   display: flex;
 }
+.draggable__taskMenu__modal__titleCont__content h2 {
+  margin-bottom: 10px;
+}
 .draggable__taskMenu__modal__titleCont__content h2::first-letter {
   text-transform: uppercase;
 }
@@ -616,6 +619,52 @@ html, body {
 }
 .draggable__taskMenu__modal__subTasks__check label {
   margin-left: 4px;
+}
+.draggable__taskMenu__modal__deleteBtn {
+  margin-top: 25px;
+  width: 200px;
+}
+.draggable__taskMenu__modal__deleteBtn input {
+  background: #635EC6;
+  border: none;
+  font-weight: 500;
+  color: #ffffff;
+  height: 42px;
+  width: 100%;
+  border-radius: 42px;
+  margin-top: 30px;
+  cursor: pointer;
+  transition: all 150ms ease-in-out;
+}
+.draggable__taskMenu__modal__deleteBtn input:hover {
+  transition: all 150ms ease-in-out;
+  background: #c41b1b;
+}
+.draggable__taskMenu__modal__alertDeleteConfirm {
+  text-align: center;
+  color: #c41b1b;
+  margin: 5px 0 20px;
+}
+.draggable__taskMenu__modal__btnsConfirm {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+.draggable__taskMenu__modal__btnsConfirm input {
+  height: 30px;
+  width: 48%;
+  background: inherit;
+  border: 1px solid #5e687c;
+  border-radius: 8px;
+  padding: 0 15px;
+  color: #5e687c;
+  cursor: pointer;
+  transition: all 120ms ease-in-out;
+}
+.draggable__taskMenu__modal__btnsConfirm input:hover {
+  transition: all 120ms ease-in-out;
+  border-color: #939CAD;
+  color: #939CAD;
 }
 
 .home {

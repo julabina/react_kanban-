@@ -79,6 +79,7 @@
                 &__content {
                     display: flex;
                     h2 {
+                        margin-bottom: 10px;
                         &::first-letter {
                             text-transform: uppercase;
                         }
@@ -102,6 +103,34 @@
                         margin-left: 4px;
                     }
                 }
+            }
+            &__deleteBtn {
+                margin-top: 25px;
+                width: 200px;
+                input {
+                    background: map-get($map: $colors, $key:blue-dark );
+                    border: none;
+                    font-weight: 500;
+                    color: map-get($map: $colors, $key: light-white);
+                    height: 42px;
+                    width: 100%;
+                    border-radius: 42px;
+                    margin-top: 30px;
+                    cursor: pointer;
+                    transition: all 150ms ease-in-out;
+                    &:hover {
+                        transition: all 150ms ease-in-out;
+                        background: map-get($colors, error);
+                    }
+                }
+            }
+            &__alertDeleteConfirm {
+                text-align: center;
+                color: map-get($map: $colors, $key: error);
+                margin: 5px 0 20px;
+            }
+            &__btnsConfirm {
+                @include btnsModal;
             }
         }
     }
