@@ -17,7 +17,7 @@ exports.create = (req, res, next) => {
     }
 
     if (req.body.userId !== req.auth.userId) {
-        const message = "Requete non authorisée.";
+        const message = "Requete non autorisée.";
         return res.status(403).json({ message });
     }
 
@@ -142,7 +142,6 @@ exports.getAll = (req, res, next) => {
                 const message = "Aucun utilisateur trouvé.";
                 return res.status(404).json({ message });
             }
-            console.log("1");
 
             Project.findAll({ where : { userId: req.params.id } })
                 .then(projects => {
@@ -178,7 +177,7 @@ exports.getOne = (req, res, next) => {
                 return res.status(404).json({ message });
             }
             if (project.userId !== req.auth.userId) {
-                const message = "Requete non authorisée.";
+                const message = "Requete non autorisée.";
                 return res.status(403).json({ message });
             }
 
@@ -235,7 +234,7 @@ exports.updateProject = (req, res, next) => {
 };
 
 /**
- * delete one project with columns and tasks
+ * delete one project with the columns and tasks
  * 
  * @param {*} req 
  * @param {*} res 

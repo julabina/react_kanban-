@@ -2,8 +2,6 @@ const jwt = require('jsonwebtoken');
 const { User } = require('../db/sequelize');
 
 module.exports = (req, res, next) => {
-    console.log("1");
-
     try {
         const token = req.headers.authorization.split(' ')[1];
         const decodeToken = jwt.verify(token, '' + process.env.REACT_APP_JWT_PRIVATE_KEY + '');
@@ -24,5 +22,4 @@ module.exports = (req, res, next) => {
     } catch (error) {
         res.status(401).json({ message: 'Requête non authentifié.' });
     }
-
 };

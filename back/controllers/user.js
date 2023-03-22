@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const { ValidationError, UniqueConstraintError } = require('sequelize');
 
 /**
- * create an user
+ * create a user
  * 
  * @param {*} req 
  * @param {*} res 
@@ -40,10 +40,10 @@ exports.create = (req, res, next) => {
                             })
                             .catch(error => {
                                 if (error instanceof ValidationError) {
-                                    return res.status(400).json({ message: error.message, data: error }); 
+                                    return res.status(401).json({ message: error.message, data: error }); 
                                 }
                                 if (error instanceof UniqueConstraintError) {
-                                    return res.status(400).json({ message: error.message, data: error });
+                                    return res.status(401).json({ message: error.message, data: error });
                                 }
                                 res.status(500).json({ message: "Une erreur est survenue lors de la création de l'utilisateur.", error });
                             });
@@ -51,10 +51,10 @@ exports.create = (req, res, next) => {
                         })
                         .catch(error => {
                             if (error instanceof ValidationError) {
-                                return res.status(400).json({ message: error.message, data: error }); 
+                                return res.status(401).json({ message: error.message, data: error }); 
                             }
                             if (error instanceof UniqueConstraintError) {
-                                return res.status(400).json({ message: error.message, data: error });
+                                return res.status(401).json({ message: error.message, data: error });
                             }
                             res.status(500).json({ message: "Une erreur est survenue lors de la création de l'utilisateur.", error });
                         });
@@ -68,7 +68,7 @@ exports.create = (req, res, next) => {
 };
 
 /**
- * log an user
+ * log a user
  * 
  * @param {*} req 
  * @param {*} res 
@@ -117,8 +117,15 @@ exports.login = (req, res, next) => {
     }
 };
 
+/**
+ * change dark mode option for one user
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ * @returns 
+ */
 exports.toggleDarkmod = (req, res, next) => {
-    console.log(typeof req.body.userId);
     if (req.body.userId === undefined || req.body.dark === undefined) {
         const message = "Toutes les informations n'ont pas été envoyées.";
         return res.status(401).json({ message });

@@ -21,7 +21,7 @@ exports.create = (req, res, next) => {
                 return res.status(404).json({ message });
             }
             if (project.userId !== req.auth.userId) {
-                const message = "Requete non authorisée.";
+                const message = "Requete non autorisée.";
                 return res.status(403).json({ message });
             }
             const actualArr = project.columns;   
@@ -100,7 +100,7 @@ exports.getAll = (req, res, next) => {
                 return res.status(404).json({ message });
             }
             if (project.userId !== req.auth.userId) {
-                const message = "Requete non authorisée.";
+                const message = "Requete non autorisée.";
                 return res.status(403).json({ message });
             }
             
@@ -147,7 +147,7 @@ exports.getAll = (req, res, next) => {
 };
 
 /**
- * update color and/or color for one column
+ * update title and/or color for one column
  * 
  * @param {*} req 
  * @param {*} res 
@@ -180,7 +180,7 @@ exports.update = (req, res, next) => {
                         return res.status(404).json({ message });
                     }
                     if (project.userId !== req.auth.userId) {
-                        const message = "Requete non authorisée.";
+                        const message = "Requete non autorisée.";
                         return res.status(403).json({ message });
                     }
 

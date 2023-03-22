@@ -23,7 +23,7 @@ exports.create = (req, res, next) => {
                 return res.status(404).json({ message });
             }
             if (project.userId !== req.auth.userId) {
-                const message = "Requete non authorisée.";
+                const message = "Requete non autorisée.";
                 return res.status(403).json({ message });
             }
             let checkedArr = [];
@@ -66,7 +66,7 @@ exports.create = (req, res, next) => {
 };
 
 /**
- * update one task column position
+ * update the position of a task in a column
  * 
  * @param {*} req 
  * @param {*} res 
@@ -94,7 +94,7 @@ exports.updatePosition = (req, res, next) => {
                         return res.status(404).json({ message });
                     }
                     if (project.userId !== req.auth.userId) {
-                        const message = "Requete non authorisée.";
+                        const message = "Requete non autorisée.";
                         return res.status(403).json({ message });
                     }
                 
@@ -155,7 +155,7 @@ exports.update = (req, res, next) => {
                         return res.status(404).json({ message });
                     }
                     if (project.userId !== req.auth.userId) {
-                        const message = "Requete non authorisée.";
+                        const message = "Requete non autorisée.";
                         return res.status(403).json({ message });
                     }
                 
@@ -204,7 +204,7 @@ exports.delete = (req, res, next) => {
                         return res.status(404).json({ message });
                     }
                     if (project.userId !== req.auth.userId) {
-                        const message = "Requete non authorisée.";
+                        const message = "Requete non autorisée.";
                         return res.status(403).json({ message });
                     }
 

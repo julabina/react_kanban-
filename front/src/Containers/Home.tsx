@@ -754,8 +754,7 @@ const Home = () => {
                     <FontAwesomeIcon icon={faCloudMoon} className="home__side__bot__cont__img" />
                     </div>
                     <div className="home__side__bot__hideSide">
-                        <FontAwesomeIcon icon={faEyeSlash} className="home__side__bot__hideSide__img" />
-                        <p>Cacher onglet</p>
+                        <a href="https://julienlenfume.com"><p>Retour au portfolio</p></a>
                     </div>
                 </div>
             </section>

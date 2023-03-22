@@ -860,14 +860,14 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
 .home__side__bot__hideSide {
   width: 270px;
   display: flex;
+  justify-content: center;
   margin: 25px 0 45px;
   color: #939CAD;
   cursor: pointer;
   transition: all 120ms ease-in-out;
 }
-.home__side__bot__hideSide__img {
-  height: 17px;
-  margin-right: 12px;
+.home__side__bot__hideSide a {
+  color: inherit;
 }
 .home__side__bot__hideSide:hover {
   transition: all 120ms ease-in-out;
