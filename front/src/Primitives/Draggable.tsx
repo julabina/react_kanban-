@@ -240,7 +240,7 @@ const Draggable: FC<IDraggable> = ({ id, children, darkMod, checkTasks, subTasks
                                     tasks.map((el, elInd) => {
                                         return (
                                             <div key={"subTaskCheck" + elInd} className="draggable__taskMenu__modal__subTasks__check">
-                                                <input onInput={() => updateSubTask(elInd)} type="checkbox" id={"forCheck" + elInd} checked={checkedArr[elInd]}/>
+                                                <input onChange={() => updateSubTask(elInd)} type="checkbox" id={"forCheck" + elInd} checked={checkedArr[elInd]}/>
                                                 <label htmlFor={"forCheck" + elInd}>{el}</label>
                                             </div>
                                         )
