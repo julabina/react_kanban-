@@ -12,6 +12,7 @@ export interface IElement {
   column: string;
   checkedTask: string[];
   subTasks: string[];
+  updatedAt: number;
 }
 
 type Columns = {id: string, name: string, color: string};

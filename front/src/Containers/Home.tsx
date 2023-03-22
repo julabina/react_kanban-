@@ -184,10 +184,13 @@ const Home = () => {
                                 column: data.data[1][i].status,
                                 checkedTask: data.data[1][i].checked,
                                 subTasks: data.data[1][i].subTask,
+                                updatedAt: Math.floor((new Date(data.data[1][i].updatedAt)).getTime() / 1000),
                             };                            
                             
                             arr.push(newObj);
                         }
+
+                        arr.sort((a, b) => b.updatedAt - a.updatedAt);
                         
                         setTasks(arr);
                         

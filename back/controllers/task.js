@@ -46,6 +46,9 @@ exports.create = (req, res, next) => {
             
             task.save()
                 .then(() => {
+                    project.changed('updatedAt', true);
+                    project.save();
+
                     const message = "Tache bien créée.";
                     res.status(201).json({ message });
                 })
@@ -84,20 +87,36 @@ exports.updatePosition = (req, res, next) => {
            
             task.status = req.body.tasks.column;
 
-            task.save()
-                .then(() => {
-                    const message = "Tache bien modifiée.";
-                    res.status(201).json({ message });
-                })
-                .catch(error => {
-                    if (error instanceof ValidationError) {
-                        return res.status(401).json({ message: error.message, data: error }); 
+            Project.findByPk(task.projectId)
+                .then(project => {
+                    if (project === null) {
+                        const message = "Aucun projet trouvé.";
+                        return res.status(404).json({ message });
                     }
-                    if (error instanceof UniqueConstraintError) {
-                        return res.status(401).json({ message: error.message, data: error });
+                    if (project.userId !== req.auth.userId) {
+                        const message = "Requete non authorisée.";
+                        return res.status(403).json({ message });
                     }
-                    res.status(500).json({ message: "Une erreur est survenue lors de la création de la tache.", error });
-                });
+                
+                    task.save()
+                        .then(() => {
+                            project.changed('updatedAt', true);
+                            project.save();
+
+                            const message = "Tache bien modifiée.";
+                            res.status(201).json({ message });
+                        })
+                        .catch(error => {
+                            if (error instanceof ValidationError) {
+                                return res.status(401).json({ message: error.message, data: error }); 
+                            }
+                            if (error instanceof UniqueConstraintError) {
+                                return res.status(401).json({ message: error.message, data: error });
+                            }
+                            res.status(500).json({ message: "Une erreur est survenue lors de la création de la tache.", error });
+                        });
+            })
+            .catch(error => res.status(500).json({ message: error }));
         })
         .catch(error => res.status(500).json({ message: error }));
 };
@@ -129,20 +148,37 @@ exports.update = (req, res, next) => {
             task.title = req.body.title;
             task.description = req.body.description;
 
-            task.save()
-                .then(() => {
-                    const message = "Tache bien modifiée.";
-                    res.status(201).json({ message });
+            Project.findByPk(task.projectId)
+                .then(project => {
+                    if (project === null) {
+                        const message = "Aucun projet trouvé.";
+                        return res.status(404).json({ message });
+                    }
+                    if (project.userId !== req.auth.userId) {
+                        const message = "Requete non authorisée.";
+                        return res.status(403).json({ message });
+                    }
+                
+
+                    task.save()
+                        .then(() => {
+                            project.changed('updatedAt', true);
+                            project.save();
+
+                            const message = "Tache bien modifiée.";
+                            res.status(201).json({ message });
+                        })
+                        .catch(error => {
+                            if (error instanceof ValidationError) {
+                                return res.status(401).json({ message: error.message, data: error }); 
+                            }
+                            if (error instanceof UniqueConstraintError) {
+                                return res.status(401).json({ message: error.message, data: error });
+                            }
+                            res.status(500).json({ message: "Une erreur est survenue lors de la création de la tache.", error });
+                        });
                 })
-                .catch(error => {
-                    if (error instanceof ValidationError) {
-                        return res.status(401).json({ message: error.message, data: error }); 
-                    }
-                    if (error instanceof UniqueConstraintError) {
-                        return res.status(401).json({ message: error.message, data: error });
-                    }
-                    res.status(500).json({ message: "Une erreur est survenue lors de la création de la tache.", error });
-                });
+                .catch(error => res.status(500).json({ message: error }));
         })
         .catch(error => res.status(500).json({ message: error }));
 };
@@ -161,13 +197,28 @@ exports.delete = (req, res, next) => {
                 const message = "Aucune tache trouvée.";
                 return res.status(404).json({ message });
             }
+            Project.findByPk(task.projectId)
+                .then(project => {
+                    if (project === null) {
+                        const message = "Aucun projet trouvé.";
+                        return res.status(404).json({ message });
+                    }
+                    if (project.userId !== req.auth.userId) {
+                        const message = "Requete non authorisée.";
+                        return res.status(403).json({ message });
+                    }
 
-            Task.destroy({ where: { id: req.params.id } })
-                .then(() => {
-                    const message = "Tache bien supprimée.";
-                    res.status(201).json({ message });
-                })
-                .catch(error => res.status(500).json({ message: error }));
+                    Task.destroy({ where: { id: req.params.id } })
+                        .then(() => {
+                            project.changed('updatedAt', true);
+                            project.save();
+                            
+                            const message = "Tache bien supprimée.";
+                            res.status(201).json({ message });
+                        })
+                        .catch(error => res.status(500).json({ message: error }));
+                    })
+                    .catch(error => res.status(500).json({ message: error }));  
         })
         .catch(error => res.status(500).json({ message: error }));  
 };
