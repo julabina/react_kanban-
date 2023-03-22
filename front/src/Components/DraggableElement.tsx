@@ -13,6 +13,7 @@ interface IDraggableElement {
   getAllProject: () => void;
   token: string;
 }
+
 const DraggableElement: FC<IDraggableElement> = ({
     identifier,
     content,
@@ -24,6 +25,7 @@ const DraggableElement: FC<IDraggableElement> = ({
     token,
     columnId
   }) => {
+    
     const itemIdentifier = useMemo(() => identifier, [identifier]);
 
     const [taskDone, setTaskDone] = useState<number>(0);

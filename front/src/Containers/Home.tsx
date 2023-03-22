@@ -142,9 +142,7 @@ const Home = () => {
     /**
      * get all task for one project
      */
-    const getAllColumns = (id: string, token: string, col: Board) => {
-        console.log('RERETEZGZFREV');
-        
+    const getAllColumns = (id: string, token: string, col: Board) => {        
         fetch(process.env.REACT_APP_API_URL + "/api/column/getAll/" + id, {
             headers: {
                 "Authorization": "Bearer " + token
@@ -153,10 +151,7 @@ const Home = () => {
         })
             .then(res => res.json())
             .then(data => {
-                if (data.data[0] && data.data[0].length !== 0) {
-                    console.log(data.data[0]);
-                    console.log(col.columns);
-                    
+                if (data.data[0] && data.data[0].length !== 0) {                   
                     
                     let colArr: Columns[] = [];
                     
@@ -176,8 +171,6 @@ const Home = () => {
                             }
                         }
                     }
-
-                    console.log(colArr);
                     
                     setColumns(colArr);
 
@@ -561,9 +554,7 @@ const Home = () => {
     /**
      * create on database, one new column for one project
      */
-    const tryToCreateNewColumn = () => {
-        console.log(newColumnInput);
-        
+    const tryToCreateNewColumn = () => {        
         fetch(process.env.REACT_APP_API_URL + "/api/column/create/" + activProject.id, {
             headers: {
                 'Accept': 'application/json',
@@ -590,14 +581,10 @@ const Home = () => {
      * @param id 
      */
     const changeProject = (id: string) => {
-        console.log(id);        
-
         const arr: Board[] = allBoards;
         const arrFinded: Board | undefined = arr.find(el => {
             return el.id === id
         })
-        console.log(arrFinded);
-        
         
         if (arrFinded !== undefined) {
             setActivProject(arrFinded);
@@ -674,17 +661,12 @@ const Home = () => {
     /**
      * remove subtask field to new task form
      */
-    const removeSubtaskField = (ind: number) => {
-        console.log("----------------");
-        
+    const removeSubtaskField = (ind: number) => {        
         const arr = newTaskInput.subTasks;
-        console.log(ind);
-        console.log(arr);
         const arrFiltered = arr.filter((el, elInd) => {
             return elInd !== ind;
         });
         
-        console.log(arrFiltered);
        const newObj: NewTaskInput = {
             ...newTaskInput,
             subTasks: arrFiltered

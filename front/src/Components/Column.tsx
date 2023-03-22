@@ -30,6 +30,7 @@ interface IColumn {
 }
 
 const Column: FC<IColumn> = ({ id, heading, elements, columns, columnsColor, darkMod, projectId, token, getAllProject }) => {
+
     const columnIdentifier = useMemo(() => _.camel(id), [id]);   
 
     const amounts = useMemo(
@@ -97,13 +98,14 @@ const Column: FC<IColumn> = ({ id, heading, elements, columns, columnsColor, dar
 
     /**
      * 
-     * validate modif informations inputs
+     * validate modified informations inputs
      * 
      * @param e 
      * @returns 
      */
     const validateModifColumn = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
         const errorCont = document.querySelector(".column__menu__modal__titleCont__forModif__errorCont");
 
         if (errorCont) {
@@ -132,7 +134,7 @@ const Column: FC<IColumn> = ({ id, heading, elements, columns, columnsColor, dar
     };
 
     /**
-     * update title and color column on database 
+     * update title and color on column in database 
      */
     const updateColumn = () => {
         fetch(process.env.REACT_APP_API_URL + "/api/column/update", {
@@ -174,7 +176,10 @@ const Column: FC<IColumn> = ({ id, heading, elements, columns, columnsColor, dar
             }
         };
         
-        const deleteColumn = () => {
+    /**
+     * delete one column on database
+     */    
+    const deleteColumn = () => {
         fetch(process.env.REACT_APP_API_URL + '/api/column/delete/' + id, {
             headers: {
                 "Authorization": "Bearer " + token,
@@ -190,9 +195,7 @@ const Column: FC<IColumn> = ({ id, heading, elements, columns, columnsColor, dar
                     alert("Impossible de supprimer la derniere colonne.");
                 } else {
                     res.json()
-                        .then(data => {
-                            console.log(data);
-                            
+                        .then(data => {                           
                             alert(data.message);
                         })
                 }

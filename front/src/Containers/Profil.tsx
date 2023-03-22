@@ -99,7 +99,7 @@ const Profil = () => {
     };
 
     /**
-     * change modal information to current project selected
+     * change informations of the modal to current project selected
      * 
      * @param ind 
      */
@@ -166,7 +166,7 @@ const Profil = () => {
     };
 
     /**
-     * validate modal input before project update
+     * validate modal input before updating project
      * 
      * @param e 
      * @returns 
@@ -210,7 +210,7 @@ const Profil = () => {
     };
 
     /**
-     * update one project informations
+     * update project informations
      */
     const updateBoard = () => {
         fetch(process.env.REACT_APP_API_URL + "/api/project/updateProject/" + modalInfos.id, {

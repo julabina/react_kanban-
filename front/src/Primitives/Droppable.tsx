@@ -7,6 +7,7 @@ interface IDroppable {
 }
 
 const Droppable: FC<IDroppable> = ({ id, children }) => {
+    
     const { isOver, setNodeRef } = useDroppable({ id });        
 
     const style = useMemo(

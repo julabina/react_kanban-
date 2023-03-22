@@ -75,7 +75,7 @@ const Log = () => {
     };
 
     /**
-     * validate sigin field before sign in
+     * validate signin field before sign in
      * 
      * @param e 
      * @returns 

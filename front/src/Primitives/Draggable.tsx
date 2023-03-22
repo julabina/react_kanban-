@@ -56,6 +56,9 @@ const Draggable: FC<IDraggable> = ({ id, children, darkMod, checkTasks, subTasks
         return undefined;
     }, [transform]);
 
+    /**
+     * toggle menu modal
+     */
     const toggleMenu = () => {        
         if (inputToggle) {
             setInputToggle(false);
@@ -64,6 +67,9 @@ const Draggable: FC<IDraggable> = ({ id, children, darkMod, checkTasks, subTasks
         setMenuToggle(!menuToggle);
     };
 
+    /**
+     * toggle input form
+     */
     const toggleTitleInput = () => {        
         if (inputToggle) {
             setTitle({title: content, description: description});
@@ -71,6 +77,12 @@ const Draggable: FC<IDraggable> = ({ id, children, darkMod, checkTasks, subTasks
         setInputToggle(!inputToggle);
     };
 
+    /**
+     * control input for modify informations
+     * 
+     * @param action 
+     * @param value 
+     */
     const ctrlTitleInput = (action: string, value: string) => {
         if (action === 'title') {
             const newObj: Input = {
@@ -87,6 +99,12 @@ const Draggable: FC<IDraggable> = ({ id, children, darkMod, checkTasks, subTasks
         }
     };
 
+    /**
+     * validate modified inputs 
+     * 
+     * @param e 
+     * @returns 
+     */
     const validateInput = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -125,6 +143,9 @@ const Draggable: FC<IDraggable> = ({ id, children, darkMod, checkTasks, subTasks
         } 
     };
 
+    /**
+     * try to update one task on database
+     */
     const tryToUpdateTask = () => {
         fetch(process.env.REACT_APP_API_URL + "/api/task/update/" + id, {
             headers: {
@@ -143,10 +164,16 @@ const Draggable: FC<IDraggable> = ({ id, children, darkMod, checkTasks, subTasks
             })
     };
 
+    /**
+     * toggle delete confirmation section
+     */
     const toggleDelete = () => {
         setDeleteToggle(!deleteToggle);
     };
 
+    /**
+     * delete one task on database
+     */
     const deleteTask = () => {
         fetch(process.env.REACT_APP_API_URL + "/api/task/delete/" + id, {
             headers: {
@@ -162,6 +189,11 @@ const Draggable: FC<IDraggable> = ({ id, children, darkMod, checkTasks, subTasks
             })
     };
 
+    /**
+     * update subtask, checked or unchecked
+     * 
+     * @param index 
+     */
     const updateSubTask = (index: number) => {
         fetch(process.env.REACT_APP_API_URL + "/api/task/check/" + id, {
             headers: {
@@ -174,7 +206,6 @@ const Draggable: FC<IDraggable> = ({ id, children, darkMod, checkTasks, subTasks
         })
             .then(res => {
                 if (res.status === 201) {
-                    //toggleMenu();
                     getAllProject();
                 }
             })
