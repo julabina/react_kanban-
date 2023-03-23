@@ -260,7 +260,7 @@ const Draggable: FC<IDraggable> = ({ id, children, darkMod, checkTasks, subTasks
                                         <h2>{content}</h2>
                                         <FontAwesomeIcon onClick={toggleTitleInput} icon={faPencil} className="draggable__taskMenu__modal__titleCont__content__btn" />
                                     </div>
-                                    <p>{ description }</p>
+                                    <p className="draggable__taskMenu__modal__titleCont__para">{ description }</p>
                                     </>
                                 }
                             </div>
@@ -270,7 +270,7 @@ const Draggable: FC<IDraggable> = ({ id, children, darkMod, checkTasks, subTasks
                                         
                                     tasks.map((el, elInd) => {
                                         return (
-                                            <div key={"subTaskCheck" + elInd} className="draggable__taskMenu__modal__subTasks__check">
+                                            <div key={"subTaskCheck" + elInd} className={darkMod ? "draggable__taskMenu__modal__subTasks__check draggable__taskMenu__modal__subTasks__check--dark" : "draggable__taskMenu__modal__subTasks__check draggable__taskMenu__modal__subTasks__check--light"}>
                                                 <input onChange={() => updateSubTask(elInd)} type="checkbox" id={"forCheck" + elInd} checked={checkedArr[elInd]}/>
                                                 <label htmlFor={"forCheck" + elInd}>{el}</label>
                                             </div>

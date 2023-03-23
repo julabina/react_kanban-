@@ -120,6 +120,12 @@
                     &--light {
                         color: map-get($map: $colors, $key: light-black);
                     }
+                    option {
+                        color: initial;
+                    }
+                    @include lowTablet {
+                        width: auto;
+                    }
                 }
             }
             &__deleteBtn {

@@ -10,9 +10,17 @@
         border: 1px solid map-get($map: $colors, $key:gray-light );
         border-radius: 8px;
         box-sizing: border-box;
+        @include lowTablet {
+            height: auto;
+            padding-bottom: 50px;
+        }
     }
     &__login {
         margin-right: 15px;
+        @include lowTablet {
+            margin-right: 0;
+            margin-bottom: 25px;
+        }
     }
     &__signin, &__login {
         h2 {
@@ -28,7 +36,9 @@
             height: 100%;
             &__cont {
                 display: flex;
-                
+                @include lowTablet {
+                    flex-direction: column;
+                }
             }
             &__cont__inputCont, &__inputCont {
                 display: flex;
@@ -45,6 +55,9 @@
                 }
                 &--first {
                     margin-right: 10px;
+                    @include lowTablet {
+                        margin-right: 0;
+                    }
                 }
             }
             &__btnCont {
@@ -67,7 +80,19 @@
                         background: darken($color: map-get($map: $colors, $key:blue-dark ), $amount: 15);
                     }
                 }
+                @include lowTablet {
+                    bottom: 6px;
+                }
             }
         }
+        @include lowTablet {
+            width: 380px;
+        }
+        @media screen and (max-width: 580px) {
+            width: 90%;
+        }
+    }
+    @include lowTablet {
+        flex-direction: column;
     }
 }

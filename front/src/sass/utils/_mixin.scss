@@ -12,12 +12,14 @@
         padding: 40px 30px; 
         border-radius: 6px; 
         &__closeBtn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             position: absolute;
             top: 10px;
             right: 10px;
-            text-align: center;
             font-weight: 700;
-            height: 22px;width: 22px;
+            height: 23px;width: 23px;
             background: inherit;
             border: 2px solid map-get($map: $colors, $key: blue-dark);
             border-radius: 50%;
@@ -80,15 +82,31 @@
                     transition: all 150ms ease-in-out;
                     background: darken($color: map-get($colors, blue-dark), $amount: 10);
                 }
+                @include lowTablet {
+                    
+                }
+            }
+            @include lowTablet {
+                display: flex;
+                flex-direction: column;
+                input, textarea {
+                    width: auto;
+                }     
             }
         }
         &--dark {
             background: map-get($map: $colors, $key: primary-dark); 
             color: map-get($map: $colors, $key: light-white); 
+            input, textarea {
+                color: map-get($map: $colors, $key:light-white );
+            }
         }
         &--light {
             background: map-get($map: $colors, $key: light-white); 
-            color: light-black;
+            color: map-get($map: $colors, $key: light-black);
+        }
+        @include lowTablet {
+            width: 80%;           
         }
     }
 }
@@ -98,7 +116,6 @@
     border: 1px solid map-get($map: $colors, $key: gray-light);
     border-radius: 6px;
     padding: 0 15px;
-    color: map-get($map: $colors, $key:light-white );
     &::placeholder {
         color: map-get($map: $colors, $key: gray-light);
     }
@@ -112,13 +129,17 @@
     border-radius: 0 45px 45px 0;
     padding-left: 25px;
     margin-right: 25px;
+    padding-right: 15px;
     transition: all 120ms ease-in-out;
     &__img {
         margin: 1px 15px 0 0;
         height: 16px;
     }
     p {
+        overflow :hidden;
         font-size: 1.1em;
+        max-height: 20px;
+        white-space: nowrap;
         &::first-letter {
             text-transform: uppercase;
         }
@@ -148,5 +169,17 @@
             border-color: map-get($map: $colors, $key: gray-dark);
             color: map-get($map: $colors, $key: gray-dark);
         }
+    }
+}
+
+@mixin tablet {
+    @media screen and (max-width: map-get($resolution, tablet)) {
+        @content;
+    }
+}
+
+@mixin lowTablet {
+    @media screen and (max-width: map-get($resolution, tablet)) {
+        @content;
     }
 }

@@ -80,7 +80,7 @@ exports.create = (req, res, next) => {
                                                     if (error instanceof UniqueConstraintError) {
                                                         return res.status(401).json({ message: error.message, data: error });
                                                     }
-                                                    res.status(500).json({ message: "Une erreur est survenue lors de la création de l'utilisateur.", error });
+                                                    res.status(500).json({ message: "Une erreur est survenue lors de la création du projet.", error });
                                                 })
                                                 .catch(error => res.status(500).json({ message: error }));
                                         });
@@ -95,7 +95,7 @@ exports.create = (req, res, next) => {
                                             if (error instanceof UniqueConstraintError) {
                                                 return res.status(401).json({ message: error.message, data: error });
                                             }
-                                            res.status(500).json({ message: "Une erreur est survenue lors de la création de l'utilisateur.", error });
+                                            res.status(500).json({ message: "Une erreur est survenue lors de la création de la colonne 3.", error });
                                         })
                                         .catch(error => res.status(500).json({ message: error }));
                                 });
@@ -110,7 +110,7 @@ exports.create = (req, res, next) => {
                                     if (error instanceof UniqueConstraintError) {
                                         return res.status(401).json({ message: error.message, data: error });
                                     }
-                                    res.status(500).json({ message: "Une erreur est survenue lors de la création de l'utilisateur.", error });
+                                    res.status(500).json({ message: "Une erreur est survenue lors de la création de la colonne 2.", error });
                                 })
                                 .catch(error => res.status(500).json({ message: error }));
                         });
@@ -122,7 +122,7 @@ exports.create = (req, res, next) => {
                     if (error instanceof UniqueConstraintError) {
                         return res.status(401).json({ message: error.message, data: error });
                     }
-                    res.status(500).json({ message: "Une erreur est survenue lors de la création de l'utilisateur.", error });
+                    res.status(500).json({ message: "Une erreur est survenue lors de la création de la colonne 1.", error });
                 });
         })
         .catch(error => res.status(500).json({ message: error }));

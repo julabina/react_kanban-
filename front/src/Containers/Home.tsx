@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { decodeToken, isExpired } from 'react-jwt';
 import { faRectangleList, faSun } from '@fortawesome/free-regular-svg-icons';
-import { faCloudMoon, faEyeSlash, faEllipsisVertical, faXmark, faUser, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faCloudMoon, faList, faEllipsisVertical, faXmark, faUser, faRightFromBracket, faPlus } from '@fortawesome/free-solid-svg-icons';
 import appLogo from '../assets/logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
@@ -684,11 +684,26 @@ const Home = () => {
         }
     };
 
+    /**
+     * open menu for mobile
+     */
+    const openMenu = () => {
+        const menu = document.querySelector('.home__side');
+
+        if (menu) {
+            if (menu.classList.contains('home__side--hidden')) {
+                menu.classList.remove('home__side--hidden');
+            } else {
+                menu.classList.add('home__side--hidden');
+            }
+        }
+    };
+
     return (
         <>
         <main className='home'>
             {/* side bar start */}
-            <section className={darkMod ? "home__side home__side--dark" : "home__side home__side--light"}>
+            <section className={darkMod ? "home__side home__side--hidden home__side--dark" : "home__side home__side--hidden home__side--light"}>
                 <div className='home__side__top'>
                     <div className="home__side__top__titleCont">
                         <img className='home__side__top__titleCont__logo' src={appLogo} alt="app logo" />
@@ -748,7 +763,8 @@ const Home = () => {
                         <>
                         <h2 className={darkMod ? "home__right__header__title home__right__header__title--dark" : "home__right__header__title home__right__header__title--light"}>{ activProject.title }</h2>
                         <div className='home__right__header__right'>
-                            <input onClick={toggleModalNewTask} className='home__right__header__right__newBtn' type="button" value="Ajouter une tache" />
+                            <input onClick={toggleModalNewTask} className='home__right__header__right__newBtn home__right__header__right__newBtn--screen' type="button" value="Ajouter une tache" />
+                            <FontAwesomeIcon onClick={toggleModalNewTask}  icon={faPlus} className="home__right__header__right__newBtn home__right__header__right__newBtn--mobile" />
                             <FontAwesomeIcon onClick={toggleMenu} icon={faEllipsisVertical} className="home__right__header__right__menuBtn" />
                             {
                                 togglemenu &&
@@ -758,6 +774,10 @@ const Home = () => {
                                     <FontAwesomeIcon icon={faUser} className="home__right__header__right__menu__menuItem__icon" />
                                     <p>Profil</p>
                                 </div></a>
+                                <div onClick={openMenu} className={darkMod ? "home__right__header__right__menu__menuItem home__right__header__right__menu__menuItem--mobile home__right__header__right__menu__menuItem--dark" : "home__right__header__right__menu__menuItem home__right__header__right__menu__menuItem--mobile home__right__header__right__menu__menuItem--light"}>
+                                    <FontAwesomeIcon icon={faList} className="home__right__header__right__menu__menuItem__icon" />
+                                    <p>Menu</p>
+                                </div>
                                 <div onClick={logout} className={darkMod ? "home__right__header__right__menu__menuItem home__right__header__right__menu__menuItem--dark" : "home__right__header__right__menu__menuItem home__right__header__right__menu__menuItem--light"}>
                                     <FontAwesomeIcon icon={faRightFromBracket} className="home__right__header__right__menu__menuItem__icon" />
                                     <p>Se deconnecter</p>

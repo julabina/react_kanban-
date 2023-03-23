@@ -68,6 +68,10 @@ a {
 }
 
 html, body {
+  height: 100%;
+}
+
+html, body {
   font-family: "Kanit", sans-serif;
 }
 
@@ -130,13 +134,15 @@ html, body {
   border-radius: 6px;
 }
 .column__menu__modal__closeBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   top: 10px;
   right: 10px;
-  text-align: center;
   font-weight: 700;
-  height: 22px;
-  width: 22px;
+  height: 23px;
+  width: 23px;
   background: inherit;
   border: 2px solid #635EC6;
   border-radius: 50%;
@@ -176,7 +182,6 @@ html, body {
   border: 1px solid #939cad70;
   border-radius: 6px;
   padding: 0 15px;
-  color: #ffffff;
 }
 .column__menu__modal__form__inputCont input::placeholder {
   color: #939cad70;
@@ -189,7 +194,6 @@ html, body {
   border: 1px solid #939cad70;
   border-radius: 6px;
   padding: 0 15px;
-  color: #ffffff;
 }
 .column__menu__modal__form__inputCont textarea::placeholder {
   color: #939cad70;
@@ -213,13 +217,30 @@ html, body {
   transition: all 150ms ease-in-out;
   background: #453fb2;
 }
+@media screen and (max-width: 980px) {
+  .column__menu__modal__form {
+    display: flex;
+    flex-direction: column;
+  }
+  .column__menu__modal__form input, .column__menu__modal__form textarea {
+    width: auto;
+  }
+}
 .column__menu__modal--dark {
   background: #2C2C37;
   color: #ffffff;
 }
+.column__menu__modal--dark input, .column__menu__modal--dark textarea {
+  color: #ffffff;
+}
 .column__menu__modal--light {
   background: #ffffff;
-  color: light-black;
+  color: #0f0f0f;
+}
+@media screen and (max-width: 980px) {
+  .column__menu__modal {
+    width: 80%;
+  }
 }
 .column__menu__modal__titleCont {
   margin-bottom: 20px;
@@ -275,7 +296,6 @@ html, body {
   border: 1px solid #939cad70;
   border-radius: 6px;
   padding: 0 15px;
-  color: #ffffff;
 }
 .column__menu__modal__titleCont__forModif__title input::placeholder {
   color: #939cad70;
@@ -324,6 +344,14 @@ html, body {
 }
 .column__menu__modal__position__select--light {
   color: #0f0f0f;
+}
+.column__menu__modal__position__select option {
+  color: initial;
+}
+@media screen and (max-width: 980px) {
+  .column__menu__modal__position__select {
+    width: auto;
+  }
 }
 .column__menu__modal__deleteBtn {
   margin-top: 25px;
@@ -459,13 +487,15 @@ html, body {
   border-radius: 6px;
 }
 .draggable__taskMenu__modal__closeBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   top: 10px;
   right: 10px;
-  text-align: center;
   font-weight: 700;
-  height: 22px;
-  width: 22px;
+  height: 23px;
+  width: 23px;
   background: inherit;
   border: 2px solid #635EC6;
   border-radius: 50%;
@@ -505,7 +535,6 @@ html, body {
   border: 1px solid #939cad70;
   border-radius: 6px;
   padding: 0 15px;
-  color: #ffffff;
 }
 .draggable__taskMenu__modal__form__inputCont input::placeholder {
   color: #939cad70;
@@ -518,7 +547,6 @@ html, body {
   border: 1px solid #939cad70;
   border-radius: 6px;
   padding: 0 15px;
-  color: #ffffff;
 }
 .draggable__taskMenu__modal__form__inputCont textarea::placeholder {
   color: #939cad70;
@@ -542,23 +570,41 @@ html, body {
   transition: all 150ms ease-in-out;
   background: #453fb2;
 }
+@media screen and (max-width: 980px) {
+  .draggable__taskMenu__modal__form {
+    display: flex;
+    flex-direction: column;
+  }
+  .draggable__taskMenu__modal__form input, .draggable__taskMenu__modal__form textarea {
+    width: auto;
+  }
+}
 .draggable__taskMenu__modal--dark {
   background: #2C2C37;
   color: #ffffff;
 }
+.draggable__taskMenu__modal--dark input, .draggable__taskMenu__modal--dark textarea {
+  color: #ffffff;
+}
 .draggable__taskMenu__modal--light {
   background: #ffffff;
-  color: light-black;
+  color: #0f0f0f;
+}
+@media screen and (max-width: 980px) {
+  .draggable__taskMenu__modal {
+    width: 80%;
+  }
 }
 .draggable__taskMenu__modal {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 300px;
+  min-width: 350px;
 }
 .draggable__taskMenu__modal__titleCont {
   margin-top: 30px;
   padding-bottom: 30px;
+  width: auto;
 }
 .draggable__taskMenu__modal__titleCont__input input[type=text] {
   height: 30px;
@@ -567,7 +613,6 @@ html, body {
   border: 1px solid #939cad70;
   border-radius: 6px;
   padding: 0 15px;
-  color: #ffffff;
 }
 .draggable__taskMenu__modal__titleCont__input input[type=text]::placeholder {
   color: #939cad70;
@@ -611,14 +656,33 @@ html, body {
   transition: all 120ms ease-in-out;
   color: #939CAD;
 }
+.draggable__taskMenu__modal__titleCont__para {
+  font-size: 0.9em;
+  color: #939CAD;
+}
+@media screen and (max-width: 980px) {
+  .draggable__taskMenu__modal__titleCont {
+    width: 85%;
+  }
+}
 .draggable__taskMenu__modal__subTasks {
-  min-width: 200px;
+  min-width: 85%;
 }
 .draggable__taskMenu__modal__subTasks__check {
-  margin-bottom: 7px;
+  display: flex;
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 4px;
 }
 .draggable__taskMenu__modal__subTasks__check label {
   margin-left: 4px;
+  color: #939CAD;
+}
+.draggable__taskMenu__modal__subTasks__check--dark {
+  background: #23232c;
+}
+.draggable__taskMenu__modal__subTasks__check--light {
+  background: #efeff2;
 }
 .draggable__taskMenu__modal__deleteBtn {
   margin-top: 25px;
@@ -665,6 +729,11 @@ html, body {
   transition: all 120ms ease-in-out;
   border-color: #939CAD;
   color: #939CAD;
+}
+@media screen and (max-width: 980px) {
+  .draggable__taskMenu__modal {
+    min-width: initial;
+  }
 }
 
 .home {
@@ -723,6 +792,7 @@ html, body {
   border-radius: 0 45px 45px 0;
   padding-left: 25px;
   margin-right: 25px;
+  padding-right: 15px;
   transition: all 120ms ease-in-out;
 }
 .home__side__top__boards__container__board__img {
@@ -730,7 +800,10 @@ html, body {
   height: 16px;
 }
 .home__side__top__boards__container__board p {
+  overflow: hidden;
   font-size: 1.1em;
+  max-height: 20px;
+  white-space: nowrap;
 }
 .home__side__top__boards__container__board p::first-letter {
   text-transform: uppercase;
@@ -764,6 +837,7 @@ html, body {
   border-radius: 0 45px 45px 0;
   padding-left: 25px;
   margin-right: 25px;
+  padding-right: 15px;
   transition: all 120ms ease-in-out;
   color: #635EC6;
   transition: all 120ms ease-in-out;
@@ -773,7 +847,10 @@ html, body {
   height: 16px;
 }
 .home__side__top__boards__addBtnCont p {
+  overflow: hidden;
   font-size: 1.1em;
+  max-height: 20px;
+  white-space: nowrap;
 }
 .home__side__top__boards__addBtnCont p::first-letter {
   text-transform: uppercase;
@@ -881,6 +958,16 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   transition: all 120ms ease-in-out;
   background: #ffffff;
 }
+@media screen and (max-width: 980px) {
+  .home__side {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 980px) {
+  .home__side--hidden {
+    display: none;
+  }
+}
 .home__right {
   position: relative;
   margin-left: 320px;
@@ -913,6 +1000,13 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
 .home__right__header__title::first-letter {
   text-transform: uppercase;
 }
+@media screen and (max-width: 980px) {
+  .home__right__header__title {
+    white-space: nowrap;
+    overflow: hidden;
+    margin-right: 25px;
+  }
+}
 .home__right__header__right {
   display: flex;
   align-items: center;
@@ -922,7 +1016,6 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   background: #635EC6;
   border: none;
   border-radius: 47px;
-  padding: 0 30px;
   font-size: 1.05em;
   font-weight: 500;
   color: #ffffff;
@@ -932,6 +1025,25 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
 .home__right__header__right__newBtn:hover {
   transition: all 150ms ease-in-out;
   background: #453fb2;
+}
+.home__right__header__right__newBtn--screen {
+  padding: 0 30px;
+}
+@media screen and (max-width: 980px) {
+  .home__right__header__right__newBtn--screen {
+    display: none;
+  }
+}
+.home__right__header__right__newBtn--mobile {
+  padding: 15px 15px 15px 16px;
+  height: 17px;
+  display: none;
+  border-radius: 50%;
+}
+@media screen and (max-width: 980px) {
+  .home__right__header__right__newBtn--mobile {
+    display: block;
+  }
 }
 .home__right__header__right__menuBtn {
   font-size: 1.4em;
@@ -978,6 +1090,14 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   transition: all 150ms ease-in-out;
   color: #939CAD;
 }
+.home__right__header__right__menu__menuItem--mobile {
+  display: none;
+}
+@media screen and (max-width: 980px) {
+  .home__right__header__right__menu__menuItem--mobile {
+    display: flex;
+  }
+}
 .home__right__header__right__menu__menuBtn {
   position: absolute;
   right: 25px;
@@ -998,6 +1118,18 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
 }
 .home__right__header__right__menu--light {
   background: #ffffff;
+}
+@media screen and (max-width: 980px) {
+  .home__right__header__right__menu {
+    left: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-left: none;
+    border-radius: 0;
+  }
+  .home__right__header__right__menu__menuItem {
+    margin-bottom: 12px;
+  }
 }
 .home__right__header--dark {
   transition: all 120ms ease-in-out;
@@ -1060,7 +1192,7 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 80vh;
   width: 100%;
 }
 .home__right__main__container__newBoardBtnCont__btn {
@@ -1080,6 +1212,12 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   transition: all 150ms ease-in-out;
   background: #453fb2;
 }
+@media screen and (max-width: 980px) {
+  .home__right__main__container {
+    position: relative;
+    overflow: scroll;
+  }
+}
 .home__right__main--dark {
   transition: all 120ms ease-in-out;
   background: #21222D;
@@ -1087,6 +1225,19 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
 .home__right__main--light {
   transition: all 120ms ease-in-out;
   background: #F3F6FE;
+}
+@media screen and (max-width: 980px) {
+  .home__right__main {
+    position: relative;
+  }
+}
+@media screen and (max-width: 980px) {
+  .home__right {
+    margin-left: 0;
+  }
+  .home__right__header {
+    left: 0;
+  }
 }
 .home__modalNewBoard {
   z-index: 10;
@@ -1106,13 +1257,15 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   border-radius: 6px;
 }
 .home__modalNewBoard__modal__closeBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   top: 10px;
   right: 10px;
-  text-align: center;
   font-weight: 700;
-  height: 22px;
-  width: 22px;
+  height: 23px;
+  width: 23px;
   background: inherit;
   border: 2px solid #635EC6;
   border-radius: 50%;
@@ -1152,7 +1305,6 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   border: 1px solid #939cad70;
   border-radius: 6px;
   padding: 0 15px;
-  color: #ffffff;
 }
 .home__modalNewBoard__modal__form__inputCont input::placeholder {
   color: #939cad70;
@@ -1165,7 +1317,6 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   border: 1px solid #939cad70;
   border-radius: 6px;
   padding: 0 15px;
-  color: #ffffff;
 }
 .home__modalNewBoard__modal__form__inputCont textarea::placeholder {
   color: #939cad70;
@@ -1189,13 +1340,30 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   transition: all 150ms ease-in-out;
   background: #453fb2;
 }
+@media screen and (max-width: 980px) {
+  .home__modalNewBoard__modal__form {
+    display: flex;
+    flex-direction: column;
+  }
+  .home__modalNewBoard__modal__form input, .home__modalNewBoard__modal__form textarea {
+    width: auto;
+  }
+}
 .home__modalNewBoard__modal--dark {
   background: #2C2C37;
   color: #ffffff;
 }
+.home__modalNewBoard__modal--dark input, .home__modalNewBoard__modal--dark textarea {
+  color: #ffffff;
+}
 .home__modalNewBoard__modal--light {
   background: #ffffff;
-  color: light-black;
+  color: #0f0f0f;
+}
+@media screen and (max-width: 980px) {
+  .home__modalNewBoard__modal {
+    width: 80%;
+  }
 }
 .home__modalNewColumn {
   z-index: 10;
@@ -1215,13 +1383,15 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   border-radius: 6px;
 }
 .home__modalNewColumn__modal__closeBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   top: 10px;
   right: 10px;
-  text-align: center;
   font-weight: 700;
-  height: 22px;
-  width: 22px;
+  height: 23px;
+  width: 23px;
   background: inherit;
   border: 2px solid #635EC6;
   border-radius: 50%;
@@ -1261,7 +1431,6 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   border: 1px solid #939cad70;
   border-radius: 6px;
   padding: 0 15px;
-  color: #ffffff;
 }
 .home__modalNewColumn__modal__form__inputCont input::placeholder {
   color: #939cad70;
@@ -1274,7 +1443,6 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   border: 1px solid #939cad70;
   border-radius: 6px;
   padding: 0 15px;
-  color: #ffffff;
 }
 .home__modalNewColumn__modal__form__inputCont textarea::placeholder {
   color: #939cad70;
@@ -1298,13 +1466,30 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   transition: all 150ms ease-in-out;
   background: #453fb2;
 }
+@media screen and (max-width: 980px) {
+  .home__modalNewColumn__modal__form {
+    display: flex;
+    flex-direction: column;
+  }
+  .home__modalNewColumn__modal__form input, .home__modalNewColumn__modal__form textarea {
+    width: auto;
+  }
+}
 .home__modalNewColumn__modal--dark {
   background: #2C2C37;
   color: #ffffff;
 }
+.home__modalNewColumn__modal--dark input, .home__modalNewColumn__modal--dark textarea {
+  color: #ffffff;
+}
 .home__modalNewColumn__modal--light {
   background: #ffffff;
-  color: light-black;
+  color: #0f0f0f;
+}
+@media screen and (max-width: 980px) {
+  .home__modalNewColumn__modal {
+    width: 80%;
+  }
 }
 .home__modalNewColumn__modal__form__colOptions {
   display: flex;
@@ -1337,6 +1522,11 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
 .home__modalNewColumn__modal__form__colOptions__position__select--light {
   color: #0f0f0f;
 }
+@media screen and (max-width: 980px) {
+  .home__modalNewColumn__modal__form__colOptions__position {
+    width: 100%;
+  }
+}
 .home__modalNewTask {
   z-index: 10;
   position: fixed;
@@ -1355,13 +1545,15 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   border-radius: 6px;
 }
 .home__modalNewTask__modal__closeBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   top: 10px;
   right: 10px;
-  text-align: center;
   font-weight: 700;
-  height: 22px;
-  width: 22px;
+  height: 23px;
+  width: 23px;
   background: inherit;
   border: 2px solid #635EC6;
   border-radius: 50%;
@@ -1401,7 +1593,6 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   border: 1px solid #939cad70;
   border-radius: 6px;
   padding: 0 15px;
-  color: #ffffff;
 }
 .home__modalNewTask__modal__form__inputCont input::placeholder {
   color: #939cad70;
@@ -1414,7 +1605,6 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   border: 1px solid #939cad70;
   border-radius: 6px;
   padding: 0 15px;
-  color: #ffffff;
 }
 .home__modalNewTask__modal__form__inputCont textarea::placeholder {
   color: #939cad70;
@@ -1438,13 +1628,30 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   transition: all 150ms ease-in-out;
   background: #453fb2;
 }
+@media screen and (max-width: 980px) {
+  .home__modalNewTask__modal__form {
+    display: flex;
+    flex-direction: column;
+  }
+  .home__modalNewTask__modal__form input, .home__modalNewTask__modal__form textarea {
+    width: auto;
+  }
+}
 .home__modalNewTask__modal--dark {
   background: #2C2C37;
   color: #ffffff;
 }
+.home__modalNewTask__modal--dark input, .home__modalNewTask__modal--dark textarea {
+  color: #ffffff;
+}
 .home__modalNewTask__modal--light {
   background: #ffffff;
-  color: light-black;
+  color: #0f0f0f;
+}
+@media screen and (max-width: 980px) {
+  .home__modalNewTask__modal {
+    width: 80%;
+  }
 }
 .home__modalNewTask__modal__form__checkList {
   margin-top: 22px;
@@ -1468,7 +1675,6 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   border: 1px solid #939cad70;
   border-radius: 6px;
   padding: 0 15px;
-  color: #ffffff;
 }
 .home__modalNewTask__modal__form__checkList__cont__inputCont input[type=text]::placeholder {
   color: #939cad70;
@@ -1529,6 +1735,11 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
 .home__modalNewTask__modal__form__status__select--light {
   color: #0f0f0f;
 }
+@media screen and (max-width: 980px) {
+  .home {
+    height: auto;
+  }
+}
 
 .log {
   display: flex;
@@ -1544,8 +1755,20 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   border-radius: 8px;
   box-sizing: border-box;
 }
+@media screen and (max-width: 980px) {
+  .log section {
+    height: auto;
+    padding-bottom: 50px;
+  }
+}
 .log__login {
   margin-right: 15px;
+}
+@media screen and (max-width: 980px) {
+  .log__login {
+    margin-right: 0;
+    margin-bottom: 25px;
+  }
 }
 .log__signin h2, .log__login h2 {
   text-align: center;
@@ -1561,6 +1784,11 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
 }
 .log__signin__form__cont, .log__login__form__cont {
   display: flex;
+}
+@media screen and (max-width: 980px) {
+  .log__signin__form__cont, .log__login__form__cont {
+    flex-direction: column;
+  }
 }
 .log__signin__form__cont__inputCont, .log__signin__form__inputCont, .log__login__form__cont__inputCont, .log__login__form__inputCont {
   display: flex;
@@ -1578,6 +1806,11 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
 }
 .log__signin__form__cont__inputCont--first, .log__signin__form__inputCont--first, .log__login__form__cont__inputCont--first, .log__login__form__inputCont--first {
   margin-right: 10px;
+}
+@media screen and (max-width: 980px) {
+  .log__signin__form__cont__inputCont--first, .log__signin__form__inputCont--first, .log__login__form__cont__inputCont--first, .log__login__form__inputCont--first {
+    margin-right: 0;
+  }
 }
 .log__signin__form__btnCont, .log__login__form__btnCont {
   display: flex;
@@ -1599,6 +1832,26 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
 .log__signin__form__btnCont input[type=submit]:hover, .log__login__form__btnCont input[type=submit]:hover {
   transition: all 120ms ease-in-out;
   background: #3d389f;
+}
+@media screen and (max-width: 980px) {
+  .log__signin__form__btnCont, .log__login__form__btnCont {
+    bottom: 6px;
+  }
+}
+@media screen and (max-width: 980px) {
+  .log__signin, .log__login {
+    width: 380px;
+  }
+}
+@media screen and (max-width: 580px) {
+  .log__signin, .log__login {
+    width: 90%;
+  }
+}
+@media screen and (max-width: 980px) {
+  .log {
+    flex-direction: column;
+  }
 }
 
 .profil {
@@ -1667,6 +1920,22 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   transition: all 120ms ease-in-out;
   color: #69758a;
 }
+@media screen and (max-width: 980px) {
+  .profil__section__projectCont__project {
+    width: 80%;
+  }
+  .profil__section__projectCont__project h2 {
+    text-align: start;
+    padding-right: 20px;
+  }
+}
+@media screen and (max-width: 980px) {
+  .profil__section__projectCont {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+}
 .profil__modalMenu {
   z-index: 10;
   position: fixed;
@@ -1685,13 +1954,15 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   border-radius: 6px;
 }
 .profil__modalMenu__modal__closeBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   top: 10px;
   right: 10px;
-  text-align: center;
   font-weight: 700;
-  height: 22px;
-  width: 22px;
+  height: 23px;
+  width: 23px;
   background: inherit;
   border: 2px solid #635EC6;
   border-radius: 50%;
@@ -1731,7 +2002,6 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   border: 1px solid #939cad70;
   border-radius: 6px;
   padding: 0 15px;
-  color: #ffffff;
 }
 .profil__modalMenu__modal__form__inputCont input::placeholder {
   color: #939cad70;
@@ -1744,7 +2014,6 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   border: 1px solid #939cad70;
   border-radius: 6px;
   padding: 0 15px;
-  color: #ffffff;
 }
 .profil__modalMenu__modal__form__inputCont textarea::placeholder {
   color: #939cad70;
@@ -1768,13 +2037,30 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   transition: all 150ms ease-in-out;
   background: #453fb2;
 }
+@media screen and (max-width: 980px) {
+  .profil__modalMenu__modal__form {
+    display: flex;
+    flex-direction: column;
+  }
+  .profil__modalMenu__modal__form input, .profil__modalMenu__modal__form textarea {
+    width: auto;
+  }
+}
 .profil__modalMenu__modal--dark {
   background: #2C2C37;
   color: #ffffff;
 }
+.profil__modalMenu__modal--dark input, .profil__modalMenu__modal--dark textarea {
+  color: #ffffff;
+}
 .profil__modalMenu__modal--light {
   background: #ffffff;
-  color: light-black;
+  color: #0f0f0f;
+}
+@media screen and (max-width: 980px) {
+  .profil__modalMenu__modal {
+    width: 80%;
+  }
 }
 .profil__modalMenu__modal__form {
   margin-bottom: 50px;
@@ -1819,6 +2105,11 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
 }
 .profil__modalMenu__modal__main__title__icon:hover {
   color: #939CAD;
+}
+@media screen and (max-width: 980px) {
+  .profil__modalMenu__modal__main {
+    width: auto;
+  }
 }
 .profil__modalMenu__modal__deleteBtn {
   display: flex;
