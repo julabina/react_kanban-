@@ -120,13 +120,13 @@ const Draggable: FC<IDraggable> = ({ id, children, darkMod, checkTasks, subTasks
 
             if (title.title.length < 2 || title.title.length > 100) {
                 error = `<p>- La taille du titre doit etre comprise entre 2 et 100 caractères.</p>`;
-            } else if (!title.title.match(/^[\wé èà\-\']*$/i)) {
+            } else if (!title.title.match(/^[\wé êèà\-\']*$/i)) {
                 error = `<p>- Le titre ne doit contenir que des lettres et des chiffres.</p>`;
             }
             
             if (title.description.length > 100) {
                 error += `<p>- La description ne doit contenir que 100 caractères maximum.</p>`;   
-            } else if (!title.description.match(/^[\wé èà\-\'\.]*$/im)) {
+            } else if (!title.description.match(/^[\wé êèà\-\'\.\,]*$/im)) {
                 error += `<p>- La description ne doit contenir que des lettres et des chiffres.</p>`;
             }
 

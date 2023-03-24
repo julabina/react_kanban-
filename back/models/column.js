@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
             validate: {
                 notEmpty: { msg: "Le nom de la colenne ne doit pas être vide." },
                 len: { args: [2, 100], msg: "Le nom de la colenne doit etre compris entre 2 et 100 caractères." },
-                is: {args: /^[\wé èà\-\'\.]*$/i, msg: "le nom de la colenne ne doit contenir que des lettres et des chiffres"}
+                is: {args: /^[\wé êèà\-\'\.\,]*$/i, msg: "le nom de la colenne ne doit contenir que des lettres et des chiffres"}
             }
         },
         color: {

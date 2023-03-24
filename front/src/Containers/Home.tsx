@@ -345,14 +345,14 @@ const Home = () => {
                 errors = `<p>- Le titre est requis.</p>`;
             } else if (newBoardInput.title.length < 3 || newBoardInput.title.length > 100) {
                 errors = `<p>- La taille du titre doit etre comprise entre 2 et 100 caractères.</p>`;          
-            } else if (!newBoardInput.title.match(/^[\wé èà\-]*$/i)) {
+            } else if (!newBoardInput.title.match(/^[\wé êèà\-]*$/i)) {
                 errors = `<p>- Le titre ne doit contenir que des lettres et des chiffres.</p>`;
             }
 
             if (newBoardInput.description !== "") {
                 if (newBoardInput.description.length > 100) {
                     errors += `<p>- La description doit comprendre maximum 100 caractères.</p>`;          
-                } else if (!newBoardInput.description.match(/^[\wé èà\-\.]*$/i)) {
+                } else if (!newBoardInput.description.match(/^[\wé êèà\-\.]*$/i)) {
                     errors += `<p>- La description ne doit contenir que des lettres et des chiffres.</p>`;
                 }
             }
@@ -411,7 +411,7 @@ const Home = () => {
                 return errorCont.innerHTML = `<p>- Le nom de la colonne est requis.</p>`;
             } else if (newColumnInput.name.length > 50) {
                 return errorCont.innerHTML = `<p>- Le nom de la colonne doit contenir 50 caractères maximum.</p>`;
-            } else if (!newColumnInput.name.match(/^[\wé èà\-\'\.]*$/i)) {
+            } else if (!newColumnInput.name.match(/^[\wé êèà\-\'\.\,]*$/i)) {
                 return errorCont.innerHTML = `<p>- Le nom de la colonne ne doit contenir que des lettres et des chiffres.</p>`;
             }
             
@@ -499,13 +499,13 @@ const Home = () => {
 
             if (newTaskInput.title.length < 2 || newTaskInput.title.length > 100) {
                 error = `<p>- La taille du titre doit etre comprise entre 2 et 100 caractères.</p>`;
-            } else if (!newTaskInput.title.match(/^[\wé èà\-\']*$/i)) {
+            } else if (!newTaskInput.title.match(/^[\wé êèà\-\']*$/i)) {
                 error = `<p>- Le titre ne doit contenir que des lettres et des chiffres.</p>`;
             }
             
             if (newTaskInput.description.length > 100) {
                 error += `<p>- La description ne doit contenir que 100 caractères maximum.</p>`;   
-            } else if (!newTaskInput.description.match(/^[\wé èà\-\'\.]*$/im)) {
+            } else if (!newTaskInput.description.match(/^[\wé êèà\-\'\.\,]*$/im)) {
                 error += `<p>- La description ne doit contenir que des lettres et des chiffres.</p>`;
             }
             
@@ -514,7 +514,7 @@ const Home = () => {
                     if (newTaskInput.subTasks[i].length < 2 || newTaskInput.subTasks[i].length > 100) {
                         error += `<p>- Les champs de sous tache ne doivent contenir que des lettres et des chiffres, et etre d'une taille comprise entre 2 et 100 caractères.</p>`;
                         break;
-                    } else if (!newTaskInput.title.match(/^[\wé èà\-\']*$/i)) {
+                    } else if (!newTaskInput.title.match(/^[\wé êèà\-\']*$/i)) {
                         error += `<p>- Les champs de sous tache ne doivent contenir que des lettres et des chiffres, et etre d'une taille comprise entre 2 et 100 caractères.</p>`;
                         break;
                     }

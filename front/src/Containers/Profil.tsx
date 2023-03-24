@@ -188,14 +188,14 @@ const Profil = () => {
                 errors = `<p>- Le titre est requis.</p>`;
             } else if (input.title.length < 3 || input.title.length > 100) {
                 errors = `<p>- La taille du titre doit etre comprise entre 2 et 100 caractères.</p>`;          
-            } else if (!input.title.match(/^[\wé èà\-]*$/i)) {
+            } else if (!input.title.match(/^[\wé êèà\-]*$/i)) {
                 errors = `<p>- Le titre ne doit contenir que des lettres et des chiffres.</p>`;
             }
 
             if (input.description !== "") {
                 if (input.description.length > 100) {
                     errors += `<p>- La description doit comprendre maximum 100 caractères.</p>`;          
-                } else if (!input.description.match(/^[\wé èà\-\.]*$/i)) {
+                } else if (!input.description.match(/^[\wé êèà\-\'\.\,]*$/i)) {
                     errors += `<p>- La description ne doit contenir que des lettres et des chiffres.</p>`;
                 }
             }

@@ -267,6 +267,7 @@ const Log = () => {
                             <label htmlFor="logPassword">Mot de passe</label>
                             <input onInput={(e) => ctrlLog('password', (e.target as HTMLInputElement).value)} value={logInput.password} type="password" id="logPassword" />
                         </div>
+                        <div className="log__login__form__checkboxCont"></div>
                         <div className="log__login__form__btnCont">
                             <input type="submit" value="Connexion" />
                         </div>

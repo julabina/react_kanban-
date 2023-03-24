@@ -483,6 +483,7 @@
     &__modalNewTask {
         @include modal;
         &__modal {
+            top: 450px;
             &__form {
                 &__checkList {
                     margin-top: 22px;

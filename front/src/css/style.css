@@ -1698,6 +1698,9 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
     overflow: scroll;
   }
 }
+.home__modalNewTask__modal {
+  top: 450px;
+}
 .home__modalNewTask__modal__form__checkList {
   margin-top: 22px;
 }
@@ -1796,8 +1799,8 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   width: 100vw;
 }
 .log section {
-  height: 300px;
-  padding: 18px 18px 28px;
+  height: auto;
+  padding: 18px;
   border: 1px solid #939cad70;
   border-radius: 8px;
   box-sizing: border-box;
@@ -1822,6 +1825,12 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   font-weight: 500;
   font-size: 1.4em;
   margin-bottom: 25px;
+}
+.log__signin__errorCont, .log__login__errorCont {
+  height: 15px;
+  font-size: 0.9em;
+  color: #c41b1b;
+  margin-bottom: 10px;
 }
 .log__signin__form, .log__login__form {
   position: relative;
@@ -1863,8 +1872,7 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   display: flex;
   justify-content: center;
   width: 100%;
-  position: absolute;
-  bottom: 35px;
+  margin-top: 25px;
 }
 .log__signin__form__btnCont input[type=submit], .log__login__form__btnCont input[type=submit] {
   height: 30px;
@@ -1880,10 +1888,8 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   transition: all 120ms ease-in-out;
   background: #3d389f;
 }
-@media screen and (max-width: 980px) {
-  .log__signin__form__btnCont, .log__login__form__btnCont {
-    bottom: 6px;
-  }
+.log__signin__form__checkboxCont, .log__login__form__checkboxCont {
+  height: 20px;
 }
 @media screen and (max-width: 980px) {
   .log__signin, .log__login {
