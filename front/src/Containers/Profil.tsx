@@ -195,7 +195,7 @@ const Profil = () => {
             if (input.description !== "") {
                 if (input.description.length > 100) {
                     errors += `<p>- La description doit comprendre maximum 100 caractères.</p>`;          
-                } else if (!input.description.match(/^[\wé èà\-]*$/i)) {
+                } else if (!input.description.match(/^[\wé èà\-\.]*$/i)) {
                     errors += `<p>- La description ne doit contenir que des lettres et des chiffres.</p>`;
                 }
             }

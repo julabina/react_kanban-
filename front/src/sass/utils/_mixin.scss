@@ -68,6 +68,9 @@
                 }
             }
             &__submitBtn {
+                margin: 30px 0 10px;
+            }
+            &__submitBtn, &__cancelBtn {
                 background: map-get($map: $colors, $key:blue-dark );
                 border: none;
                 font-weight: 500;
@@ -75,15 +78,11 @@
                 height: 42px;
                 width: 100%;
                 border-radius: 42px;
-                margin-top: 30px;
                 cursor: pointer;
                 transition: all 150ms ease-in-out;
                 &:hover {
                     transition: all 150ms ease-in-out;
                     background: darken($color: map-get($colors, blue-dark), $amount: 10);
-                }
-                @include lowTablet {
-                    
                 }
             }
             @include lowTablet {
@@ -106,8 +105,13 @@
             color: map-get($map: $colors, $key: light-black);
         }
         @include lowTablet {
-            width: 80%;           
+            width: 80%;    
+            top: 50%; 
+            margin-top: 50px;      
         }
+    }
+    @include lowTablet {
+        overflow: scroll;
     }
 }
 

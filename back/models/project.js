@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             validate: {
                 len: { args: [0, 100], msg: "La description doit comprendre maximum 100 caractères." },
-                is: {args: /^[\wé èà\-\']*$/i, msg: "la description ne doit contenir que des lettres et des chiffres"}
+                is: {args: /^[\wé èà\-\'\.]*$/i, msg: "la description ne doit contenir que des lettres et des chiffres"}
             }
         },
         columns: {

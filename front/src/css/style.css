@@ -202,6 +202,9 @@ html, body {
   margin-top: 8px;
 }
 .column__menu__modal__form__submitBtn {
+  margin: 30px 0 10px;
+}
+.column__menu__modal__form__submitBtn, .column__menu__modal__form__cancelBtn {
   background: #635EC6;
   border: none;
   font-weight: 500;
@@ -209,11 +212,10 @@ html, body {
   height: 42px;
   width: 100%;
   border-radius: 42px;
-  margin-top: 30px;
   cursor: pointer;
   transition: all 150ms ease-in-out;
 }
-.column__menu__modal__form__submitBtn:hover {
+.column__menu__modal__form__submitBtn:hover, .column__menu__modal__form__cancelBtn:hover {
   transition: all 150ms ease-in-out;
   background: #453fb2;
 }
@@ -240,6 +242,13 @@ html, body {
 @media screen and (max-width: 980px) {
   .column__menu__modal {
     width: 80%;
+    top: 50%;
+    margin-top: 50px;
+  }
+}
+@media screen and (max-width: 980px) {
+  .column__menu {
+    overflow: scroll;
   }
 }
 .column__menu__modal__titleCont {
@@ -555,6 +564,9 @@ html, body {
   margin-top: 8px;
 }
 .draggable__taskMenu__modal__form__submitBtn {
+  margin: 30px 0 10px;
+}
+.draggable__taskMenu__modal__form__submitBtn, .draggable__taskMenu__modal__form__cancelBtn {
   background: #635EC6;
   border: none;
   font-weight: 500;
@@ -562,11 +574,10 @@ html, body {
   height: 42px;
   width: 100%;
   border-radius: 42px;
-  margin-top: 30px;
   cursor: pointer;
   transition: all 150ms ease-in-out;
 }
-.draggable__taskMenu__modal__form__submitBtn:hover {
+.draggable__taskMenu__modal__form__submitBtn:hover, .draggable__taskMenu__modal__form__cancelBtn:hover {
   transition: all 150ms ease-in-out;
   background: #453fb2;
 }
@@ -593,6 +604,13 @@ html, body {
 @media screen and (max-width: 980px) {
   .draggable__taskMenu__modal {
     width: 80%;
+    top: 50%;
+    margin-top: 50px;
+  }
+}
+@media screen and (max-width: 980px) {
+  .draggable__taskMenu {
+    overflow: scroll;
   }
 }
 .draggable__taskMenu__modal {
@@ -1325,6 +1343,9 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   margin-top: 8px;
 }
 .home__modalNewBoard__modal__form__submitBtn {
+  margin: 30px 0 10px;
+}
+.home__modalNewBoard__modal__form__submitBtn, .home__modalNewBoard__modal__form__cancelBtn {
   background: #635EC6;
   border: none;
   font-weight: 500;
@@ -1332,11 +1353,10 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   height: 42px;
   width: 100%;
   border-radius: 42px;
-  margin-top: 30px;
   cursor: pointer;
   transition: all 150ms ease-in-out;
 }
-.home__modalNewBoard__modal__form__submitBtn:hover {
+.home__modalNewBoard__modal__form__submitBtn:hover, .home__modalNewBoard__modal__form__cancelBtn:hover {
   transition: all 150ms ease-in-out;
   background: #453fb2;
 }
@@ -1363,6 +1383,13 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
 @media screen and (max-width: 980px) {
   .home__modalNewBoard__modal {
     width: 80%;
+    top: 50%;
+    margin-top: 50px;
+  }
+}
+@media screen and (max-width: 980px) {
+  .home__modalNewBoard {
+    overflow: scroll;
   }
 }
 .home__modalNewColumn {
@@ -1451,6 +1478,9 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   margin-top: 8px;
 }
 .home__modalNewColumn__modal__form__submitBtn {
+  margin: 30px 0 10px;
+}
+.home__modalNewColumn__modal__form__submitBtn, .home__modalNewColumn__modal__form__cancelBtn {
   background: #635EC6;
   border: none;
   font-weight: 500;
@@ -1458,11 +1488,10 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   height: 42px;
   width: 100%;
   border-radius: 42px;
-  margin-top: 30px;
   cursor: pointer;
   transition: all 150ms ease-in-out;
 }
-.home__modalNewColumn__modal__form__submitBtn:hover {
+.home__modalNewColumn__modal__form__submitBtn:hover, .home__modalNewColumn__modal__form__cancelBtn:hover {
   transition: all 150ms ease-in-out;
   background: #453fb2;
 }
@@ -1489,6 +1518,13 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
 @media screen and (max-width: 980px) {
   .home__modalNewColumn__modal {
     width: 80%;
+    top: 50%;
+    margin-top: 50px;
+  }
+}
+@media screen and (max-width: 980px) {
+  .home__modalNewColumn {
+    overflow: scroll;
   }
 }
 .home__modalNewColumn__modal__form__colOptions {
@@ -1613,6 +1649,9 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   margin-top: 8px;
 }
 .home__modalNewTask__modal__form__submitBtn {
+  margin: 30px 0 10px;
+}
+.home__modalNewTask__modal__form__submitBtn, .home__modalNewTask__modal__form__cancelBtn {
   background: #635EC6;
   border: none;
   font-weight: 500;
@@ -1620,11 +1659,10 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   height: 42px;
   width: 100%;
   border-radius: 42px;
-  margin-top: 30px;
   cursor: pointer;
   transition: all 150ms ease-in-out;
 }
-.home__modalNewTask__modal__form__submitBtn:hover {
+.home__modalNewTask__modal__form__submitBtn:hover, .home__modalNewTask__modal__form__cancelBtn:hover {
   transition: all 150ms ease-in-out;
   background: #453fb2;
 }
@@ -1651,6 +1689,13 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
 @media screen and (max-width: 980px) {
   .home__modalNewTask__modal {
     width: 80%;
+    top: 50%;
+    margin-top: 50px;
+  }
+}
+@media screen and (max-width: 980px) {
+  .home__modalNewTask {
+    overflow: scroll;
   }
 }
 .home__modalNewTask__modal__form__checkList {
@@ -1695,6 +1740,9 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   transition: all 120ms ease-in-out;
   color: #5e687c;
 }
+.home__modalNewTask__modal__form__checkList__cont input[type=button] {
+  color: #635EC6;
+}
 .home__modalNewTask__modal__form__checkList__cont__addSubBtn {
   width: 100%;
   border: none;
@@ -1703,7 +1751,6 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   font-weight: 500;
   cursor: pointer;
   background: #ffffff;
-  color: #635EC6;
   transition: all 120ms ease-in-out;
 }
 .home__modalNewTask__modal__form__checkList__cont__addSubBtn--light {
@@ -1736,8 +1783,8 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   color: #0f0f0f;
 }
 @media screen and (max-width: 980px) {
-  .home {
-    height: auto;
+  .home__modalNewTask__modal {
+    top: 400px;
   }
 }
 
@@ -2022,6 +2069,9 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   margin-top: 8px;
 }
 .profil__modalMenu__modal__form__submitBtn {
+  margin: 30px 0 10px;
+}
+.profil__modalMenu__modal__form__submitBtn, .profil__modalMenu__modal__form__cancelBtn {
   background: #635EC6;
   border: none;
   font-weight: 500;
@@ -2029,11 +2079,10 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
   height: 42px;
   width: 100%;
   border-radius: 42px;
-  margin-top: 30px;
   cursor: pointer;
   transition: all 150ms ease-in-out;
 }
-.profil__modalMenu__modal__form__submitBtn:hover {
+.profil__modalMenu__modal__form__submitBtn:hover, .profil__modalMenu__modal__form__cancelBtn:hover {
   transition: all 150ms ease-in-out;
   background: #453fb2;
 }
@@ -2060,6 +2109,13 @@ input:checked + .home__side__bot__cont__darkModOption__slider:before {
 @media screen and (max-width: 980px) {
   .profil__modalMenu__modal {
     width: 80%;
+    top: 50%;
+    margin-top: 50px;
+  }
+}
+@media screen and (max-width: 980px) {
+  .profil__modalMenu {
+    overflow: scroll;
   }
 }
 .profil__modalMenu__modal__form {

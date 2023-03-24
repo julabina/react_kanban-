@@ -352,7 +352,7 @@ const Home = () => {
             if (newBoardInput.description !== "") {
                 if (newBoardInput.description.length > 100) {
                     errors += `<p>- La description doit comprendre maximum 100 caractères.</p>`;          
-                } else if (!newBoardInput.description.match(/^[\wé èà\-]*$/i)) {
+                } else if (!newBoardInput.description.match(/^[\wé èà\-\.]*$/i)) {
                     errors += `<p>- La description ne doit contenir que des lettres et des chiffres.</p>`;
                 }
             }
@@ -411,7 +411,7 @@ const Home = () => {
                 return errorCont.innerHTML = `<p>- Le nom de la colonne est requis.</p>`;
             } else if (newColumnInput.name.length > 50) {
                 return errorCont.innerHTML = `<p>- Le nom de la colonne doit contenir 50 caractères maximum.</p>`;
-            } else if (!newColumnInput.name.match(/^[\w éèàêî]*$/i)) {
+            } else if (!newColumnInput.name.match(/^[\wé èà\-\'\.]*$/i)) {
                 return errorCont.innerHTML = `<p>- Le nom de la colonne ne doit contenir que des lettres et des chiffres.</p>`;
             }
             
@@ -505,7 +505,7 @@ const Home = () => {
             
             if (newTaskInput.description.length > 100) {
                 error += `<p>- La description ne doit contenir que 100 caractères maximum.</p>`;   
-            } else if (!newTaskInput.description.match(/^[\wé èà\-\']*$/im)) {
+            } else if (!newTaskInput.description.match(/^[\wé èà\-\'\.]*$/im)) {
                 error += `<p>- La description ne doit contenir que des lettres et des chiffres.</p>`;
             }
             
@@ -925,6 +925,7 @@ const Home = () => {
                             </select>
                         </div>
                         <input className='home__modalNewTask__modal__form__submitBtn' type="submit" value="Créer tache" />
+                        <input className='home__modalNewTask__modal__form__cancelBtn' onClick={toggleModalNewTask} type="button" value="Annuler" />
                     </form>
                 </div>
             </div>

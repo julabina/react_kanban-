@@ -518,6 +518,9 @@
                                 }
                             }
                         }
+                        input[type=button] {
+                            color: map-get($map: $colors, $key: blue-dark);     
+                        }
                         &__addSubBtn {
                             width: 100%;
                             border: none;
@@ -526,7 +529,6 @@
                             font-weight: 500;
                             cursor: pointer;
                             background: map-get($map: $colors, $key:light-white );
-                            color: map-get($map: $colors, $key: blue-dark);     
                             transition: all 120ms ease-in-out;
                             &--light {
                                 border: 1px solid map-get($map: $colors, $key:blue-dark );
@@ -561,9 +563,9 @@
                     }
                 }
             }
+            @include lowTablet {
+               top: 400px;
+            }
         }
-    }
-    @include tablet {
-        height: auto;
     }
 }

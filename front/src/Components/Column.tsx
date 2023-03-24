@@ -115,7 +115,7 @@ const Column: FC<IColumn> = ({ id, heading, elements, columns, columnsColor, dar
                 return errorCont.innerHTML = `<p>- Le titre ne peut pas etre vide.</p>`;
             } else if (modifColumnInput.title.length > 50) {
                 return errorCont.innerHTML = `<p>- Le nom de la colonne doit contenir 50 caractères maximum.</p>`;
-            } else if (!modifColumnInput.title.match(/^[\w éèàêî]*$/i)) {
+            } else if (!modifColumnInput.title.match(/^[\wé èà\-\'\.]*$/i)) {
                 return errorCont.innerHTML = `<p>- Le nom de la colonne ne doit contenir que des lettres et des chiffres.</p>`;
             }
             
